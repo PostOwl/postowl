@@ -1,12 +1,10 @@
-# editable-website
+# postowl
 
-A SvelteKit template that allows you to code a **completely custom website**, while allowing non-technical people to **make edits** to the content by simply logging in with a secure admin password.
+A minimalistic software for sharing the story of your life.
 
-Check out the demo at [editable.website](https://editable.website).
-
-## But why?
-
-It's a dynamic website, but light as a feather compared to building on top of a CMS. It makes editing content self-explanatory.
+- 🧡 Personal journal - just for you
+- 💛 Shared letters - with friends and family
+- 💚 Public blog - for the world
 
 ## Step 0 - Requirements
 
@@ -55,53 +53,7 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-## Step 2 - Making changes to your website
-
-You can literally do everything that SvelteKit allows you to do. Below is the source code for the /imprint page, which has a `<PlainText>` title and `<RichText>` content.
-
-```svelte
-<svelte:head>
-  <title>Imprint</title>
-</svelte:head>
-
-{#if showUserMenu}
-  <Modal on:close={() => (showUserMenu = false)}>
-    <div class="w-full flex flex-col space-y-4 p-4 sm:p-6">
-      <PrimaryButton on:click={toggleEdit}>Edit page</PrimaryButton>
-      <LoginMenu {currentUser} />
-    </div>
-  </Modal>
-{/if}
-
-{#if editable}
-  <EditorToolbar on:cancel={initOrReset} on:save={savePage} />
-{/if}
-
-<WebsiteNav bind:showUserMenu {currentUser} bind:editable />
-
-<div class="py-12 sm:py-24">
-  <div class="max-w-screen-md mx-auto px-6 md:text-xl">
-    <h1 class="text-4xl md:text-7xl font-bold pb-8">
-      <PlainText {editable} bind:content={title} />
-    </h1>
-    <div class="prose md:prose-xl pb-12 sm:pb-24">
-      <RichText multiLine {editable} bind:content={imprint} />
-    </div>
-  </div>
-</div>
-
-<Footer counter="/imprint" />
-```
-
-To see the full picture, open [src/routes/imprint/+page.svelte](src/routes/imprint/%2Bpage.svelte) and [src/routes/imprint/+page.server.js](src/routes/imprint/%2Bpage.server.js).
-
-Please use this as a starting point for new pages you want to add to your website. `editable-website` is not a widget-library on purpose. Instead you are encouraged to inspect and adjust all source code, including the [schema](./src/lib/prosemirrorSchemas.js) for the editors. I want you to be in control of everything. No behind-the-scene magic.
-
-## Step 3 - Making changes to the content
-
-Just navigate to `http://127.0.0.1:5173/login` and enter your secure admin password (`VITE_ADMIN_PASSWORD`). Now you see an additional ellipsis menu, which will provide you an "Edit page" or "Edit post" option for all pages that you have set up as "editable".
-
-## Step 4 - Deployment
+## Step 3 - Deployment
 
 I will describe the steps to deploy to [Northflank](https://northflank.com/) (which I am using). I recommend to assign 0.2 vCPU and 512MB RAM to each resource (~ $17/month) but you can go lower to save some costs or higher if you expect your site to have significant traffic.
 
@@ -110,7 +62,3 @@ I will describe the steps to deploy to [Northflank](https://northflank.com/) (wh
 2. Create a combined service, select the Heroku buildpack and assign the environment variables as they are exposed by the Postgres and MinIO addons. Use the same environment variables during the build step and runtime (yes you have to type them twice).
 
 You can deploy your editable website anywhere else as well. For instance if you'd like to go the "Serverless" path, you can deploy on Vercel, and use NeonDB (or DigitalOcean with Connection Pooling activated). You may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-## Step 5 - Get in touch
-
-If you have questions or need help (with development or deployment), send me an email (michael@letsken.com) and suggest a few slots where you have time for a 30 minute chat (I'm based in Austria GMT+1).
