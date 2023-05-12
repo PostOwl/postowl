@@ -1,6 +1,6 @@
 # postowl
 
-A minimalistic software for sharing the story of your life.
+Share the story of your life.
 
 - 🧡 Personal journal - just for you
 - 💛 Shared letters - with friends and family
