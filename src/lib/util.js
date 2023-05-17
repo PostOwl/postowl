@@ -208,3 +208,13 @@ export async function fetchJSON(method, url, data = undefined) {
   const result = await response.json();
   return result;
 }
+
+/**
+ * Checks email for syntactically correctness using a reg-ex
+ * @param {string} email - Email to check
+ * @returns {boolean}
+ */
+export function isEmailValid (email) {
+  const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
+  return emailRegex.test(email);
+}

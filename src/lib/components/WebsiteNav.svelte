@@ -28,7 +28,7 @@
     isDark ? 'bg-black text-white' : 'bg-white bg-opacity-95'
   )}
 >
-  <div class="max-w-screen-xl mx-auto py-4 px-6">
+  <div class="max-w-screen-md mx-auto py-4 px-6">
     <NotEditable {editable}>
       <div class="flex items-center relative">
         <a class={classNames('mr-6 font-bold')} href="/">

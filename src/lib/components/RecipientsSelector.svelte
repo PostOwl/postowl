@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { debounce, classNames } from '$lib/util';
+  import { debounce, classNames, isEmailValid } from '$lib/util';
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
   
   export let recipients = [];
@@ -22,6 +22,17 @@
       result = await response.json();
     } else {
       result = [];
+    }
+
+    if (isEmailValid(value)) {
+      // Double check that the email is not already in your contacts
+      const isInResult = Boolean(result.find(f => f.email === value));
+      if (!isInResult) {
+        result = [
+          { email: value },
+          ...result
+        ];
+      }
     }
     selectedResult = 0;
   }
@@ -143,15 +154,19 @@
   </div>
   
   <div class="overflow-y-auto" bind:this={resultsEl}>
-    {#each result as item, i}
+    {#each result as friend, i}
       <button
-        on:click={() => addRecipient(item)}
+        on:click={() => addRecipient(friend)}
         class={classNames(
           'w-full text-left block px-4 sm:px-6 py-3 border-b border-gray-100 text-gray-600 hover:text-black',
           selectedResult === i ? 'bg-gray-100' : ''
         )}
       >
-        {item.name} ({item.email})
+        {#if friend.name}
+          {friend.name} ({friend.email})
+        {:else}
+          {friend.email}
+        {/if}
       </button>
     {/each}
   </div>

@@ -9,7 +9,7 @@ const db = _db.instance;
 /**
  * Creates a post
  */
-export async function createPost(title, content, teaser, teaserImage, createdAt, currentUser) {
+export async function createPost(title, content, teaser, teaserImage, recipients, isPublic, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
 
   const slug = slugify(title, {
@@ -18,10 +18,28 @@ export async function createPost(title, content, teaser, teaserImage, createdAt,
   });
 
   return await db.tx('create-post', async t => {
-    return t.one(
-      'INSERT INTO posts (slug, title, content, teaser, teaser_image, created_at) values($1, $2, $3, $4, $5, $6) RETURNING slug, created_at',
-      [slug, title, content, teaser, teaserImage, createdAt]
+    const post = await t.one(
+      'INSERT INTO posts (slug, title, content, teaser, teaser_image, is_public) values($1, $2, $3, $4, $5, $6) RETURNING slug, post_id, created_at',
+      [slug, title, content, teaser, teaserImage, isPublic]
     );
+
+    for (let i = 0; i < recipients.length; i++) {
+      const recipient = recipients[i];
+      let friendId = recipient.friendId
+      if (!friendId) {
+        const friend  = await t.one(
+          "INSERT INTO friends (name, email) values('', $1) RETURNING friend_id",
+          [recipient.email]
+        );
+        friendId = friend.friendId;
+      }
+      const r = await t.one(
+        'INSERT INTO recipients (post_id, friend_id) values($1, $2) RETURNING recipient_id',
+        [post.postId, friendId]
+      );
+    }
+
+    return post;
   });
 }
 

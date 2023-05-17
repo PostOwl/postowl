@@ -8,10 +8,9 @@
   import Post from '$lib/components/Post.svelte';
 
   export let data;
-  
+
   let isPublic = false;
   let recipients = [];
-
   let showUserMenu = false,
     editable = true,
     title = 'Untitled',
@@ -32,12 +31,13 @@
         content,
         teaser,
         teaserImage,
-        createdAt
+        recipients,
+        isPublic
       });
       goto(`/posts/${slug}`);
     } catch (err) {
       console.error(err);
-      // This is guesswork
+      // HACK: This is guesswork
       alert('Error. Likely a document with that title has already been published. Choose a different title.');
     }
   }
@@ -56,9 +56,6 @@
 {/if}
 
 <WebsiteNav bind:editable bind:showUserMenu {currentUser} />
-
 <RecipientsSelector bind:isPublic bind:recipients />
-
 <Post bind:title bind:content bind:createdAt {editable} />
-
 <Footer {editable} />
