@@ -130,11 +130,11 @@
 {/if}
 
 <!-- Bio -->
-<div class="bg-white pb-12 sm:pb-24">
+<div class="bg-white">
   <div class="max-w-screen-md mx-auto px-6">
-    <div class="pt-12 sm:pt-24 pb-12 text-center">
+    <div class="pt-6 sm:pt-12 pb-2 sm:pb-6 text-center">
       <Image
-        class="inline-block w-48 h-48 md:w-72 md:h-72 rounded-full"
+        class="inline-block w-16 h-16 md:w-28 md:h-28 rounded-full"
         maxWidth="384"
         maxHeight="384"
         quality="0.8"
@@ -145,20 +145,19 @@
       />
     </div>
     <div class="">
-      <h1 class="text-3xl md:text-5xl lg:text-6xl font-medium">
+      <h1 class="text-center text-3xl md:text-6xl font-bold">
         <PlainText {editable} bind:content={bioTitle} />
       </h1>
     </div>
-    <div class="prose md:prose-xl pb-6">
-      <RichText multiLine {editable} bind:content={bio} />
+    <div class="prose text-center py-2 sm:text-xl">
+      <RichText {editable} bind:content={bio} />
     </div>
   </div>
 </div>
 
 <NotEditable {editable}>
-  <div class="bg-white pb-10 sm:pb-16" id="blog">
-    <div class="max-w-screen-md mx-auto px-6 pt-16 sm:pt-24 lg:pt-48">
-      <SectionLabel>My letters</SectionLabel>
+  <div class="bg-white pb-10 sm:pb-16" id="letters">
+    <div class="max-w-screen-md mx-auto px-6 pt-16 lg:pt-24">
       {#if data.posts.length === 0}
         <div class="md:text-xl py-4">No letters so far.</div>
       {/if}

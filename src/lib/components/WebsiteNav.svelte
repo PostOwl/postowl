@@ -35,8 +35,9 @@
           POSTOWL
         </a>
         <div class="flex-1" />
-        <a class="mr-4 font-medium px-2 py-1 rounded-md" href="/">Home</a>
-        <a class="mr-4 font-medium px-2 py-1 rounded-md" href="/#contact">Conact</a>
+        <a class="mr-4 font-medium px-2 py-1 rounded-md" href="/">About</a>
+        <a class="mr-4 font-medium px-2 py-1 rounded-md" href="/#letters">Letters</a>
+        
         {#if currentUser}
           <button
             on:click={() => (showUserMenu = !showUserMenu)}

@@ -38,17 +38,16 @@ export async function createPost(title, content, teaser, teaserImage, recipients
         [post.postId, friendId]
       );
     }
-
     return post;
   });
 }
 
-export async function updatePost(slug, title, content, teaser, teaserImage, createdAt, currentUser) {
+export async function updatePost(slug, title, content, teaser, teaserImage, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
   return await db.tx('update-post', async t => {
     return await t.one(
-      'UPDATE posts SET title= $1, content = $2, teaser = $3, teaser_image = $4, created_at = $5, updated_at = NOW() WHERE slug = $6 RETURNING slug, updated_at',
-      [title, content, teaser, teaserImage, createdAt, slug]
+      'UPDATE posts SET title= $1, content = $2, teaser = $3, teaser_image = $4, updated_at = NOW() WHERE slug = $5 RETURNING slug, updated_at',
+      [title, content, teaser, teaserImage, slug]
     );
   });
 }

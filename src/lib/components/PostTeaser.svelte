@@ -10,7 +10,7 @@
     <div class="text-base" />
     <div>
       <a
-        class={classNames('mb-12 text-2xl md:text-3xl lg:text-4xl font-medium')}
+        class={classNames('mb-12 text-2xl md:text-3xl lg:text-4xl font-bold')}
         href={`/posts/${post.slug}`}
       >
         {post.title}
@@ -30,12 +30,12 @@
     <div class="pt-4">
       <div class={teaserImage?.src ? 'line-clamp-3' : 'line-clamp-5'}>
         <a href={`/posts/${post.slug}`}>
-          <span class="font-medium">{formatDate(post.createdAt)}</span> — {post.teaser}
+          <span class="font-bold">{formatDate(post.createdAt)}</span> — {post.teaser}
         </a>
       </div>
     </div>
   </div>
   <div class="pt-4">
-    <a class="font-medium underline" href={`/posts/${post.slug}`}>Continue reading</a>
+    <a class="font-bold underline" href={`/posts/${post.slug}`}>Continue reading</a>
   </div>
 </div>

@@ -65,7 +65,6 @@
         content,
         teaser,
         teaserImage,
-        createdAt
       });
       updatedAt = result.updatedAt;
       editable = false;
