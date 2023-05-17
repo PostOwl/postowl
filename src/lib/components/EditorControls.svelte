@@ -16,6 +16,7 @@
 
   export let currentUser = undefined;
   export let isDark = false;
+  export let confirmLabel = 'Save';
 
   let editorView = null;
   let editorState = null;
@@ -172,7 +173,7 @@
         <div class="flex-1 h-8" />
         <SecondaryButton type="button" on:click={handleCancel}>Cancel</SecondaryButton>
         <div class="shrink-0 w-2 sm:w-4" />
-        <PrimaryButton type="button" on:click={handleSave}>Save</PrimaryButton>
+        <PrimaryButton type="button" on:click={handleSave}>{confirmLabel}</PrimaryButton>
       </div>
     </div>
   </div>

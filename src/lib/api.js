@@ -136,6 +136,23 @@ export async function createOrUpdatePage(pageId, page, currentUser) {
   });
 }
 
+
+/**
+ * Search within friends (contacts)
+ */
+export async function searchFriends(q, currentUser) {
+  return await db.tx('search-friends', async t => {
+    let result;
+    if (currentUser) {
+      result = await t.any(
+        "SELECT * FROM friends WHERE email ILIKE $1 OR name ILIKE $1 ORDER BY created_at DESC LIMIT 6",
+        [`%${q}%`]
+      );
+    }
+    return result;
+  });
+}
+
 /**
  * E.g. getPage("home") gets all dynamic data for the home page
  */

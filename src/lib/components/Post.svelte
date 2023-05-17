@@ -10,10 +10,10 @@
 
 <div>
   <div class="max-w-screen-md mx-auto px-6">
-    <div class="pt-12 sm:pt-24 font-medium lg:text-lg">
+    <!-- <div class="pt-12 sm:pt-24 font-medium lg:text-lg">
       <Date {editable} bind:value={createdAt} />
-    </div>
-    <h1 class="text-3xl md:text-5xl font-medium pt-2">
+    </div> -->
+    <h1 class="text-3xl md:text-5xl font-medium pt-8">
       <PlainText {editable} bind:content={title} />
     </h1>
   </div>
