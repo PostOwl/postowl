@@ -83,9 +83,29 @@ export async function destroySession(sessionId) {
 /**
  * List posts (either public, or all if you are the site owner)
  */
-export async function getPosts(/*currentUser*/) {
+export async function getPosts(currentUser) {
   return await db.tx('get-posts', async t => {
-    const posts = await t.any('SELECT * FROM posts ORDER BY created_at DESC');
+    let posts;
+    if (currentUser) {
+      posts = await t.any(`
+        SELECT
+          p.*,
+          (SELECT
+            coalesce(json_agg(x.*), '[]'::json)
+            FROM
+            (
+              SELECT
+                coalesce(f.name, f.email) AS name
+              FROM recipients r
+              INNER JOIN friends f ON (r.friend_id=f.friend_id)
+              WHERE r.post_id = p.post_id
+            ) x
+          ) AS recipients
+        FROM posts p;
+      `);
+    } else {
+      posts = await t.any('SELECT * FROM posts WHERE is_public IS TRUE ORDER BY created_at DESC');
+    }
     return posts;
   });
 }

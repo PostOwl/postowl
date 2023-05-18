@@ -3,11 +3,24 @@
   import { classNames, formatDate } from '$lib/util';
 
   $: teaserImage = JSON.parse(post.teaserImage);
+
+  
+
 </script>
 
-<div class="md:text-xl lg:saturate-0 lg:hover:saturate-100">
+<div class={classNames('md:text-xl rounded-lg border shadow-md bg-white p-4 sm:p-8', post.isPublic ? 'border-gray-300': post.recipients.length > 0 ? 'border-yellow-300' : 'border-red-300' )}>
   <div>
-    <div class="text-base" />
+    <div class="text-sm py-2">
+      {#if post.isPublic}
+        <strong>To:</strong> Everyone, {post.recipients.map(r => r.name ).join(', ')}
+      {:else if (post.recipients.length > 0)}
+        <strong>To:</strong> {post.recipients.map(r => r.name ).join(', ')}
+      {:else}
+      <strong>To:</strong> Myself
+      {/if}
+
+      
+    </div>
     <div>
       <a
         class={classNames('mb-12 text-2xl md:text-3xl lg:text-4xl font-bold')}

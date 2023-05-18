@@ -45,7 +45,7 @@
         fetchJSON('POST', '/api/delete-post', {
           slug: data.slug
         });
-        goto('/blog');
+        goto('/');
       } catch (err) {
         console.error(err);
         alert('Error deleting the article. Try again.');

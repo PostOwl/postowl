@@ -29,7 +29,6 @@
 
   let editable, title, bioTitle, bioPicture, bio, contact, showUserMenu;
 
-  $: projectLimit = $page.url.searchParams.get('projectLimit') || 4;
   $: postLimit = $page.url.searchParams.get('postLimit') || 4;
 
   function initOrReset() {
@@ -49,12 +48,8 @@
     showUserMenu = false;
   }
 
-  function showMoreProjects() {
-    goto(extendQueryParams({ projectLimit: projectLimit + 10 }), { noScroll: true });
-  }
-
   function showMoreposts() {
-    goto(extendQueryParams({ postLimit: postLimit + 10 }), { noScroll: true });
+    goto(extendQueryParams({ postLimit: postLimit + 50 }), { noScroll: true });
   }
 
   async function savePage() {
@@ -156,15 +151,15 @@
 </div>
 
 <NotEditable {editable}>
-  <div class="bg-white pb-10 sm:pb-16" id="letters">
-    <div class="max-w-screen-md mx-auto px-6 pt-16 lg:pt-24">
+  <div class="bg-white" id="letters">
+    <div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">
       {#if data.posts.length === 0}
         <div class="md:text-xl py-4">No letters so far.</div>
       {/if}
     </div>
 
     <div class="max-w-screen-md mx-auto px-6">
-      <div class="grid sm:grid-cols-1 gap-14 my-6 space-y-12">
+      <div class="my-6 space-y-8">
         {#each data.posts.slice(0, postLimit) as post, i}
           <PostTeaser {post} />
         {/each}

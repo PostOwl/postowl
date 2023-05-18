@@ -17,9 +17,9 @@
 
 <NotEditable {editable}>
   <div class="">
-    <div class="max-w-screen-md mx-auto px-6 py-12 text-sm lg:text-base">
+    <div class="max-w-screen-md mx-auto px-6 py-6 text-sm lg:text-base">
       <div class="">
-        Powered by <a class="underline font-medium" href="https://editable.website">PostOwl</a> · Page viewed {count || '…'} times.
+        Powered by <a class="underline font-medium" href="https://postowl.com">PostOwl</a> · Page viewed {count || '…'} times.
       </div>
     </div>
   </div>
