@@ -101,7 +101,8 @@ export async function getPosts(currentUser) {
               WHERE r.post_id = p.post_id
             ) x
           ) AS recipients
-        FROM posts p;
+        FROM posts p
+        ORDER BY created_at DESC
       `);
     } else {
       posts = await t.any('SELECT * FROM posts WHERE is_public IS TRUE ORDER BY created_at DESC');
