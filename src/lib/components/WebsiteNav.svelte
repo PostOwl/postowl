@@ -1,19 +1,14 @@
 <script>
   import { classNames } from '$lib/util';
   import NotEditable from './NotEditable.svelte';
+  import PrimaryButton from './PrimaryButton.svelte';
   export let editable = false;
   export let currentUser;
 
   export let showUserMenu = undefined;
-  export let showSearch = undefined;
   export let isDark = undefined;
 
   function onKeyDown(e) {
-    // Close modals
-    if (e.key === 'Escape') {
-      showSearch = false;
-      showUserMenu = false;
-    }
     // Turn on editing
     if (e.key === 'e' && e.metaKey) {
       editable = true;
@@ -21,9 +16,10 @@
   }
 </script>
 
+{#if currentUser}
 <div
   class={classNames(
-    'backdrop-blur-sm  z-10 text-sm lg:text-lg',
+    'backdrop-blur-sm  z-10 text-sm lg:text-lg border-b',
     !editable ? 'sticky top-0' : '',
     isDark ? 'bg-black text-white' : 'bg-white bg-opacity-95'
   )}
@@ -31,17 +27,12 @@
   <div class="max-w-screen-md mx-auto py-4 px-6">
     <NotEditable {editable}>
       <div class="flex items-center relative">
-        <a class={classNames('mr-6 font-bold')} href="/">
-          POSTOWL
-        </a>
         <div class="flex-1" />
-        <a class="mr-4 font-medium px-2 py-1 rounded-md" href="/">About</a>
-        <a class="mr-4 font-medium px-2 py-1 rounded-md" href="/#letters">Letters</a>
-        
+        <PrimaryButton size="sm">New letter</PrimaryButton>
         {#if currentUser}
           <button
             on:click={() => (showUserMenu = !showUserMenu)}
-            class="ml-0"
+            class="ml-0 px-4"
             title={currentUser.name}
           >
             <svg
@@ -60,9 +51,11 @@
             </svg>
           </button>
         {/if}
+        <div class="flex-1" />
       </div>
     </NotEditable>
   </div>
 </div>
+{/if}
 
 <svelte:window on:keydown={onKeyDown} />

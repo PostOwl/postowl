@@ -8,15 +8,18 @@
   import { goto } from '$app/navigation';
   import Footer from '$lib/components/Footer.svelte';
   import Post from '$lib/components/Post.svelte';
+  import NotEditable from '$lib/components/NotEditable.svelte';
 
   export let data;
-  $: prev = data.prev;
-  $: next = data.next;
 
   let showUserMenu = false;
   let editable, title, content, createdAt, updatedAt;
 
   $: currentUser = data.currentUser;
+
+  $: fullName = data.page?.name || 'Jane Doe'; 
+  $: avatar = data.page?.avatar || '/images/person-placeholder.jpg';
+  $: bio = data.page?.bio;
 
   $: {
     // HACK: To make sure this is only run when the parent passes in new data
@@ -112,6 +115,30 @@
   </Modal>
 {/if}
 
+<NotEditable {editable}>
+  <div class="bg-white">
+    <div class="max-w-screen-md mx-auto px-6 pb-8">
+      <div class="pt-6 sm:pt-16 pb-2 text-center">
+        <a href="/"><img src={avatar} alt={fullName} class="inline-block w-16 h-16 md:w-16 md:h-16 rounded-full" /></a>
+      </div>
+      <div class="text-center">
+        <a href="/" class="text-lg font-semibold underline">
+          {fullName}
+        </a>
+      </div>
+    </div>
+  </div>
+</NotEditable>
+
 <Post bind:title bind:content bind:createdAt {editable} />
+
+{#if bio}
+  <NotEditable {editable}>
+    <div class="text-center max-w-screen-sm mx-auto px-6 py-16">
+      <h1 class="sm:text-xl font-bold pb-4">About {fullName}</h1>
+      <p class="sm:text-lg prose">{@html bio}</p>
+    </div>
+  </NotEditable>
+{/if}
 
 <Footer counter={`/blog/${data.slug}`} />

@@ -10,8 +10,8 @@
 
 <div>
   <div class="max-w-screen-md mx-auto px-6">
-    <div>{formatDate(createdAt)}</div>
-    <h1 class="text-3xl md:text-5xl font-bold pt-8">
+    <div class="pt-8 pb-2 sm:text-lg">{formatDate(createdAt)}</div>
+    <h1 class="text-3xl md:text-5xl font-bold">
       <PlainText {editable} bind:content={title} />
     </h1>
   </div>

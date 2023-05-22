@@ -10,7 +10,6 @@
   import Footer from '$lib/components/Footer.svelte';
   import Image from '$lib/components/Image.svelte';
   import NotEditable from '$lib/components/NotEditable.svelte';
-  import SectionLabel from '$lib/components/SectionLabel.svelte';
 
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
@@ -27,14 +26,13 @@
 		<p>Enter short bio text here.</p>
 	`;
 
-  let editable, title, bioTitle, bioPicture, bio, contact, showUserMenu;
+  let editable, title, name, avatar, bio, showUserMenu;
 
   $: postLimit = $page.url.searchParams.get('postLimit') || 4;
 
   function initOrReset() {
-    title = data.page?.title || 'Untitled Website';
-    bioPicture = data.page?.bioPicture || '/images/person-placeholder.jpg';
-    bioTitle = data.page?.bioTitle || 'I am Jane Doe';
+    avatar = data.page?.avatar || '/images/person-placeholder.jpg';
+    name = data.page?.name || 'Jane Doe';
     bio = data.page?.bio || BIO_PLACEHOLDER;
     editable = false;
   }
@@ -135,13 +133,13 @@
         quality="0.8"
         {editable}
         {currentUser}
-        bind:src={bioPicture}
+        bind:src={avatar}
         alt={undefined}
       />
     </div>
     <div class="">
       <h1 class="text-center text-3xl md:text-6xl font-bold">
-        <PlainText {editable} bind:content={bioTitle} />
+        <PlainText {editable} bind:content={name} />
       </h1>
     </div>
     <div class="prose text-center py-2 sm:text-xl">

@@ -12,7 +12,7 @@
   <div>
     <div class="text-sm py-2">
       {#if post.isPublic}
-        <strong>To:</strong> Everyone, {post.recipients.map(r => r.name ).join(', ')}
+        <strong>To:</strong> Everyone
       {:else if (post.recipients.length > 0)}
         <strong>To:</strong> {post.recipients.map(r => r.name ).join(', ')}
       {:else}

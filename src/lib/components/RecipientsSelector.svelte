@@ -104,7 +104,7 @@
   }
 </script>
 
-<div class="max-w-screen-md mx-auto px-6">
+<div class="max-w-screen-md mx-auto px-6 pt-8">
   <div class="flex items-center">
     <div class="font-bold">To:</div>
     <div class="flex-1"></div>
