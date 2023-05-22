@@ -84,7 +84,7 @@ export async function destroySession(sessionId) {
  * List posts (either public, or all if you are the site owner)
  */
 export async function getPosts(currentUser) {
-  return await db.tx('get-posts', async t => {
+  return db.tx('get-posts', async t => {
     let posts;
     if (currentUser) {
       posts = await t.any(`
@@ -110,14 +110,65 @@ export async function getPosts(currentUser) {
   });
 }
 
+/**
+ * List all friends/contacts.
+ */
+export async function getFriends(currentUser) {
+  if (!currentUser) throw new Error('Not authorized');
+  return db.tx('get-friends', async t => {
+      return t.any('SELECT * FROM friends ORDER BY created_at DESC');
+  });
+}
+
+/**
+ * Get friend for a given friendId
+ */
+export async function getFriend(friendId) {
+  return await db.tx('get-friend', async t => {
+    const friend = await t.one('SELECT * FROM friends WHERE friend_id = $1', [friendId]);
+    return { ...friend };
+  });
+}
+
+/**
+ * Create a new friend
+ */
+export async function createFriend(name, email, currentUser) {
+  if (!currentUser) throw new Error('Not authorized');
+
+  return await db.tx('create-friend', async t => {
+    const friend = await t.one(
+      'INSERT INTO friends (name, email) VALUES ($1, $2) RETURNING friend_id, created_at',
+      [name, email]
+    );
+    return friend;
+  });
+}
+
+export async function updateFriend(friendId, name, email, currentUser) {
+  if (!currentUser) throw new Error('Not authorized');
+  return await db.tx('update-friend', async t => {
+    return await t.one(
+      'UPDATE friends SET name= $1, email = $2, updated_at = NOW() WHERE friend_id = $3 RETURNING friend_id, updated_at',
+      [name, email, friendId]
+    );
+  });
+}
+
+export async function deleteFriend(friendId, currentUser) {
+  if (!currentUser) throw new Error('Not authorized');
+  return await db.tx('delete-friend', async t => {
+    await t.any('DELETE FROM friends WHERE friend_id = $1', [friendId]);
+    return true;
+  });
+}
+
+/**
+ * Get post for a given slug
+ */
 export async function getPostBySlug(slug) {
   return await db.tx('get-post-by-slug', async t => {
-    const post = await t.one(
-      `
-      SELECT * FROM posts WHERE slug = $1
-    `,
-      [slug]
-    );
+    const post = await t.one('SELECT * FROM posts WHERE slug = $1', [slug]);
     return { ...post };
   });
 }
@@ -172,7 +223,6 @@ export async function createOrUpdatePage(pageId, page, currentUser) {
     }
   });
 }
-
 
 /**
  * Search within friends (contacts)

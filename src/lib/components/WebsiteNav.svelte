@@ -28,7 +28,7 @@
     <NotEditable {editable}>
       <div class="flex items-center relative">
         <div class="flex-1" />
-        <PrimaryButton size="sm">New letter</PrimaryButton>
+        <PrimaryButton size="sm" href="/posts/new">New letter</PrimaryButton>
         {#if currentUser}
           <button
             on:click={() => (showUserMenu = !showUserMenu)}
