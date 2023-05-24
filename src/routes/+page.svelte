@@ -26,7 +26,7 @@
 		<p>Enter short bio text here.</p>
 	`;
 
-  let editable, title, name, avatar, bio, showUserMenu;
+  let editable, name, avatar, bio, showUserMenu;
 
   $: postLimit = $page.url.searchParams.get('postLimit') || 4;
 
@@ -55,13 +55,11 @@
       // Only persist the start page when logged in as an admin
       if (currentUser) {
         await fetchJSON('POST', '/api/save-page', {
-          pageId: 'home',
+          pageId: 'bio',
           page: {
-            title,
-            bioPicture,
-            bioTitle,
-            bio,
-            contact
+            avatar,
+            name,
+            bio
           }
         });
       }
@@ -152,7 +150,7 @@
   <div class="bg-white" id="letters">
     <div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">
       {#if data.posts.length === 0}
-        <div class="md:text-xl py-4">No letters so far.</div>
+        <div class="md:text-xl py-4 text-center">No letters so far.</div>
       {/if}
     </div>
 
