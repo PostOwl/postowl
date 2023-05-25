@@ -90,6 +90,10 @@
   />
   <meta name="twitter:image" content="%sveltekit.assets%/favicon/favicon-512x512.png" />
   <meta name="robots" content="index, follow" />
+
+  <link rel="icon" type="image/png" sizes="300x300" href={avatar}>
+  <link rel="apple-touch-icon" sizes="300x300" href={avatar}>
+
 </svelte:head>
 
 {#if editable}
@@ -135,6 +139,9 @@
     <div class="prose text-center py-2 sm:text-xl">
       <RichText {editable} bind:content={bio} />
     </div>
+    {#if currentUser && !editable}
+      <div class="flex justify-center py-4"><PrimaryButton size='sm' on:click={() => editable = true}>Edit bio</PrimaryButton></div>
+    {/if}
   </div>
 </div>
 
@@ -149,7 +156,7 @@
     <div class="max-w-screen-md mx-auto px-6">
       <div class="my-6 space-y-8">
         {#each data.posts.slice(0, postLimit) as post, i}
-          <PostTeaser {post} />
+          <PostTeaser {post} {currentUser} />
         {/each}
       </div>
     </div>

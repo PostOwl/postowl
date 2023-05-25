@@ -89,6 +89,10 @@
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={data.meta?.teaser} />
   <meta name="twitter:image" content="%sveltekit.assets%/favicon/favicon-512x512.png" />
+
+  <link rel="icon" type="image/png" sizes="300x300" href={data.bio.avatar}>
+  <link rel="apple-touch-icon" sizes="300x300" href={data.bio.avatar}>
+
   <meta name="robots" content="index, follow" />
 </svelte:head>
 
