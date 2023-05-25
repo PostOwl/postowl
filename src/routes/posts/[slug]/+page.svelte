@@ -2,18 +2,17 @@
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
   import { extractTeaser, extractTeaserImage, fetchJSON } from '$lib/util';
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
+  import SecondaryButton from '$lib/components/SecondaryButton.svelte';
   import WebsiteNav from '$lib/components/WebsiteNav.svelte';
-  import Modal from '$lib/components/Modal.svelte';
-  import LoginMenu from '$lib/components/LoginMenu.svelte';
   import { goto } from '$app/navigation';
   import Footer from '$lib/components/Footer.svelte';
   import Post from '$lib/components/Post.svelte';
   import NotEditable from '$lib/components/NotEditable.svelte';
-
+  import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
+  
   export let data;
 
-  let showUserMenu = false;
-  let editable, title, content, createdAt, updatedAt, teaserImage, teaser;
+  let editable, title, content, createdAt, updatedAt, teaserImage, teaser, isPublic, recipients;
 
   $: currentUser = data.currentUser;
   $: {
@@ -29,18 +28,15 @@
     updatedAt = data.updatedAt;
     teaserImage = data.teaserImage;
     teaser = data.teaser;
+    isPublic = data.isPublic;
+    recipients = data.recipients;
     editable = false;
   }
 
-  function toggleEdit() {
-    editable = true;
-    showUserMenu = false;
-  }
-
-  async function deleteArticle() {
+  async function deletePost() {
     if (!currentUser) return alert('Sorry, you are not authorized.');
 
-    if (confirm('Are you sure you want to delete this post? It cannot be undone.')) {
+    if (confirm('Are you sure you want to delete this letter? It cannot be undone.')) {
       try {
         fetchJSON('POST', '/api/delete-post', {
           slug: data.slug
@@ -65,6 +61,8 @@
         content,
         teaser,
         teaserImage,
+        recipients,
+        isPublic
       });
       updatedAt = result.updatedAt;
       editable = false;
@@ -102,40 +100,34 @@
   <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={savePost} />
 {/if}
 
-<WebsiteNav bind:editable bind:showUserMenu {currentUser} bio={data.bio} />
+<WebsiteNav bind:editable {currentUser} bio={data.bio} />
 
-{#if showUserMenu}
-  <Modal on:close={() => (showUserMenu = false)}>
-    <form class="w-full block" method="POST">
-      <div class="w-full flex flex-col space-y-4 p-4 sm:p-6">
-        <PrimaryButton on:click={toggleEdit}>Edit post</PrimaryButton>
-        <PrimaryButton type="button" on:click={deleteArticle}>Delete post</PrimaryButton>
-        <LoginMenu {currentUser} />
-      </div>
-    </form>
-  </Modal>
+{#if editable}
+  <RecipientsSelector bind:isPublic bind:recipients />
 {/if}
-
-<NotEditable {editable}>
-  <div class="bg-white">
-    <div class="max-w-screen-md mx-auto px-6 pb-8">
-      <div class="pt-6 sm:pt-16 pb-2 text-center">
-        <a href="/"><img src={data.bio.avatar} alt={data.bio.name} class="inline-block w-16 h-16 md:w-16 md:h-16 rounded-full" /></a>
-      </div>
-      <div class="text-center">
-        <a href="/" class="text-lg font-semibold underline">
-          {data.bio.name}
-        </a>
-      </div>
-    </div>
-  </div>
-</NotEditable>
-
 <Post bind:title bind:content bind:createdAt {editable} />
 
+<div class="max-w-screen-md mx-auto px-6">
+  {#if currentUser && !editable}
+    <div class="flex justify-center py-4 space-x-4">
+      <PrimaryButton size='sm' on:click={() => editable = true}>Edit</PrimaryButton>
+      <SecondaryButton size='sm' on:click={deletePost}>Delete</SecondaryButton>
+    </div>
+  {/if}
+</div>
+
 <NotEditable {editable}>
-  <div class="text-center max-w-screen-sm mx-auto px-6 py-16">
-    <h1 class="sm:text-xl font-bold pb-4">About {data.bio.name}</h1>
+  <div class="text-center max-w-screen-sm mx-auto px-6 py-12 sm:py-16">
+    <div class="pb-4 text-center">
+      <a href="/"><img src={data.bio.avatar} alt={data.bio.name} class="inline-block w-16 h-16 md:w-16 md:h-16 rounded-full" /></a>
+    </div>
+
+    <div class="text-center pb-4 sm:pb-8">
+      <a href="/" class="text-2xl font-bold underline">
+        {data.bio.name}
+      </a>
+    </div>
+
     <p class="sm:text-lg prose">{@html data.bio.bio}</p>
   </div>
 </NotEditable>

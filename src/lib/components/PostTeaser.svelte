@@ -46,7 +46,7 @@
       </div>
     </div>
   </div>
-  <div class="pt-4">
+  <div class="pt-4 flex">
     <SecondaryButton size='sm' href={`/posts/${post.slug}`}>Continue reading →</SecondaryButton>
   </div>
 </a>

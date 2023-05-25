@@ -34,7 +34,7 @@ export async function createPost(title, content, teaser, teaserImage, recipients
         );
         friendId = friend.friendId;
       }
-      const r = await t.one(
+      await t.one(
         'INSERT INTO recipients (post_id, friend_id) values($1, $2) RETURNING recipient_id',
         [post.postId, friendId]
       );
@@ -43,13 +43,35 @@ export async function createPost(title, content, teaser, teaserImage, recipients
   });
 }
 
-export async function updatePost(slug, title, content, teaser, teaserImage, currentUser) {
+export async function updatePost(slug, title, content, teaser, teaserImage, recipients, isPublic, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
   return await db.tx('update-post', async t => {
-    return await t.one(
-      'UPDATE posts SET title= $1, content = $2, teaser = $3, teaser_image = $4, updated_at = NOW() WHERE slug = $5 RETURNING slug, updated_at',
-      [title, content, teaser, teaserImage, slug]
+    const post = await t.one(
+      'UPDATE posts SET title= $1, content = $2, teaser = $3, teaser_image = $4, is_public = $5, updated_at = NOW() WHERE slug = $6 RETURNING slug, post_id, updated_at',
+      [title, content, teaser, teaserImage, isPublic, slug]
     );
+
+    for (let i = 0; i < recipients.length; i++) {
+      const recipient = recipients[i];
+      let friendId = recipient.friendId
+      if (!friendId) {
+        const friend  = await t.one(
+          "INSERT INTO friends (name, email) values('', $1) RETURNING friend_id",
+          [recipient.email]
+        );
+        friendId = friend.friendId;
+      }
+
+      const recipientExists = await t.oneOrNone('SELECT recipient_id FROM recipients WHERE post_id = $1 AND friend_id = $2', [post.postId, friendId]);
+      if (!recipientExists) {
+        await t.one(
+          'INSERT INTO recipients (post_id, friend_id) values($1, $2) RETURNING recipient_id',
+          [post.postId, friendId]
+        );
+      }
+    }
+
+    return post;
   });
 }
 
@@ -177,10 +199,14 @@ export async function deleteFriend(friendId, currentUser) {
 /**
  * Get post for a given slug
  */
-export async function getPostBySlug(slug) {
+export async function getPostBySlug(slug, currentUser) {
   return await db.tx('get-post-by-slug', async t => {
     const post = await t.one('SELECT * FROM posts WHERE slug = $1', [slug]);
-    return { ...post };
+    let recipients = [];
+    if (currentUser) {
+      recipients = t.any('SELECT f.name, f.email, f.friend_id FROM recipients r INNER JOIN friends f ON (r.friend_id=f.friend_id) WHERE r.post_id = $1', [post.postId]);
+    }
+    return { ...post, recipients };
   });
 }
 

@@ -53,7 +53,7 @@
 {#if showMenu}
   <div class="bg-white fixed inset-0 z-50">
 
-    <div class="max-w-screen-md mx-auto py-4 px-6 flex flex-col">
+    <div class="max-w-screen-md mx-auto py-4 px-6 flex flex-col space-y-4">
       <div class="text-right mb-8">
         <button on:click={() => showMenu = false}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

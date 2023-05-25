@@ -121,7 +121,7 @@
   <div class="max-w-screen-md mx-auto px-6">
     <div class="pt-6 sm:pt-12 pb-2 sm:pb-6 text-center">
       <Image
-        class="inline-block w-16 h-16 md:w-28 md:h-28 rounded-full"
+        class="inline-block w-20 h-20 md:w-28 md:h-28 rounded-full"
         maxWidth="384"
         maxHeight="384"
         quality="0.8"
@@ -139,8 +139,13 @@
     <div class="prose text-center py-2 sm:text-xl">
       <RichText {editable} bind:content={bio} />
     </div>
-    {#if currentUser && !editable}
-      <div class="flex justify-center py-4"><PrimaryButton size='sm' on:click={() => editable = true}>Edit bio</PrimaryButton></div>
+    {#if currentUser}
+      {#if !editable}
+        <div class="flex justify-center py-4"><PrimaryButton size='sm' on:click={() => editable = true}>Edit bio</PrimaryButton></div>
+      {:else}
+        <div class="flex justify-center py-4"><PrimaryButton size='sm' on:click={saveBio}>Save bio</PrimaryButton></div>
+      {/if}
+
     {/if}
   </div>
 </div>
