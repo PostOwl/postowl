@@ -1,5 +1,6 @@
 import slugify from 'slugify';
 import _db from './_db';
+import { DEFAULT_BIO } from '$lib/constants';
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
 
@@ -146,6 +147,9 @@ export async function createFriend(name, email, currentUser) {
   });
 }
 
+/**
+ * Update friend record with new data
+ */
 export async function updateFriend(friendId, name, email, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
   return await db.tx('update-friend', async t => {
@@ -156,9 +160,15 @@ export async function updateFriend(friendId, name, email, currentUser) {
   });
 }
 
+/**
+ * Delete friend and remove associated recipient entries
+ */
 export async function deleteFriend(friendId, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
   return await db.tx('delete-friend', async t => {
+    // Remove recipients associated with the friend if there are any entries
+    await t.any('DELETE FROM recipients WHERE friend_id = $1', [friendId]);
+    // Delete the friend record itself
     await t.any('DELETE FROM friends WHERE friend_id = $1', [friendId]);
     return true;
   });
@@ -194,10 +204,9 @@ export async function getCurrentUser(sessionId) {
     const session = await t.oneOrNone('SELECT session_id FROM sessions WHERE session_id = $1', [
       sessionId
     ]);
+
     if (session) {
-      return {
-        name: 'Admin'
-      };
+      return { name: 'Admin' };
     } else {
       return null;
     }
@@ -249,6 +258,14 @@ export async function getPage(pageId) {
     const page = await t.oneOrNone('SELECT data FROM pages WHERE page_id = $1', [pageId]);
     return page?.data;
   });
+}
+
+/**
+ * Just proxying the getPage API to ensure defaults for bio.
+ */
+export async function getBio() {
+  const bio = await getPage('bio')
+  return bio || DEFAULT_BIO;
 }
 
 /**

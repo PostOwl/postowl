@@ -1,7 +1,5 @@
-export const SHORTCUTS = [
-  { name: 'About', url: '/' },
-  { name: 'Blog', url: '/blog' },
-  { name: 'Contact', url: '/#contact' },
-  { name: 'Imprint', url: '/imprint' },
-  { name: 'Login', url: '/login' }
-];
+export const DEFAULT_BIO = {
+  avatar: '/images/person-placeholder.jpg',
+  name: 'Jamie Doe',
+  bio: '<p>Enter short bio text here.</p>'
+}

@@ -50,10 +50,11 @@
 
 <div class={classNames('sticky top-0 z-10 sm:py-4 sm:px-4', isDark ? 'bg-black' : 'bg-white')}>
   <div
-    class="max-w-screen-xl mx-auto px-2 backdrop-blur-sm bg-white bg-opacity-95 border-b border-t sm:border sm:rounded-full border-gray-100 shadow"
+    class="max-w-screen-md mx-auto px-2 backdrop-blur-sm bg-white bg-opacity-95 border-b border-t sm:border sm:rounded-full border-gray-100 shadow"
   >
     <div>
       <div class="flex items-center overflow-x-auto py-3 px-1">
+        <!-- <SecondaryButton type="button" on:click={handleCancel}>← Back</SecondaryButton> -->
         {#if editorState}
           <div class="flex">
             <ToggleMark {editorState} {editorView} type="strong">

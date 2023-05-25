@@ -18,22 +18,14 @@
   export let data;
   $: currentUser = data.currentUser;
 
-  // --------------------------------------------------------------------------
-  // DEFAULT PAGE CONTENT - AJDUST TO YOUR NEEDS
-  // --------------------------------------------------------------------------
-
-  const BIO_PLACEHOLDER = `
-		<p>Enter short bio text here.</p>
-	`;
-
   let editable, name, avatar, bio, showUserMenu;
 
-  $: postLimit = $page.url.searchParams.get('postLimit') || 4;
+  $: postLimit = $page.url.searchParams.get('postLimit') || 30;
 
   function initOrReset() {
-    avatar = data.page?.avatar || '/images/person-placeholder.jpg';
-    name = data.page?.name || 'Jane Doe';
-    bio = data.page?.bio || BIO_PLACEHOLDER;
+    avatar = data.bio.avatar;
+    name = data.bio.name;
+    bio = data.bio.bio;
     editable = false;
   }
 
@@ -50,9 +42,9 @@
     goto(extendQueryParams({ postLimit: postLimit + 50 }), { noScroll: true });
   }
 
-  async function savePage() {
+  // NOTE: We utilize the page API to store bio information
+  async function saveBio() {
     try {
-      // Only persist the start page when logged in as an admin
       if (currentUser) {
         await fetchJSON('POST', '/api/save-page', {
           pageId: 'bio',
@@ -74,12 +66,12 @@
 </script>
 
 <svelte:head>
-  <title>PostOwl Site</title>
+  <title>{name}</title>
   <meta
     name="description"
     content="The story of my life"
   />
-  <meta name="og:title" property="og:title" content="PostOwl Site" />
+  <meta name="og:title" property="og:title" content={name} />
   <meta
     name="og:description"
     property="og:description"
@@ -91,7 +83,7 @@
     content="%sveltekit.assets%/favicon/favicon-512x512.png"
   />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="PostOwl Site" />
+  <meta name="twitter:title" content={name} />
   <meta
     name="twitter:description"
     content="The story of my life"
@@ -101,10 +93,10 @@
 </svelte:head>
 
 {#if editable}
-  <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={savePage} />
+  <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={saveBio} />
 {/if}
 
-<WebsiteNav bind:showUserMenu {currentUser} bind:editable />
+<WebsiteNav bind:showUserMenu {currentUser} bio={{ avatar, name, bio }} bind:editable />
 
 {#if showUserMenu}
   <Modal on:close={() => (showUserMenu = false)}>
@@ -163,9 +155,9 @@
     </div>
 
     {#if postLimit < data.posts.length}
-      <div class="max-w-screen-md mx-auto px-6 lg:pt-6">
+      <div class="max-w-screen-md mx-auto px-6 pb-6">
         <button
-          class="w-full mx-auto block px-4 py-2 border border-black text-center uppercase text-sm lg:text-lg font-medium"
+          class="w-full mx-auto block px-4 py-2 rounded-lg border shadow-md bg-white text-center uppercase font-medium"
           on:click={showMoreposts}
         >
           Show more

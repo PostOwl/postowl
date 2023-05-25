@@ -1,7 +1,6 @@
 <script>
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
   import { extractTeaser, extractTeaserImage, fetchJSON, toDateString } from '$lib/util';
-  import WebsiteNav from '$lib/components/WebsiteNav.svelte';
   import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
   import { goto } from '$app/navigation';
   import Footer from '$lib/components/Footer.svelte';
@@ -9,9 +8,8 @@
 
   export let data;
 
-  let isPublic = false;
-  let recipients = [];
-  let showUserMenu = false,
+  let isPublic = false,
+    recipients = [],
     editable = true,
     title = 'Untitled',
     content = 'Copy and paste your text here.',
@@ -55,7 +53,6 @@
   <EditorToolbar {currentUser} on:cancel={discardDraft} on:save={createPost} confirmLabel='Send' />
 {/if}
 
-<WebsiteNav bind:editable bind:showUserMenu {currentUser} />
 <RecipientsSelector bind:isPublic bind:recipients />
 <Post bind:title bind:content bind:createdAt {editable} />
 <Footer {editable} />

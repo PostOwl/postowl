@@ -16,11 +16,6 @@
   let editable, title, content, createdAt, updatedAt;
 
   $: currentUser = data.currentUser;
-
-  $: fullName = data.page?.name || 'Jane Doe'; 
-  $: avatar = data.page?.avatar || '/images/person-placeholder.jpg';
-  $: bio = data.page?.bio;
-
   $: {
     // HACK: To make sure this is only run when the parent passes in new data
     data = data;
@@ -101,7 +96,7 @@
   <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={savePost} />
 {/if}
 
-<WebsiteNav bind:editable bind:showUserMenu {currentUser} />
+<WebsiteNav bind:editable bind:showUserMenu {currentUser} bio={data.bio} />
 
 {#if showUserMenu}
   <Modal on:close={() => (showUserMenu = false)}>
@@ -119,11 +114,11 @@
   <div class="bg-white">
     <div class="max-w-screen-md mx-auto px-6 pb-8">
       <div class="pt-6 sm:pt-16 pb-2 text-center">
-        <a href="/"><img src={avatar} alt={fullName} class="inline-block w-16 h-16 md:w-16 md:h-16 rounded-full" /></a>
+        <a href="/"><img src={data.bio.avatar} alt={data.bio.name} class="inline-block w-16 h-16 md:w-16 md:h-16 rounded-full" /></a>
       </div>
       <div class="text-center">
         <a href="/" class="text-lg font-semibold underline">
-          {fullName}
+          {data.bio.name}
         </a>
       </div>
     </div>
@@ -132,13 +127,11 @@
 
 <Post bind:title bind:content bind:createdAt {editable} />
 
-{#if bio}
-  <NotEditable {editable}>
-    <div class="text-center max-w-screen-sm mx-auto px-6 py-16">
-      <h1 class="sm:text-xl font-bold pb-4">About {fullName}</h1>
-      <p class="sm:text-lg prose">{@html bio}</p>
-    </div>
-  </NotEditable>
-{/if}
+<NotEditable {editable}>
+  <div class="text-center max-w-screen-sm mx-auto px-6 py-16">
+    <h1 class="sm:text-xl font-bold pb-4">About {data.bio.name}</h1>
+    <p class="sm:text-lg prose">{@html data.bio.bio}</p>
+  </div>
+</NotEditable>
 
-<Footer counter={`/blog/${data.slug}`} />
+<Footer {editable} counter={`/blog/${data.slug}`} />

@@ -4,6 +4,7 @@
   import PrimaryButton from './PrimaryButton.svelte';
   export let editable = false;
   export let currentUser;
+  export let bio;
   export let isDark = undefined;
 
   let showMenu = false;
@@ -30,7 +31,7 @@
   <div class="max-w-screen-md mx-auto py-4 px-6">
     <NotEditable {editable}>
       <div class="flex items-center relative">
-        <a href="/" class="text-sm font-bold uppercase">Michael Aufreiter</a>
+        <a href="/" class="text-sm font-bold uppercase">{bio.name}</a>
         <div class="flex-1" />
         {#if currentUser}
           <PrimaryButton size="sm" href="/posts/new">New letter</PrimaryButton>

@@ -26,7 +26,7 @@
     if (!currentUser) return alert('Sorry, you are not authorized.');
     if (confirm('Are you sure you want to delete this friend? It cannot be undone.')) {
       try {
-        fetchJSON('POST', '/api/delete-friend', {
+        await fetchJSON('POST', '/api/delete-friend', {
           friendId: data.friendId
         });
         goto('/friends');
@@ -63,8 +63,6 @@
 {#if editable}
   <EditorToolbar {currentUser} on:cancel={() => goto('/friends')} on:save={saveFriend} />
 {/if}
-
-<!-- <WebsiteNav bind:editable bind:showUserMenu {currentUser} /> -->
 
 <div class="max-w-screen-md mx-auto px-6 pb-8 sm:text-xl">
   <div class="pt-24 text-sm font-bold">Name</div>

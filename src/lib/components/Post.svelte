@@ -2,6 +2,7 @@
   import PlainText from '$lib/components/PlainText.svelte';
   import RichText from '$lib/components/RichText.svelte';
   import { formatDate } from '$lib/util';
+  import NotEditable from './NotEditable.svelte';
   export let title;
   export let content;
   export let createdAt;
@@ -10,7 +11,9 @@
 
 <div>
   <div class="max-w-screen-md mx-auto px-6">
-    <div class="pt-8 pb-2 sm:text-lg">{formatDate(createdAt)}</div>
+    <NotEditable {editable}>
+      <div class="pt-8 pb-2 sm:text-lg">{formatDate(createdAt)}</div>
+    </NotEditable>
     <h1 class="text-3xl md:text-5xl font-bold">
       <PlainText {editable} bind:content={title} />
     </h1>
