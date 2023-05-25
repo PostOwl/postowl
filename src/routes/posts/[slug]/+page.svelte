@@ -13,7 +13,7 @@
   export let data;
 
   let showUserMenu = false;
-  let editable, title, content, createdAt, updatedAt;
+  let editable, title, content, createdAt, updatedAt, teaserImage, teaser;
 
   $: currentUser = data.currentUser;
   $: {
@@ -27,6 +27,8 @@
     content = data.content;
     createdAt = data.createdAt;
     updatedAt = data.updatedAt;
+    teaserImage = data.teaserImage;
+    teaser = data.teaser;
     editable = false;
   }
 
@@ -54,8 +56,8 @@
 
   async function savePost() {
     if (!currentUser) return alert('Sorry, you are not authorized.');
-    const teaser = extractTeaser(document.getElementById('post_content'));
-    const teaserImage = extractTeaserImage(document.getElementById('post_content'));
+    teaser = extractTeaser(document.getElementById('post_content'));
+    teaserImage = extractTeaserImage(document.getElementById('post_content'));
     try {
       const result = await fetchJSON('POST', '/api/update-post', {
         slug: data.slug,
@@ -77,18 +79,18 @@
 
 <svelte:head>
   <title>{title}</title>
-  <meta name="description" content={data.meta?.teaser} />
+  <meta name="description" content={teaser} />
   <meta name="og:title" property="og:title" content={title} />
-  <meta name="og:description" property="og:description" content={data.meta?.teaser} />
+  <meta name="og:description" property="og:description" content={teaser} />
   <meta
     name="og:image"
     property="og:image"
-    content="%sveltekit.assets%/favicon/favicon-512x512.png"
+    content={data.teaserImage || data.bio.avatar}
   />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content={title} />
-  <meta name="twitter:description" content={data.meta?.teaser} />
-  <meta name="twitter:image" content="%sveltekit.assets%/favicon/favicon-512x512.png" />
+  <meta name="twitter:description" content={teaser} />
+  <meta name="twitter:image" content={data.teaserImage || data.bio.avatar} />
 
   <link rel="icon" type="image/png" sizes="300x300" href={data.bio.avatar}>
   <link rel="apple-touch-icon" sizes="300x300" href={data.bio.avatar}>
