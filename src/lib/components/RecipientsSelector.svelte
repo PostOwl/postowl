@@ -24,6 +24,8 @@
       result = [];
     }
 
+    // TODO: remove 
+
     if (isEmailValid(value)) {
       // Double check that the email is not already in your contacts
       const isInResult = Boolean(result.find(f => f.email === value));

@@ -102,9 +102,24 @@
 
 <WebsiteNav bind:editable {currentUser} bio={data.bio} />
 
+<div class="pt-8 sm:pt-16 "></div>
+
 {#if editable}
   <RecipientsSelector bind:isPublic bind:recipients />
+{:else}
+  <div class="max-w-screen-md mx-auto px-6 mb-2">
+    {#if currentUser}
+      {#if isPublic}
+        <strong>To:</strong> Everyone
+      {:else if (recipients.length > 0)}
+        <strong>To:</strong> {recipients.map(r => r.name ).join(', ')}
+      {:else}
+        <strong>To:</strong> Myself
+      {/if}
+    {/if}
+  </div>
 {/if}
+
 <Post bind:title bind:content bind:createdAt {editable} />
 
 <div class="max-w-screen-md mx-auto px-6">

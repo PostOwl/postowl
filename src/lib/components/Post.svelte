@@ -12,7 +12,7 @@
 <div>
   <div class="max-w-screen-md mx-auto px-6">
     <NotEditable {editable}>
-      <div class="pt-8 sm:pt-16 pb-2 sm:text-lg">{formatDate(createdAt)}</div>
+      <div class="pb-2 sm:text-lg">{formatDate(createdAt)}</div>
     </NotEditable>
     <h1 class="text-3xl md:text-5xl font-bold">
       <PlainText {editable} bind:content={title} />
