@@ -43,6 +43,13 @@ export async function createPost(title, content, teaser, teaserImage, recipients
   });
 }
 
+
+// TODO: Improve this code, as soon as we are certain about the correct behavior
+// 
+// Challenge
+// OLD: [f1,f2,f3]
+// NEW: [f1,f3,ma@foo.bar]
+// RESULT: [f1,f3,f4]
 export async function updatePost(slug, title, content, teaser, teaserImage, recipients, isPublic, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
   return await db.tx('update-post', async t => {
@@ -51,6 +58,8 @@ export async function updatePost(slug, title, content, teaser, teaserImage, reci
       [title, content, teaser, teaserImage, isPublic, slug]
     );
 
+    const previousRecipients = (await t.any('SELECT recipient_id FROM recipients WHERE post_id = $1', [post.postId])).map(r => r.recipientId);
+    const newRecipients = [];
     for (let i = 0; i < recipients.length; i++) {
       const recipient = recipients[i];
       let friendId = recipient.friendId
@@ -64,10 +73,22 @@ export async function updatePost(slug, title, content, teaser, teaserImage, reci
 
       const recipientExists = await t.oneOrNone('SELECT recipient_id FROM recipients WHERE post_id = $1 AND friend_id = $2', [post.postId, friendId]);
       if (!recipientExists) {
-        await t.one(
+        const { recipientId } = await t.one(
           'INSERT INTO recipients (post_id, friend_id) values($1, $2) RETURNING recipient_id',
           [post.postId, friendId]
         );
+        // TODO: Email this new recipient
+        newRecipients.push(recipientId);
+      } else {
+        newRecipients.push(recipientExists.recipientId);
+      }
+    }
+
+    for (let i = 0; i < previousRecipients.length; i++) {
+      const r = previousRecipients[i];
+      // If one the previousRecipients is no longer there, we need to delete it.
+      if (newRecipients.indexOf(r) === -1) {
+        await t.any('DELETE FROM recipients WHERE recipient_id = $1', [r]);
       }
     }
 

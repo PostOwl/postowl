@@ -16,10 +16,8 @@
   import PostTeaser from '$lib/components/PostTeaser.svelte';
 
   export let data;
-  $: currentUser = data.currentUser;
-
   let editable, name, avatar, bio, showUserMenu;
-
+  $: currentUser = data.currentUser;
   $: postLimit = $page.url.searchParams.get('postLimit') || 30;
 
   function initOrReset() {

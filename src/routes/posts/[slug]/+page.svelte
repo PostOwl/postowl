@@ -38,7 +38,7 @@
 
     if (confirm('Are you sure you want to delete this letter? It cannot be undone.')) {
       try {
-        fetchJSON('POST', '/api/delete-post', {
+        await fetchJSON('POST', '/api/delete-post', {
           slug: data.slug
         });
         goto('/');
