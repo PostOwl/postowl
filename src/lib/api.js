@@ -209,8 +209,13 @@ export async function getPostBySlug(slug, currentUser) {
  */
 export async function deletePost(slug, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
-  db.prepare("DELETE FROM posts WHERE slug = ?").run(slug);
-  return true;
+  return db.transaction(() => {
+    const { post_id } = db.prepare("SELECT post_id FROM posts WHERE slug = ?").get(slug);
+    // Remove recipients first
+    db.prepare("DELETE FROM recipients WHERE post_id = ?").run(post_id);
+    db.prepare("DELETE FROM posts WHERE slug = ?").run(slug);
+    return true;
+  })();
 }
 
 /**

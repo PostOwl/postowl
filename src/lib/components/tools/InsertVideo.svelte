@@ -7,7 +7,7 @@
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
 
-  const ASSET_PATH = import.meta.env.VITE_ASSET_PATH;
+  import { PUBLIC_ASSET_PATH } from '$env/static/public';
 
   export let editorView;
   export let editorState;
@@ -30,11 +30,11 @@
     ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
     const posterFile = await toBlob(ctx.canvas);
     const videoId = uuid();
-    const videoPath = [['sonja-stonjanovic', 'videos', videoId].join('/'), 'mp4'].join('.');
-    const posterPath = [['sonja-stonjanovic', 'videos', videoId].join('/'), 'webp'].join('.');
+    const videoPath = [['videos', videoId].join('/'), 'mp4'].join('.');
+    const posterPath = [['videos', videoId].join('/'), 'webp'].join('.');
     const { width, height } = { width: videoEl.videoWidth, height: videoEl.videoHeight };
-    const src = currentUser ? `${ASSET_PATH}/${videoPath}` : URL.createObjectURL(file);
-    const poster = currentUser ? `${ASSET_PATH}/${posterPath}` : URL.createObjectURL(file);
+    const src = currentUser ? `${PUBLIC_ASSET_PATH}/${videoPath}` : URL.createObjectURL(file);
+    const poster = currentUser ? `${PUBLIC_ASSET_PATH}/${posterPath}` : URL.createObjectURL(file);
 
     progress = 0;
     try {

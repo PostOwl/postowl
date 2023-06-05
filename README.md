@@ -6,46 +6,30 @@ Share the story of your life.
 - 💛 Shared letters - with friends and family
 - 💚 Public blog - for the world
 
-## Step 0 - Requirements
+## Requirements
 
 - Node.js 16+ or other Javascript runtime
-- Postgres 14+
 - MinIO or other S3-compatible storage solution
 
-## Step 1 - Development setup
+## Development
 
-This is a full-fledged webapp you want adjust to your own needs. So please **create a copy** or fork of the source code and rename the project accordingly. Then check out your own copy.
+### How to run the app on your computer
 
-```bash
-git clone https://github.com/your-user/your-website.git
-cd your-website
-```
+1. Clone this repo to a directory on your computer
+1. Make sure you have a supported version of nodejs installed (minimum 16.16.0 LTS, 18.15.0 LTS or newer recommended)
+1. Run `npm install`
+1. Rename `.env.example` to `.env` and adjust accordingly
+1. Create the database with `sqlite3 data/db.sqlite3 < schema.sql`
+1. Run the dev server and open a new browser tab with `npm run dev -- --open`
+1. Have fun editing and creating questions
 
-Create a `.env` file and set the folllowing environment variables pointing to your development database and MinIO instance.
+### Exploring the database
 
-```bash
-VITE_DB_URL=postgresql://$USER@localhost:5432/editable-website
-VITE_S3_ACCESS_KEY=000000000000000000
-VITE_S3_SECRET_ACCESS_KEY=00000000000000000000000000000000000000
-VITE_S3_ENDPOINT=https://minio.ew-dev-assets--000000000000.addon.code.run
-VITE_S3_BUCKET=editable-website
-VITE_ASSET_PATH=https://minio.ew-dev-assets--000000000000.addon.code.run/editable-website
-VITE_ADMIN_PASSWORD=00000000000000000000000000000000000000
-```
+[Beekeeper studio](https://github.com/beekeeper-studio/beekeeper-studio/releases) is an excellent app for exploring the database.
 
-Seed the database:
+### Building
 
-```bash
-psql -h localhost -U $USER -d editable-website -a -f sql/schema.sql
-```
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-```
-
-To create and test a production version of your app:
+To create a production version of your app:
 
 ```bash
 npm run build
@@ -53,12 +37,16 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-## Step 3 - Deployment
+### Deploy to fly.io
 
-I will describe the steps to deploy to [Northflank](https://northflank.com/) (which I am using). I recommend to assign 0.2 vCPU and 512MB RAM to each resource (~ $17/month) but you can go lower to save some costs or higher if you expect your site to have significant traffic.
+This app is currently deployed to https://pcqa.fly.dev/
 
-1. Create instances for Postgres 14 and MinIO through the Northflank user interface.
+WORK IN PROGRESS: This is currently a proof of concept and needs refining!
 
-2. Create a combined service, select the Heroku buildpack and assign the environment variables as they are exposed by the Postgres and MinIO addons. Use the same environment variables during the build step and runtime (yes you have to type them twice).
+To deploy your own version:
 
-You can deploy your editable website anywhere else as well. For instance if you'd like to go the "Serverless" path, you can deploy on Vercel, and use NeonDB (or DigitalOcean with Connection Pooling activated). You may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+1. Make sure you have `flyctl` installed and you're signed in (see the [Fly docs](https://fly.io/docs/hands-on/install-flyctl/))
+1. Run `fly launch` and choose the Organization you'd like to deploy to. Accept all the defaults.
+1. Change the value of `ORIGIN` in fly.toml to be the name of the app you're deploying to on Fly
+1. Run `fly deploy` and it should 'just work'!
+1. TODO: make scripts/migrate.sh actually migrate the db safely

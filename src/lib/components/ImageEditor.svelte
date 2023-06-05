@@ -12,7 +12,7 @@
   let className = '';
   export { className as class };
 
-  const ASSET_PATH = import.meta.env.VITE_ASSET_PATH;
+  import { PUBLIC_ASSET_PATH } from '$env/static/public';
 
   let fileInput; // for uploading an image
   let progress = undefined; // file upload progress
@@ -35,7 +35,7 @@
         await uploadAsset(resizedFile, path, p => {
           progress = p;
         });
-        src = `${ASSET_PATH}/${path}`;
+        src = `${PUBLIC_ASSET_PATH}/${path}`;
       } else {
         src = URL.createObjectURL(file);
       }

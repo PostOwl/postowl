@@ -4,7 +4,7 @@
   import uploadAsset from '$lib/uploadAsset';
   import { insertImage } from '$lib/prosemirrorCommands';
 
-  const ASSET_PATH = import.meta.env.VITE_ASSET_PATH;
+  import { PUBLIC_ASSET_PATH } from '$env/static/public';
 
   export let editorView;
   export let editorState;
@@ -21,7 +21,7 @@
 
     // We convert all uploads to the WEBP image format
     const extension = 'webp';
-    const path = [['sonja-stonjanovic', 'images', uuid()].join('/'), extension].join('.');
+    const path = [['images', uuid()].join('/'), extension].join('.');
 
     const maxWidth = 1440;
     const maxHeight = 1440;
@@ -33,7 +33,7 @@
     });
 
     const { width, height } = await getDimensions(resizedFile);
-    const src = currentUser ? `${ASSET_PATH}/${path}` : URL.createObjectURL(resizedFile);
+    const src = currentUser ? `${PUBLIC_ASSET_PATH}/${path}` : URL.createObjectURL(resizedFile);
 
     progress = 0;
     try {
