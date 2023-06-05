@@ -229,19 +229,6 @@ export async function getCurrentUser(session_id) {
 }
 
 /**
- * Update the page
- */
-export async function createOrUpdatePage(page_id, page, currentUser) {
-  if (!currentUser) throw new Error('Not authorized');
-  const pageExists = db.prepare("SELECT page_id FROM pages WHERE page_id = ?").get(page_id);
-  if (pageExists) {
-    return db.prepare("UPDATE pages SET data = ? WHERE page_id = ? RETURNING page_id").get(page, page_id);
-  } else {
-    return db.prepare("INSERT INTO pages (page_id, data) values(?, ?) RETURNING page_id").get(page_id, page);
-  }
-}
-
-/**
  * Search within friends (contacts)
  */
 export async function searchFriends(q, currentUser) {
@@ -253,20 +240,36 @@ export async function searchFriends(q, currentUser) {
 }
 
 /**
+ * Update the page
+ */
+export async function createOrUpdatePage(page_id, page, currentUser) {
+  if (!currentUser) throw new Error('Not authorized');
+  const pageExists = db.prepare("SELECT page_id FROM pages WHERE page_id = ?").get(page_id);
+  if (pageExists) {
+    return db.prepare("UPDATE pages SET data = ?, updated_at = ? WHERE page_id = ? RETURNING page_id").get(JSON.stringify(page), new Date().toISOString(), page_id);
+  } else {
+    return db.prepare("INSERT INTO pages (page_id, data, updated_at) values(?, ?, ?) RETURNING page_id").get(page_id, JSON.stringify(page), new Date().toISOString());
+  }
+}
+
+/**
  * E.g. getPage("home") gets all dynamic data for the home page
  */
 export async function getPage(page_id) {
   const page = db.prepare("SELECT data FROM pages WHERE page_id = ?").get(page_id);
-  return page?.data;
+  if (page?.data) {
+    return JSON.parse(page.data);
+  } else {
+    return null;
+  }
 }
 
 /**
  * Just proxying the getPage API to ensure defaults for bio.
  */
 export async function getBio() {
-  // const bio = getPage('bio')
-  // return bio || DEFAULT_BIO;
-  return DEFAULT_BIO;
+  const bio = await getPage('bio')
+  return bio || DEFAULT_BIO;
 }
 
 /**

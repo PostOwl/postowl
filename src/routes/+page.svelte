@@ -45,7 +45,7 @@
     try {
       if (currentUser) {
         await fetchJSON('POST', '/api/save-page', {
-          pageId: 'bio',
+          page_id: 'bio',
           page: {
             avatar,
             name,
