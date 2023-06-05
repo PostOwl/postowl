@@ -1,6 +1,5 @@
 import { getSitemap } from '$lib/api';
-
-const ORIGIN = import.meta.env.VITE_ORIGIN;
+import { ORIGIN } from '$env/static/private';
 
 export async function GET({ setHeaders }) {
   setHeaders({

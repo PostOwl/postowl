@@ -12,7 +12,7 @@
   
   export let data;
 
-  let editable, title, content, createdAt, updatedAt, teaserImage, teaser, isPublic, recipients;
+  let editable, title, content, created_at, updated_at, teaser_image, teaser, is_public, recipients;
 
   $: currentUser = data.currentUser;
   $: {
@@ -24,11 +24,11 @@
   function initOrReset() {
     title = data.title;
     content = data.content;
-    createdAt = data.createdAt;
-    updatedAt = data.updatedAt;
-    teaserImage = data.teaserImage;
+    created_at = data.created_at;
+    updated_at = data.updated_at;
+    teaser_image = data.teaser_image;
     teaser = data.teaser;
-    isPublic = data.isPublic;
+    is_public = data.is_public;
     recipients = data.recipients;
     editable = false;
   }
@@ -53,18 +53,18 @@
   async function savePost() {
     if (!currentUser) return alert('Sorry, you are not authorized.');
     teaser = extractTeaser(document.getElementById('post_content'));
-    teaserImage = extractTeaserImage(document.getElementById('post_content'));
+    teaser_image = extractTeaserImage(document.getElementById('post_content'));
     try {
       const result = await fetchJSON('POST', '/api/update-post', {
         slug: data.slug,
         title,
         content,
         teaser,
-        teaserImage,
+        teaser_image,
         recipients,
-        isPublic
+        is_public
       });
-      updatedAt = result.updatedAt;
+      updated_at = result.updated_at;
       editable = false;
     } catch (err) {
       console.error(err);
@@ -83,12 +83,12 @@
   <meta
     name="og:image"
     property="og:image"
-    content={data.teaserImage || data.bio.avatar}
+    content={data.teaser_image || data.bio.avatar}
   />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={teaser} />
-  <meta name="twitter:image" content={data.teaserImage || data.bio.avatar} />
+  <meta name="twitter:image" content={data.teaser_image || data.bio.avatar} />
 
   <link rel="icon" type="image/png" sizes="300x300" href={data.bio.avatar}>
   <link rel="apple-touch-icon" sizes="300x300" href={data.bio.avatar}>
@@ -105,11 +105,11 @@
 <div class="pt-8 sm:pt-16 "></div>
 
 {#if editable}
-  <RecipientsSelector bind:isPublic bind:recipients />
+  <RecipientsSelector bind:is_public bind:recipients />
 {:else}
   <div class="max-w-screen-md mx-auto px-6 mb-2">
     {#if currentUser}
-      {#if isPublic}
+      {#if is_public}
         <strong>To:</strong> Everyone
       {:else if (recipients.length > 0)}
         <strong>To:</strong> {recipients.map(r => r.name ).join(', ')}
@@ -120,7 +120,7 @@
   </div>
 {/if}
 
-<Post bind:title bind:content bind:createdAt {editable} />
+<Post bind:title bind:content bind:created_at {editable} />
 
 <div class="max-w-screen-md mx-auto px-6">
   {#if currentUser && !editable}

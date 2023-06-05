@@ -8,12 +8,12 @@
 
   export let data;
 
-  let isPublic = false,
+  let is_public = false,
     recipients = [],
     editable = true,
     title = 'Untitled',
     content = 'Copy and paste your text here.',
-    createdAt = toDateString();
+    created_at = toDateString();
 
   $: currentUser = data.currentUser;
 
@@ -22,15 +22,15 @@
       return alert('Sorry, you are not authorized to create new posts.');
     }
     const teaser = extractTeaser(document.getElementById('post_content'));
-    const teaserImage = extractTeaserImage(document.getElementById('post_content'));
+    const teaser_image = extractTeaserImage(document.getElementById('post_content'));
     try {
       const { slug } = await fetchJSON('POST', '/api/create-post', {
         title,
         content,
         teaser,
-        teaserImage,
+        teaser_image,
         recipients,
-        isPublic
+        is_public
       });
       goto(`/posts/${slug}`);
     } catch (err) {
@@ -53,6 +53,6 @@
   <EditorToolbar {currentUser} on:cancel={discardDraft} on:save={createPost} confirmLabel='Send' />
 {/if}
 
-<RecipientsSelector bind:isPublic bind:recipients />
-<Post bind:title bind:content bind:createdAt {editable} />
+<RecipientsSelector bind:is_public bind:recipients />
+<Post bind:title bind:content bind:created_at {editable} />
 <Footer {editable} />

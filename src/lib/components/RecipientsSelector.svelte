@@ -4,7 +4,7 @@
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
   
   export let recipients = [];
-  export let isPublic;
+  export let is_public;
   
   let value;
   let result = [];
@@ -79,7 +79,7 @@
   }
 
   function togglePublic() {
-    isPublic = !isPublic;
+    is_public = !is_public;
   }
 
   // HACK: This is not ideal, may cancel clicks on results when pressed too long
@@ -110,7 +110,7 @@
   <div class="flex items-center">
     <div class="font-bold">To:</div>
     <div class="flex-1"></div>
-    {#if !isPublic}
+    {#if !is_public}
       <SecondaryButton size='sm' on:click={togglePublic}>Make public</SecondaryButton>
     {/if}
   </div>
@@ -128,7 +128,7 @@
         </button>
       </div>
     {/each}
-    {#if isPublic}
+    {#if is_public}
       <div class="rounded-md bg-green-50 border border-green-300 inline-block px-2 mr-1 mb-1 text-sm sm:text-base">
         <span>Everyone</span>
         <button on:click={togglePublic}>
