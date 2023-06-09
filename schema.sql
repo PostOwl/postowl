@@ -1,8 +1,7 @@
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS posts;
-CREATE TABLE posts (
+CREATE TABLE IF NOT EXISTS posts (
    post_id INTEGER PRIMARY KEY,
    is_public INTEGER DEFAULT FALSE,
    slug TEXT UNIQUE NOT NULL,
@@ -14,14 +13,12 @@ CREATE TABLE posts (
    updated_at TEXT
 );
 
-DROP TABLE IF EXISTS old_post_slugs;
-CREATE TABLE old_post_slugs (
+CREATE TABLE IF NOT EXISTS old_post_slugs (
   slug TEXT PRIMARY KEY,
   post_id INTEGER REFERENCES posts NOT NULL
 );
 
-DROP TABLE IF EXISTS friends;
-CREATE TABLE friends (
+CREATE TABLE IF NOT EXISTS friends (
   friend_id INTEGER PRIMARY KEY,
   name TEXT UNIQUE NOT NULL,
   email TEXT UNIQUE NOT NULL,
@@ -29,8 +26,7 @@ CREATE TABLE friends (
   updated_at TEXT DEFAULT NULL
 );
 
-DROP TABLE IF EXISTS recipients;
-CREATE TABLE recipients (
+CREATE TABLE IF NOT EXISTS recipients (
   recipient_id INTEGER PRIMARY KEY,
   secret TEXT NOT NULL, -- this will serve as the secret for accessing private posts
   post_id INTEGER REFERENCES posts NOT NULL,
@@ -38,22 +34,19 @@ CREATE TABLE recipients (
   UNIQUE(post_id, friend_id)
 );
 
-DROP TABLE IF EXISTS sessions;
-CREATE TABLE sessions (
+CREATE TABLE IF NOT EXISTS sessions (
   session_id TEXT PRIMARY KEY,
   expires TEXT NOT NULL
 );
 
-DROP TABLE IF EXISTS pages;
-CREATE TABLE pages (
+CREATE TABLE IF NOT EXISTS pages (
   page_id TEXT PRIMARY KEY,
   data TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );
 
 -- counters (for view counts and everything you want to track anonymously)
-DROP TABLE IF EXISTS counters;
-CREATE TABLE counters (
+CREATE TABLE IF NOT EXISTS counters (
   counter_id TEXT PRIMARY KEY,
   count INTEGER NOT NULL
 );
@@ -61,7 +54,7 @@ COMMIT;
 
 
 -- We might want to ensure the datetime fields follow a certain format
--- CREATE TABLE events (
+-- CREATE TABLE IF NOT EXISTS events (
 --     id INTEGER PRIMARY KEY,
 --     date_string TEXT NOT NULL CHECK (
 --         strftime('%Y-%m-%dT%H:%M:%S', date_string) = date_string
