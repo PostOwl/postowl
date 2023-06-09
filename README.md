@@ -16,12 +16,13 @@ Share the story of your life.
 ### How to run the app on your computer
 
 1. Clone this repo to a directory on your computer
-1. Make sure you have a supported version of nodejs installed (minimum 16.16.0 LTS, 18.15.0 LTS or newer recommended)
+1. Make sure you have a supported version of nodejs installed (minimum 16.16.0 LTS, 18.16.0 LTS or newer recommended)
 1. Run `npm install`
 1. Rename `.env.example` to `.env` and adjust accordingly
 1. Create the database with `sqlite3 data/db.sqlite3 < schema.sql`
 1. Run the dev server and open a new browser tab with `npm run dev -- --open`
-1. Have fun editing and creating questions
+1. Sign in with the admin password you set
+1. Enjoy creating letters!
 
 ### Exploring the database
 
@@ -39,14 +40,18 @@ You can preview the production build with `npm run preview`.
 
 ### Deploy to fly.io
 
-This app is currently deployed to https://pcqa.fly.dev/
+The repo contains the files you need to deploy to fly.io. It will run well on their free plan.
 
-WORK IN PROGRESS: This is currently a proof of concept and needs refining!
+You'll also need to configure an S3 bucket or other compatible object storage for image hosting.
 
 To deploy your own version:
 
 1. Make sure you have `flyctl` installed and you're signed in (see the [Fly docs](https://fly.io/docs/hands-on/install-flyctl/))
-1. Run `fly launch` and choose the Organization you'd like to deploy to. Accept all the defaults.
-1. Change the value of `ORIGIN` in fly.toml to be the name of the app you're deploying to on Fly
+1. Change the value of `ORIGIN` in fly.toml to be the name of the app you're deploying to on Fly (e.g. https://my-app.fly.dev)
+1. Set your admin password with `flyctl secrets set ADMIN_PASSWORD=my-secret-password`
 1. Run `fly deploy` and it should 'just work'!
-1. TODO: make scripts/migrate.sh actually migrate the db safely
+
+**TODO**
+
+1. Document how to configure for S3 when deploying
+1. TODO: make start.sh actually migrate the db safely on deployment
