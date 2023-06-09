@@ -7,7 +7,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write ."
+    "format": "prettier --plugin-search-dir . --write .",
+    "start": "node build",
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^2.0.0",
@@ -28,7 +29,7 @@
   "type": "module",
   "dependencies": {
     "@fontsource/jost": "^4.5.13",
-    "@sveltejs/adapter-node": "^1.2.3",
+    "@sveltejs/adapter-node": "^1.2.4",
     "aws-sdk": "^2.619.0",
     "better-sqlite3": "^8.4.0",
     "camelcase-keys": "^8.0.2",
