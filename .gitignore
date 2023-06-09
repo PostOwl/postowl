@@ -1,11 +1,12 @@
 .DS_Store
 node_modules
 /build
-/data
 /.svelte-kit
 /package
 .env
 .env.*
 !.env.example
+*.sqlite3
+.tool-versions
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
