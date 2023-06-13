@@ -3,20 +3,25 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
+# 'app' can be overridden at deploy time with `fly deploy -a yourappname`
 app = "postowldev"
 primary_region = "lhr"
 
+# Specify the multistage Docker build target
+[build]
+  build-target = "runner"
+
+# Override the CMD set in Dockerfile so we can migrate the SQLite database
 [experimental]
   cmd = ["start.sh"]
   entrypoint = ["sh"]
 
 [env]
-  DB_PATH = "/data/powstowldev_data/db.sqlite3"
   PORT = "3000"
 
 [[mounts]]
   source = "postowldev_data"
-  destination = "/data"
+  destination = "/app/data"
 
 [http_service]
   internal_port = 3000

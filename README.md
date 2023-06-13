@@ -47,11 +47,27 @@ You'll also need to configure an S3 bucket or other compatible object storage fo
 To deploy your own version:
 
 1. Make sure you have `flyctl` installed and you're signed in (see the [Fly docs](https://fly.io/docs/hands-on/install-flyctl/))
-1. Change the value of `ORIGIN` in fly.toml to be the name of the app you're deploying to on Fly (e.g. https://my-app.fly.dev)
-1. Set your admin password with `flyctl secrets set ADMIN_PASSWORD=my-secret-password`
-1. Run `fly deploy` and it should 'just work'!
+1. Run `fly apps create`
+    1. Enter a name for your application at the prompt (e.g. `myapp`)
+    1. Choose a Fly organization to deploy to
+1. Run `fly deploy` as shown below (substitute your own values for the secrets - for `ORIGIN` make sure the subdomain is the name you specified when creating the app above):
+
+```
+fly deploy -a myapp \
+    --build-secret DB_PATH="./data/db.sqlite3" \
+    --build-secret ORIGIN="https://myapp.fly.dev" \
+    --build-secret ADMIN_PASSWORD="my-super-secret-password" \
+    --build-secret S3_ACCESS_KEY="xxxxx" \
+    --build-secret S3_SECRET_ACCESS_KEY="xxxxx" \
+    --build-secret S3_ENDPOINT="assets.your-domain.com" \
+    --build-secret S3_BUCKET="postowl" \
+    --build-secret PUBLIC_ASSET_PATH="https://your-asset.com/postowl"
+```
+
+(The `-a` option in `fly deploy` lets you override the app name specified in `fly.toml`.) 
+
+Fly will let you know when the app is deployed. Visit the URL shown in your terminal and sign in with the ADMIN_PASSWORD you set above. Have fun creating letters!
 
 **TODO**
 
-1. Document how to configure for S3 when deploying
-1. TODO: make start.sh actually migrate the db safely on deployment
+1. TODO: make start.sh actually migrate the db safely on deployment. (Looking into this approach: https://david.rothlis.net/declarative-schema-migration-for-sqlite/ HN discussion: https://news.ycombinator.com/item?id=31249823)

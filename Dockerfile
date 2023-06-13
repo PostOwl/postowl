@@ -38,7 +38,11 @@ FROM node:18-slim AS runner
 RUN apt update -qq && \
     apt install -y sqlite3
 
-COPY --from=builder /app /app
+COPY --from=builder /app/node_modules /app/node_modules
+COPY --from=builder /app/build /app/build
+COPY --from=builder /app/package.json /app
+COPY --from=builder /app/start.sh /app
+COPY --from=builder /app/schema.sql /app
 WORKDIR /app
 ENV NODE_ENV production
 

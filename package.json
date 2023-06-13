@@ -32,7 +32,6 @@
     "aws-sdk": "^2.619.0",
     "better-sqlite3": "^8.4.0",
     "camelcase-keys": "^8.0.2",
-    "dotenv": "^16.1.4",
     "nanoid": "^4.0.2",
     "pg-promise": "^11.4.3",
     "prosemirror-commands": "^1.5.0",
