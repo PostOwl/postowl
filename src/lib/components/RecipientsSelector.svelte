@@ -24,7 +24,7 @@
       result = [];
     }
 
-    // TODO: remove 
+    // TODO: remove entries that are already in the recipient list
 
     if (isEmailValid(value)) {
       // Double check that the email is not already in your contacts
@@ -73,7 +73,6 @@
   }
 
   function removeRecipient(index) {
-    console.log('removing index:', index);
     recipients.splice(index, 1);
     recipients = recipients;
   }

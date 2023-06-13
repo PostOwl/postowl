@@ -1,8 +1,9 @@
 import { getPostBySlug, getBio } from '$lib/api';
 
-export async function load({ params, locals }) {
+export async function load({ params, locals, url }) {
   const currentUser = locals.user;
-  const data = await getPostBySlug(params.slug, currentUser);
+  const secret = url.searchParams.get('secret');
+  const data = await getPostBySlug(params.slug, secret, currentUser);
   const bio = await getBio();
   return {
     ...data,

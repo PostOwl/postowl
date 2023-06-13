@@ -68,7 +68,7 @@ export async function updatePost(slug, title, content, teaser, teaser_image, rec
         .get(post.post_id, friend_id);
       if (!recipient_exists) {
         const secret = nanoid();
-        const { recipient_id } = db.prepare("INERT INTO recipients (post_id, friend_id, secret) values(?, ?, ?) RETURNING recipient_id")
+        const { recipient_id } = db.prepare("INSERT INTO recipients (post_id, friend_id, secret) values(?, ?, ?) RETURNING recipient_id")
           .get(post.post_id, friend_id, secret);
         // TODO: Email this new recipient here
         new_recipients.push(recipient_id);
@@ -123,7 +123,13 @@ export async function destroySession(sessionId) {
  * List posts (either public, or all if you are the site owner)
  */
 export async function getPosts(currentUser) {
-  const posts = db.prepare("SELECT * FROM posts ORDER BY created_at DESC").all()
+  let posts;
+  if (currentUser){
+    posts = db.prepare("SELECT * FROM posts ORDER BY created_at DESC").all();
+  } else {
+    posts = db.prepare("SELECT * FROM posts WHERE is_public IS TRUE ORDER BY created_at DESC").all();
+  }
+
   for (let i = 0; i < posts.length; i++) {
     const post = posts[i];
     post.recipients = db.prepare(`
@@ -132,7 +138,7 @@ export async function getPosts(currentUser) {
       FROM recipients r
       INNER JOIN friends f ON (r.friend_id=f.friend_id)
       WHERE r.post_id = ?
-    `).all(post.post_id)
+    `).all(post.post_id);
   }
   return posts;
 }
@@ -149,7 +155,7 @@ export async function getFriends(currentUser) {
  * Get friend for a given friendId
  */
 export async function getFriend(friend_id) {
-  const friend = db.prepare("SELECT * FROM friends WHERE friend_id = ?").all(friend_id);
+  const friend = db.prepare("SELECT * FROM friends WHERE friend_id = ?").get(friend_id);
   return { ...friend };
 }
 
@@ -159,14 +165,15 @@ export async function getFriend(friend_id) {
 export async function createFriend(name, email, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
 
-  const friend = db.prepare("INSERT INTO friends (name, email) VALUES (?, ?) RETURNING friend_id, created_at")
-    .get(name, email);
+  const friend = db.prepare("INSERT INTO friends (name, email, created_at) VALUES (?, ?, ?) RETURNING friend_id, created_at")
+    .get(name, email, new Date().toISOString());
+  return friend;
 }
 
 /**
  * Update friend record with new data
  */
-export async function updateFriend(friendId, name, email, currentUser) {
+export async function updateFriend(friend_id, name, email, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
   return db.prepare("UPDATE friends SET name= ?, email = ?, updated_at = NOW() WHERE friend_id = ? RETURNING friend_id, updated_at")
     .get(name, email, friend_id);
@@ -188,19 +195,29 @@ export async function deleteFriend(friend_id, currentUser) {
 }
 
 /**
- * Get post for a given slug
+ * Get post for a given slug (and secret for private posts)
  */
-export async function getPostBySlug(slug, currentUser) {
+export async function getPostBySlug(slug, secret = undefined, currentUser) {
   const post = db.prepare("SELECT * FROM posts WHERE slug = ?")
     .get(slug);
   
+  // Check if authorized to view
+  let hasAccess = false;
+  if (currentUser || post.is_public) {
+    hasAccess = true;
+  } else {
+    const validSecret = db.prepare("SELECT recipient_id FROM recipients WHERE post_id = ? AND secret = ?").get(post.post_id, secret);
+    if (validSecret) hasAccess = true;
+  }
+  if (!hasAccess) throw new Error('Not authorized');
+  
   let recipients = [];
-
   // Only expose recipients for the admin
   if (currentUser) {
-    recipients = db.prepare("SELECT f.name, f.email, f.friend_id FROM recipients r INNER JOIN friends f ON (r.friend_id=f.friend_id) WHERE r.post_id = ?")
+    recipients = db.prepare("SELECT f.name, f.email, f.friend_id, secret FROM recipients r INNER JOIN friends f ON (r.friend_id=f.friend_id) WHERE r.post_id = ?")
       .all(post.post_id);
   }
+
   return { ...post, recipients };
 }
 
@@ -281,8 +298,7 @@ export async function getBio() {
  * We can count all kinds of things with this.
  */
 export async function createOrUpdateCounter(counter_id) {
-  return { count: 43 }
-
+  // return { count: 43 }
   return db.transaction(() => {
     // Remove recipients associated with the friend if there are any entries
     const counter_exists = db.prepare("SELECT counter_id FROM counters WHERE counter_id = ?").get(counter_id);
