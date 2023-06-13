@@ -3,3 +3,15 @@ Dockerfile
 .dockerignore
 node_modules
 .git
+.DS_Store
+build
+data
+/.svelte-kit
+/package
+.env
+.envrc
+.env.*
+.tool-versions
+.tool-versions
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

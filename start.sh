@@ -2,5 +2,5 @@
 
 set -e
 
-sqlite3 /data/db.sqlite3 < schema.sql
-node ./build
+sqlite3 data/db.sqlite3 < schema.sql
+node -r dotenv/config build

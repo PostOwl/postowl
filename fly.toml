@@ -1,24 +1,22 @@
-# fly.toml app configuration file generated for postowl-dev on 2023-06-09
+# fly.toml app configuration file generated for postowldev on 2023-06-12T17:45:42+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "postowl-dev"
+app = "postowldev"
 primary_region = "lhr"
 
-[env]
-  PORT = "3000"
-  ORIGIN = "https://postowl-dev.fly.dev/"
-  DB_PATH = "/data/powstowl-dev_data/db.sqlite3"
-
-# add a volume for our sqlite db
-[mounts]
-  source="postowl-dev_data"
-  destination="/data"
-
 [experimental]
-  cmd = "start.sh"
-  entrypoint = "sh"
+  cmd = ["start.sh"]
+  entrypoint = ["sh"]
+
+[env]
+  DB_PATH = "/data/powstowldev_data/db.sqlite3"
+  PORT = "3000"
+
+[[mounts]]
+  source = "postowldev_data"
+  destination = "/data"
 
 [http_service]
   internal_port = 3000
