@@ -5,7 +5,7 @@
   import PlainText from '$lib/components/PlainText.svelte';
 
   export let data;
-  let editable, name, email, createdAt, updatedAt;
+  let editable, name, email, created_at, updated_at;
 
   $: currentUser = data.currentUser;
   $: {
@@ -17,8 +17,8 @@
   function initOrReset() {
     name = data.name;
     email = data.email;
-    createdAt = data.createdAt;
-    updatedAt = data.updatedAt;
+    created_at = data.created_at;
+    updated_at = data.updated_at;
     editable = true;
   }
 
@@ -27,7 +27,7 @@
     if (confirm('Are you sure you want to delete this friend? It cannot be undone.')) {
       try {
         await fetchJSON('POST', '/api/delete-friend', {
-          friendId: data.friendId
+          friend_id: data.friend_id
         });
         goto('/friends');
       } catch (err) {
@@ -41,11 +41,11 @@
     if (!currentUser) return alert('Sorry, you are not authorized.');
     try {
       const result = await fetchJSON('POST', '/api/update-friend', {
-        friendId: data.friendId,
+        friend_id: data.friend_id,
         name,
         email
       });
-      updatedAt = result.updatedAt;
+      updated_at = result.updated_at;
       goto('/friends');
     } catch (err) {
       console.error(err);
@@ -66,13 +66,14 @@
 
 <div class="max-w-screen-md mx-auto px-6 pb-8 sm:text-xl">
   <div class="pt-24 text-sm font-bold">Name</div>
-
   <div class="font-bold text-2xl">
     <PlainText {editable} bind:content={name} />
   </div>
   
   <div class="pt-8 text-sm font-bold">Email</div>
-  <PlainText {editable} bind:content={email} />
+  <div>
+    <PlainText {editable} bind:content={email} />
+  </div>
 
   <div class="text-center pt-12">
     <button class="rounded-lg border w-full py-2 border-red-600 text-red-600" on:click={deleteFriend}>Delete friend</button>

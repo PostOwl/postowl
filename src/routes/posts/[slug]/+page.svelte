@@ -8,6 +8,7 @@
   import Footer from '$lib/components/Footer.svelte';
   import Post from '$lib/components/Post.svelte';
   import NotEditable from '$lib/components/NotEditable.svelte';
+  import CopyableRecipient from '$lib/components/CopyableRecipient.svelte';
   import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
   
   export let data;
@@ -112,7 +113,10 @@
       {#if is_public}
         <strong>To:</strong> Everyone
       {:else if (recipients.length > 0)}
-        <strong>To:</strong> {recipients.map(r => r.name ).join(', ')}
+        <strong>To:</strong>
+        {#each recipients as recipient, i}
+          <CopyableRecipient {recipient} slug={data.slug} />
+        {/each}
       {:else}
         <strong>To:</strong> Myself
       {/if}
