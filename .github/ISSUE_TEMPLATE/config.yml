@@ -7,5 +7,5 @@ contact_links:
     url: https://github.com/PostOwl/postowl/discussions/new?category=ideas
     about: 'Suggest any ideas you have using our discussion forums.'
   - name: Bug Report
-    url: https://github.com/PostOwl/postowl/issues/new?body=%3C%21--%20Please%20provide%20as%20much%20information%20as%20possible.%20--%3E%0A%0A%2A%2A
+    url: https://github.com/PostOwl/postowl/issues/new?body=%3C%21--%20Please%20provide%20as%20much%20information%20as%20possible.%20--%3E%0A%0A
     about: If you've already asked for help with a problem and confirmed something is broken with PostOwl, create a bug report.
