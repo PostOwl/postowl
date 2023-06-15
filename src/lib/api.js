@@ -2,7 +2,10 @@ import slugify from 'slugify';
 import Database from 'better-sqlite3';
 import { nanoid } from 'nanoid'
 import { DEFAULT_BIO } from '$lib/constants';
-import { DB_PATH, ADMIN_PASSWORD } from '$env/static/private';
+import { DB_PATH, ADMIN_NAME, ADMIN_PASSWORD } from '$env/static/private';
+import { PUBLIC_ORIGIN } from '$env/static/public';
+import sendMail from '$lib/sendMail';
+import { dev } from '$app/environment';
 
 const db = new Database(DB_PATH, { verbose: console.log });
 // db.pragma('journal_mode = WAL');
@@ -24,17 +27,27 @@ export async function createPost(title, content, teaser, teaser_image, recipient
     
     for (let i = 0; i < recipients.length; i++) {
       const recipient = recipients[i];
+      let friend;
       let friend_id = recipient.friend_id;
       if (!friend_id) {
-        const friend = db.prepare("INSERT INTO friends (name, email) values('', ?) RETURNING friend_id")
-          .get(recipient.email);
+        friend = db.prepare("INSERT INTO friends (name, email, created_at) values('', ?, ?) RETURNING friend_id")
+          .get(recipient.email, new Date().toISOString());
         friend_id = friend.friend_id;
       }
       const secret = nanoid();
       db.prepare("INSERT INTO recipients (post_id, friend_id, secret) values(?, ?, ?) RETURNING recipient_id")
         .get(post.post_id, friend_id, secret);
   
-      // TODO: email `friend.email` with a link containing `secret`.
+      // Email this new recipient - it may or may not work - we don't wait for it
+      // TODO: for the future: Add some reporting, which emails have been sent/delivered
+      // TODO: We may need some queuing to send out many emails (hopefully not!)
+      sendMail(
+        recipient.email,
+        title,
+        `<p>${teaser}</p>
+        <p><a href="${`${dev ? 'http' : 'https'}://${PUBLIC_ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
+        <p>Best, ${ADMIN_NAME}</p>`
+      );
     }
     return post;
   })();
@@ -49,10 +62,10 @@ export async function createPost(title, content, teaser, teaser_image, recipient
 export async function updatePost(slug, title, content, teaser, teaser_image, recipients, is_public, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
 
-  return db.transaction(() => {
+  return db.transaction(async () => {
     const post = db.prepare("UPDATE posts SET title= ?, content = ?, teaser = ?, teaser_image = ?, is_public = ?, updated_at = ? WHERE slug = ? RETURNING slug, post_id, updated_at")
       .get(title, content, teaser, teaser_image, is_public ? 1 : 0, new Date().toISOString(), slug);
-    const previousRecipients = db.prepare("SELECT recipient_id FROM recipients WHERE post_id = ?")
+    const previous_recipients = db.prepare("SELECT recipient_id FROM recipients WHERE post_id = ?")
       .all(post.post_id)
       .map(r => r.recipient_id);
     const new_recipients = [];
@@ -60,8 +73,8 @@ export async function updatePost(slug, title, content, teaser, teaser_image, rec
       const recipient = recipients[i];
       let friend_id = recipient.friend_id;
       if (!friend_id) {
-        const friend = db.prepare("INSERT INTO friends (name, email) values('', ?) RETURNING friend_id")
-          .get(recipient.email);
+        const friend = db.prepare("INSERT INTO friends (name, email, created_at) values('', ?, ?) RETURNING friend_id")
+          .get(recipient.email, new Date().toISOString());
         friend_id = friend.friend_id;
       }
       const recipient_exists = db.prepare("SELECT recipient_id FROM recipients WHERE post_id = ? AND friend_id = ?")
@@ -70,21 +83,36 @@ export async function updatePost(slug, title, content, teaser, teaser_image, rec
         const secret = nanoid();
         const { recipient_id } = db.prepare("INSERT INTO recipients (post_id, friend_id, secret) values(?, ?, ?) RETURNING recipient_id")
           .get(post.post_id, friend_id, secret);
-        // TODO: Email this new recipient here
+        
+        // Email this new recipient - it may or may not work - we don't wait for it
+        // TODO: for the future: Add some reporting, which emails have been sent/delivered
+        // TODO: We may need some queuing to send out many emails (hopefully not!)
+        sendMail(
+          recipient.email,
+          title,
+          `<p>${teaser}</p>
+          <p><a href="${`${dev ? 'http' : 'https'}://${PUBLIC_ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
+          <p>Best, ${ADMIN_NAME}</p>`
+        );
         new_recipients.push(recipient_id);
       } else {
-        new_recipients.push(recipient_exists.recipientId);
+        new_recipients.push(recipient_exists.recipient_id);
       }
     }
 
-    for (let i = 0; i < previousRecipients.length; i++) {
-      const r = previousRecipients[i];
-      // If one the previousRecipients is no longer there, we need to delete it.
+    for (let i = 0; i < previous_recipients.length; i++) {
+      const r = previous_recipients[i];
+      // If one the previous_recipients is no longer there, we need to delete it.
       if (new_recipients.indexOf(r) === -1) {
         db.prepare("DELETE FROM recipients WHERE recipient_id = ?").run(r);
       }
     }
-    return post;
+
+    // Finally reload all current recipients to provide the client with an updated list
+    const current_recipients = db.prepare("SELECT f.name, f.email, f.friend_id, secret FROM recipients r INNER JOIN friends f ON (r.friend_id=f.friend_id) WHERE r.post_id = ?")
+      .all(post.post_id);
+
+    return { slug, recipients: current_recipients };
   })();
 }
 

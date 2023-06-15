@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS old_post_slugs (
 
 CREATE TABLE IF NOT EXISTS friends (
   friend_id INTEGER PRIMARY KEY,
-  name TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL,
   created_at TEXT NOT NULL,
   updated_at TEXT DEFAULT NULL
