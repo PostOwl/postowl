@@ -1,5 +1,4 @@
 import nodemailer from 'nodemailer';
-import { dev } from '$app/environment';
 
 import {
   SMTP_SERVER,
@@ -11,11 +10,6 @@ import {
 } from '$env/static/private';
 
 export default async function sendMail(to, subject, message) {
-  if (dev) {
-    // Don't send out emails in dev mode just log them
-    console.log('Pretending to send email:', to, subject, message);
-    return;
-  }
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: SMTP_SERVER,
