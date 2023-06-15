@@ -74,7 +74,3 @@ fly deploy -a myapp \
 (The `-a` option in `fly deploy` lets you override the app name specified in `fly.toml`.) 
 
 Fly will let you know when the app is deployed. Visit the URL shown in your terminal and sign in with the ADMIN_PASSWORD you set above. Have fun creating letters!
-
-**TODO**
-
-1. TODO: make start.sh actually migrate the db safely on deployment. (Looking into this approach: https://david.rothlis.net/declarative-schema-migration-for-sqlite/ HN discussion: https://news.ycombinator.com/item?id=31249823)
