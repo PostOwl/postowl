@@ -1,5 +1,5 @@
 import { getSitemap } from '$lib/api';
-import { PUBLIC_ORIGIN } from '$env/static/private';
+import { PUBLIC_ORIGIN } from '$env/static/public';
 
 export async function GET({ setHeaders }) {
   setHeaders({
