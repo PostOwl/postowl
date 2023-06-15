@@ -56,12 +56,19 @@ To deploy your own version:
 fly deploy -a myapp \
     --build-secret DB_PATH="./data/db.sqlite3" \
     --build-secret ORIGIN="https://myapp.fly.dev" \
+    --build-secret ADMIN_NAME="Your Name" \
+    --build-secret ADMIN_EMAIL="you@your.domain" \
     --build-secret ADMIN_PASSWORD="my-super-secret-password" \
     --build-secret S3_ACCESS_KEY="xxxxx" \
     --build-secret S3_SECRET_ACCESS_KEY="xxxxx" \
     --build-secret S3_ENDPOINT="assets.your-domain.com" \
     --build-secret S3_BUCKET="postowl" \
-    --build-secret PUBLIC_ASSET_PATH="https://your-asset.com/postowl"
+    --build-secret PUBLIC_ASSET_PATH="https://your-asset.com/postowl" \
+    --build-secret SMTP_SERVER="smtp.eu.mailgun.org" \
+    --build-secret SMTP_PORT="465" \
+    --build-secret SMTP_USERNAME="postmaster@mg.your.domain" \
+    --build-secret SMTP_PASSWORD="super-secret-smtp-password" \
+    --build-secret PUBLIC_ORIGIN="myapp.fly.dev"
 ```
 
 (The `-a` option in `fly deploy` lets you override the app name specified in `fly.toml`.) 
