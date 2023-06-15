@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Get Help
+    url: https://github.com/PostOwl/postowl/discussions/new?category=help
+    about: If you can't get something to work the way you expect, open a question in our discussion forums.
+  - name: Feature Request
+    url: https://github.com/PostOwl/postowl/discussions/new?category=ideas
+    about: 'Suggest any ideas you have using our discussion forums.'
+  - name: Bug Report
+    url: https://github.com/PostOwl/postowl/issues/new?body=%3C%21--%20Please%20provide%20as%20much%20information%20as%20possible.
+    about: If you've already asked for help with a problem and confirmed something is broken with PostOwl, create a bug report.
