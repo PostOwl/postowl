@@ -8,8 +8,7 @@ Share the story of your life.
 
 ## Requirements
 
-- Node.js 16+ or other Javascript runtime
-- MinIO or other S3-compatible storage solution
+- Node.js 18+ LTS or other Javascript runtime
 
 ## Development
 
@@ -55,8 +54,6 @@ You can preview the production build with `npm run preview`.
 ### Deploy to fly.io
 
 The repo contains the files you need to deploy to fly.io. It will run well on their free plan.
-
-You'll also need to configure an S3 bucket or other compatible object storage for image hosting.
 
 To deploy your own version:
 
