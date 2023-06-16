@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { dev } from '$app/environment';
 
 import {
   SMTP_SERVER,
@@ -14,7 +15,7 @@ export default async function sendMail(to, subject, message) {
   let transporter = nodemailer.createTransport({
     host: SMTP_SERVER,
     port: SMTP_PORT,
-    secure: true, // true for 465, false for other ports
+    secure: dev ? false : true, // don't use SSL for emails in dev
     auth: {
       user: SMTP_USERNAME,
       pass: SMTP_PASSWORD,
