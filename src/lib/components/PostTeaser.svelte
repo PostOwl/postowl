@@ -5,7 +5,6 @@
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
 
   $: teaser_image = JSON.parse(post.teaser_image);
-
 </script>
 
 <a href={`/posts/${post.slug}`} class={classNames('block md:text-xl rounded-lg border shadow-md bg-white p-4 sm:p-8', post.is_public ? 'border-gray-300': post.recipients.length > 0 ? 'border-yellow-300' : 'border-red-300' )}>

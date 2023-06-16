@@ -7,8 +7,6 @@
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
 
-  import { PUBLIC_ASSET_PATH } from '$env/static/public';
-
   export let editorView;
   export let editorState;
   export let currentUser;
@@ -33,8 +31,8 @@
     const videoPath = [['videos', videoId].join('/'), 'mp4'].join('.');
     const posterPath = [['videos', videoId].join('/'), 'webp'].join('.');
     const { width, height } = { width: videoEl.videoWidth, height: videoEl.videoHeight };
-    const src = currentUser ? `${PUBLIC_ASSET_PATH}/${videoPath}` : URL.createObjectURL(file);
-    const poster = currentUser ? `${PUBLIC_ASSET_PATH}/${posterPath}` : URL.createObjectURL(file);
+    const src = currentUser ? `/assets/${videoPath}` : URL.createObjectURL(file);
+    const poster = currentUser ? `/assets/${posterPath}` : URL.createObjectURL(file);
 
     progress = 0;
     try {
