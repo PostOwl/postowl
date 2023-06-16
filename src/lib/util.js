@@ -107,7 +107,7 @@ export function extractTeaserImage(body) {
   const firstImage = body.querySelector('img');
   if (!firstImage) return undefined;
   return {
-    src: firstImage.src,
+    src: firstImage.getAttribute('src'),
     height: firstImage.height,
     width: firstImage.width
   };
