@@ -6,6 +6,7 @@ import { DB_PATH, ADMIN_NAME, ADMIN_PASSWORD } from '$env/static/private';
 import { PUBLIC_ORIGIN } from '$env/static/public';
 import sendMail from '$lib/sendMail';
 import { dev } from '$app/environment';
+import { Blob } from 'node:buffer';
 
 const db = new Database(DB_PATH, { verbose: console.log });
 // db.pragma('journal_mode = WAL');
@@ -336,6 +337,54 @@ export async function createOrUpdateCounter(counter_id) {
       return db.prepare("INSERT INTO counters (counter_id, count) values(?, 1) RETURNING count").get(counter_id);
     }
   })()
+}
+
+// asset_id is a string and has the form path
+export async function storeAsset(asset_id, file) {
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+
+  const sql = `
+  INSERT into assets (asset_id, mime_type, updated_at, size, data) VALUES (?, ?, ?, ?, ?)
+  ON CONFLICT (asset_id) DO
+  UPDATE
+     SET mime_type = excluded.mime_type,
+         updated_at = excluded.updated_at,
+         size = excluded.size,
+         data = excluded.data
+  WHERE asset_id = excluded.asset_id
+  `;
+  const stmnt = db.prepare(sql);
+  stmnt.run(
+    asset_id,
+    file.type,
+    new Date().toISOString(),
+    file.size,
+    buffer
+  );
+}
+
+export function getAsset(asset_id) {
+  const sql = `
+  SELECT
+    asset_id,
+    mime_type,
+    updated_at,
+    size,
+    data
+  FROM assets
+  WHERE asset_id = ?
+  `;
+
+  const stmnt = db.prepare(sql);
+  const row = stmnt.get(asset_id);
+  return {
+    filename: row.asset_id.split('/').slice(-1),
+    mimeType: row.mime_type,
+    lastModified: row.updated_at,
+    size: row.size,
+    data: new Blob([row.data], { type: row.mime_type }),
+  };
 }
 
 export async function getSitemap() {

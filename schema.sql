@@ -50,8 +50,15 @@ CREATE TABLE IF NOT EXISTS counters (
   counter_id TEXT PRIMARY KEY,
   count INTEGER NOT NULL
 );
-COMMIT;
 
+CREATE TABLE IF NOT EXISTS assets (
+  asset_id TEXT PRIMARY KEY,
+  mime_type TEXT NOT NULL,
+  updated_at TEXT DEFAULT NULL,
+  size INTEGER NOT NULL,
+  data BLOB NOT NULL
+);
+COMMIT;
 
 -- We might want to ensure the datetime fields follow a certain format
 -- CREATE TABLE IF NOT EXISTS events (
