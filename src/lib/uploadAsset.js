@@ -1,15 +1,9 @@
-async function getSignedUrl(path, type) {
-  const response = await fetch(`/api/presignedurl?path=${path}&type=${type}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json'
-    }
-  });
-  const { signedUrl } = await response.json();
-  return signedUrl;
-}
+function upload(file, path, progressCallback) {
 
-function uploadS3(url, file, progressCallback) {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("path", path);
+
   return new Promise(function (resolve, reject) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
@@ -30,16 +24,12 @@ function uploadS3(url, file, progressCallback) {
         }
       };
     }
-
-    xhr.open('put', url);
-    xhr.setRequestHeader('Content-Type', file.type);
-    xhr.setRequestHeader('x-amz-acl', 'public-read');
-    xhr.send(file);
+    xhr.open('PUT', '/api/upload-asset');
+    xhr.send(formData);
   });
 }
 
 export default async function uploadAsset(file, path, onProgress) {
-  const signedUrl = await getSignedUrl(path, file.type);
-  await uploadS3(signedUrl, file, onProgress);
+  await upload(file, path, onProgress);
   return path;
 }

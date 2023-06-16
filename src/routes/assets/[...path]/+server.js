@@ -3,7 +3,6 @@ import { json, error } from '@sveltejs/kit';
 
 export const GET = (async ({ params, setHeaders }) => {
   const path = params.path;
-  console.log('path', path);
   const file = getAsset(path);
 
   if (!file || !file.data) {

@@ -4,8 +4,6 @@
   import uploadAsset from '$lib/uploadAsset';
   import { insertImage } from '$lib/prosemirrorCommands';
 
-  import { PUBLIC_ASSET_PATH } from '$env/static/public';
-
   export let editorView;
   export let editorState;
   export let currentUser;
@@ -33,7 +31,7 @@
     });
 
     const { width, height } = await getDimensions(resizedFile);
-    const src = currentUser ? `${PUBLIC_ASSET_PATH}/${path}` : URL.createObjectURL(resizedFile);
+    const src = currentUser ? `/assets/${path}` : URL.createObjectURL(resizedFile);
 
     progress = 0;
     try {

@@ -66,10 +66,10 @@
   }
 
   function scrollIntoViewIfNeeded() {
-    let node = resultsEl.childNodes[selectedResult];
-    if (node.scrollIntoViewIfNeeded) {
-      node.scrollIntoViewIfNeeded();
-    }
+    // let node = resultsEl.childNodes[selectedResult];
+    // if (node.scrollIntoViewIfNeeded) {
+    //   node.scrollIntoViewIfNeeded();
+    // }
   }
 
   function removeRecipient(index) {
@@ -173,4 +173,4 @@
   </div>
 </div>
 
-<svelte:window on:keydown={onKeyDown} />
+<!-- <svelte:window on:keydown={onKeyDown} /> -->

@@ -12,8 +12,6 @@
   let className = '';
   export { className as class };
 
-  import { PUBLIC_ASSET_PATH } from '$env/static/public';
-
   let fileInput; // for uploading an image
   let progress = undefined; // file upload progress
 
@@ -35,7 +33,7 @@
         await uploadAsset(resizedFile, path, p => {
           progress = p;
         });
-        src = `${PUBLIC_ASSET_PATH}/${path}`;
+        src = `/assets/${path}`;
       } else {
         src = URL.createObjectURL(file);
       }

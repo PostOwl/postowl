@@ -24,7 +24,7 @@ export async function createPost(title, content, teaser, teaser_image, recipient
       strict: true
     });
     const post = db.prepare("INSERT INTO posts (slug, title, content, teaser, teaser_image, is_public, created_at) values(?, ?, ?, ?, ?, ?, ?) RETURNING slug, post_id, created_at")
-      .get(slug, title, content, teaser, teaser_image, is_public ? 1 : 0, new Date().toISOString());
+      .get(slug, title, content, teaser, teaser_image ? JSON.stringify(teaser_image) : null, is_public ? 1 : 0, new Date().toISOString());
     
     for (let i = 0; i < recipients.length; i++) {
       const recipient = recipients[i];
@@ -65,7 +65,8 @@ export async function updatePost(slug, title, content, teaser, teaser_image, rec
 
   return db.transaction(async () => {
     const post = db.prepare("UPDATE posts SET title= ?, content = ?, teaser = ?, teaser_image = ?, is_public = ?, updated_at = ? WHERE slug = ? RETURNING slug, post_id, updated_at")
-      .get(title, content, teaser, teaser_image, is_public ? 1 : 0, new Date().toISOString(), slug);
+      .get(title, content, teaser, teaser_image ? JSON.stringify(teaser_image) : null, is_public ? 1 : 0, new Date().toISOString(), slug);
+    
     const previous_recipients = db.prepare("SELECT recipient_id FROM recipients WHERE post_id = ?")
       .all(post.post_id)
       .map(r => r.recipient_id);
