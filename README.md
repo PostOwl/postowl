@@ -8,7 +8,7 @@ Share the story of your life.
 
 ## Developing
 
-PostOwl is a [sveltekit](https://kit.svelte.dev/) application that uses [SQLite](https://www.sqlite.org/) for the database. It's currently optimised for sveltekit's [adapter-node](https://github.com/sveltejs/kit/tree/master/packages/adapter-node) to enable [deployment to fly.io](#deploy-to-flyio).
+PostOwl is a [sveltekit](https://kit.svelte.dev/) application that uses [SQLite](https://www.sqlite.org/) for the database. It's currently optimised for sveltekit's [adapter-node](https://github.com/sveltejs/kit/tree/master/packages/adapter-node) to enable [deployment to fly.io](#deployment-to-flyio).
 
 ### Requirements
 
@@ -22,7 +22,7 @@ PostOwl is a [sveltekit](https://kit.svelte.dev/) application that uses [SQLite]
 1. Clone this repo to a directory on your computer: `git clone https://github.com/PostOwl/postowl.git`
 1. Enter the directory you cloned the repo to: `cd postowl`
 1. Run `npm install`
-1. Rename `.env.example` to `.env` and adjust accordingly
+1. Rename `.env.example` to `.env` and edit for your environment
 1. Create the database with `sqlite3 data/db.sqlite3 < schema.sql`
 1. Run the dev server and open a new browser tab with `npm run dev -- --open`
 1. Sign in with the ADMIN_PASSWORD you set in `.env`
@@ -63,9 +63,9 @@ If you have success **deploying to other platforms**, please [let us know](https
 
 ### Sending email in production
 
-PostOwl uses [nodemailer](https://nodemailer.com/about/) to send email notifications when you send a letter to friends. It will run OK without email being configured so you can enter dummy data for the SMTP settings when deploying if you don't have an SMTP configuration to use.
+PostOwl uses [nodemailer](https://nodemailer.com/about/) to send email notifications when you send lettera to friends. The application will run without a real SMTP server configured so you can enter dummy data for the SMTP settings when deploying if you don't need to send emails.
 
-If you don't already have an SMTP server to use, we recommend using [mailgun](https://www.mailgun.com/) if you have a domain name you can use. Their free tier will cover usage for a personal PostOwl site. Follow the mailgin documentation to get set up and generate an SMTP password from their admin interface (you'll need to click 'Reset password' under Sending > Domain Settings > SMTP credentials to get a password for a new domain).
+If you'd like to send emails but don't have an SMTP server to use, we recommend [mailgun](https://www.mailgun.com/). Their free tier will cover usage for a personal PostOwl site. You'll need to own a domain name to get set up with mailgun. Follow their documentation to activate your domain for email sending. Then generate an SMTP password from their admin interface (click 'Reset password' under Sending > Domain Settings > SMTP credentials to get a password for a new domain).
 
 ### Deployment to fly.io
 
