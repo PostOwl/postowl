@@ -23,7 +23,7 @@ PostOwl is a [sveltekit](https://kit.svelte.dev/) application that uses [SQLite]
 1. Enter the directory you cloned the repo to: `cd postowl`
 1. Run `npm install`
 1. Rename `.env.example` to `.env` and edit for your environment
-1. Create the database with `sqlite3 data/db.sqlite3 < schema.sql`
+1. Create the database with `sqlite3 data/db.sqlite3 < scripts/schema.sql`
 1. Run the dev server and open a new browser tab with `npm run dev -- --open`
 1. Sign in with the ADMIN_PASSWORD you set in `.env`
 
@@ -84,14 +84,14 @@ This repo contains the files you need to deploy your PostOwl site to [fly.io](ht
 fly deploy -a myapp \
     --build-secret DB_PATH="./data/db.sqlite3" \
     --build-secret ORIGIN="https://myapp.fly.dev" \
-    --build-secret PUBLIC_ORIGIN="myapp.fly.dev"
+    --build-secret PUBLIC_ORIGIN="myapp.fly.dev" \
     --build-secret ADMIN_NAME="Your Name" \
     --build-secret ADMIN_EMAIL="you@your.domain" \
     --build-secret ADMIN_PASSWORD="your-super-secret-admin-password" \
     --build-secret SMTP_SERVER="your.smtp.server" \
     --build-secret SMTP_PORT="465" \
     --build-secret SMTP_USERNAME="postmaster@your.smtp.server" \
-    --build-secret SMTP_PASSWORD="your-super-secret-smtp-password" \
+    --build-secret SMTP_PASSWORD="your-super-secret-smtp-password"
 ```
 
 The `-a` option in `fly deploy` lets you override the app name specified in `fly.toml`.

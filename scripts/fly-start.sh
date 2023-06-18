@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Script to run when deploying to fly.io
+# This creates or migrates the database on your fly volume and then starts the app
 set -e
 
 FOLDER=/app/data
