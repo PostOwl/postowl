@@ -9,7 +9,7 @@ import { dev } from '$app/environment';
 import { Blob } from 'node:buffer';
 
 const db = new Database(DB_PATH, { verbose: console.log });
-// db.pragma('journal_mode = WAL');
+db.pragma('journal_mode = WAL');
 db.pragma('case_sensitive_like = true');
 
 /**

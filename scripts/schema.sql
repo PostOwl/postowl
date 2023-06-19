@@ -1,3 +1,4 @@
+pragma journal_mode = WAL;
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
 
