@@ -48,7 +48,7 @@
   }
 </script>
 
-<div class={classNames('sticky top-0 z-10 sm:py-4 sm:px-4', isDark ? 'bg-black' : 'bg-white')}>
+<div class={classNames('sticky bottom-0 z-10 sm:py-4 sm:px-4', isDark ? 'bg-black' : 'bg-white')}>
   <div
     class="max-w-screen-md mx-auto px-2 backdrop-blur-sm bg-white bg-opacity-95 border-b border-t sm:border sm:rounded-full border-gray-100 shadow"
   >

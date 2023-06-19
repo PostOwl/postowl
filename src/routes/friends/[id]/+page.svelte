@@ -57,7 +57,7 @@
 </script>
 
 <svelte:head>
-  <title>{name}</title>
+  <title>{name || email}</title>
 </svelte:head>
 
 {#if editable}
@@ -66,16 +66,16 @@
 
 <div class="max-w-screen-md mx-auto px-6 pb-8 sm:text-xl">
   <div class="pt-24 text-sm font-bold">Name</div>
-  <div class="font-bold text-2xl">
+  <div class="border-b py-2">
     <PlainText {editable} bind:content={name} />
   </div>
   
   <div class="pt-8 text-sm font-bold">Email</div>
-  <div>
+  <div class="border-b py-2">
     <PlainText {editable} bind:content={email} />
   </div>
 
   <div class="text-center pt-12">
-    <button class="rounded-lg border w-full py-2 border-red-600 text-red-600" on:click={deleteFriend}>Delete friend</button>
+    <button class="font-medium text-sm sm:text-base rounded-full w-full py-3 bg-rose-600 hover:bg-rose-500 text-white" on:click={deleteFriend}>Delete friend</button>
   </div>
 </div>

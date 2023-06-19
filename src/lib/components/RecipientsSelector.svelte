@@ -5,6 +5,7 @@
   
   export let recipients = [];
   export let is_public;
+  export let editable;
   
   let value;
   let result = [];
@@ -13,7 +14,9 @@
   let resultsEl;
 
   onMount(() => {
-    input.focus();
+    if (input) {
+      input.focus();
+    }
   });
 
   async function search() {
@@ -105,72 +108,78 @@
   }
 </script>
 
-<div class="max-w-screen-md mx-auto px-6 pt-8">
-  <div class="flex items-center">
-    <div class="font-bold">To:</div>
-    <div class="flex-1"></div>
-    {#if !is_public}
-      <SecondaryButton size='sm' on:click={togglePublic}>Make public</SecondaryButton>
-    {/if}
-  </div>
+<div class="max-w-screen-md mx-auto px-6 pb-8">
   <div>
-    <div class="rounded-md bg-red-50 border border-red-300 inline-block px-2 mr-1 mb-1 text-sm sm:text-base">
-      <span>Myself</span>
-    </div>
+    <div class="font-bold inline">To:</div>
+    {#if recipients.length === 0 && !is_public}
+      <div class="rounded-full bg-rose-100 inline-block px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base text-rose-800">
+        <span>Myself</span>
+      </div>
+    {/if}
+    {#if is_public}
+      <div class="rounded-full bg-green-100 px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base text-green-800 inline-flex items-center space-x-1">
+        <span>Everyone</span>
+        {#if editable}
+          <button on:click={togglePublic}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        {/if}
+      </div>
+    {/if}
     {#each recipients as recipient, i}
-      <div class="rounded-md bg-yellow-50 border border-yellow-400 inline-block px-2 mr-1 mb-1 text-sm sm:text-base">
+      <div class="rounded-full bg-yellow-100 px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base text-yellow-800 inline-flex items-center space-x-1">
         <span>{recipient.email}</span>
-        <button on:click={() => removeRecipient(i) }>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+        {#if editable}
+          <button on:click={() => removeRecipient(i) }>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        {/if}
       </div>
     {/each}
-    {#if is_public}
-      <div class="rounded-md bg-green-50 border border-green-300 inline-block px-2 mr-1 mb-1 text-sm sm:text-base">
-        <span>Everyone</span>
-        <button on:click={togglePublic}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-    {/if}
+
   </div>
 
-  <div class="relative border-b border-gray-100 flex space-x-4 items-center py-2">
-    <input
-      bind:this={input}
-      bind:value
-      use:debounce={{ value, func: search, duration: 50 }}
-      on:blur={onBlur}
-      autocomplete="off"
-      id="search"
-      name="search"
-      class="block w-full border-none bg-transparent px-0 py-2 placeholder-gray-300 focus:border-black focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-0"
-      placeholder="Add recipient ..."
-      type="text"
-    />
-  </div>
-  
-  <div class="overflow-y-auto" bind:this={resultsEl}>
-    {#each result as friend, i}
-      <button
-        on:click={() => addRecipient(friend)}
-        class={classNames(
-          'w-full text-left block px-4 sm:px-6 py-3 border-b border-gray-100 text-gray-600 hover:text-black',
-          selectedResult === i ? 'bg-gray-100' : ''
-        )}
-      >
-        {#if friend.name}
-          {friend.name} ({friend.email})
-        {:else}
-          {friend.email}
-        {/if}
-      </button>
-    {/each}
-  </div>
+  {#if editable}
+    <div class="relative border-gray-100 flex space-x-4 items-center py-2">
+      <input
+        bind:this={input}
+        bind:value
+        use:debounce={{ value, func: search, duration: 50 }}
+        on:blur={onBlur}
+        autocomplete="off"
+        id="search"
+        name="search"
+        class="block w-full border-none bg-transparent px-0 py-2 placeholder-gray-300 focus:border-black focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-0"
+        placeholder="Add recipient ..."
+        type="text"
+      />
+      {#if !is_public}
+        <SecondaryButton size='sm' on:click={togglePublic}><span class="whitespace-nowrap">Make public</span></SecondaryButton>
+      {/if}
+    </div>
+    
+    <div class="overflow-y-auto" bind:this={resultsEl}>
+      {#each result as friend, i}
+        <button
+          on:click={() => addRecipient(friend)}
+          class={classNames(
+            'w-full text-left block px-4 sm:px-6 py-3 border-b border-gray-100 text-gray-600 hover:text-black',
+            selectedResult === i ? 'bg-gray-100' : ''
+          )}
+        >
+          {#if friend.name}
+            {friend.name} ({friend.email})
+          {:else}
+            {friend.email}
+          {/if}
+        </button>
+      {/each}
+    </div>
+  {/if}
 </div>
 
 <!-- <svelte:window on:keydown={onKeyDown} /> -->

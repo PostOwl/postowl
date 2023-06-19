@@ -1,5 +1,5 @@
 pragma journal_mode = WAL;
-PRAGMA foreign_keys=OFF;
+
 BEGIN TRANSACTION;
 
 CREATE TABLE IF NOT EXISTS posts (
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS old_post_slugs (
 
 CREATE TABLE IF NOT EXISTS friends (
   friend_id INTEGER PRIMARY KEY,
-  name TEXT NOT NULL,
+  name TEXT,
   email TEXT UNIQUE NOT NULL,
   created_at TEXT NOT NULL,
   updated_at TEXT DEFAULT NULL

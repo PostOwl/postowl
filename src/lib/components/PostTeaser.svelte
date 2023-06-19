@@ -7,7 +7,7 @@
   $: teaser_image = JSON.parse(post.teaser_image);
 </script>
 
-<a href={`/posts/${post.slug}`} class={classNames('block md:text-xl rounded-lg border shadow-md bg-white p-4 sm:p-8', post.is_public ? 'border-gray-300': post.recipients.length > 0 ? 'border-yellow-300' : 'border-red-300' )}>
+<div href={`/posts/${post.slug}`} class={classNames('md:text-xl rounded-lg border-2 shadow-md bg-white p-4 sm:p-8', post.is_public ? 'border-gray-300': post.recipients.length > 0 ? 'border-yellow-300' : 'border-red-300' )}>
   <div>
     <div class="text-sm py-2">
       <!-- Only show this for the site owner -->
@@ -22,20 +22,23 @@
       {/if}
     </div>
     <div>
-      <div
+      <a
+        href={`/posts/${post.slug}`}
         class={classNames('text-2xl md:text-3xl lg:text-4xl font-bold')}
       >
         {post.title}
-      </div>
+      </a>
     </div>
     {#if teaser_image?.src && teaser_image?.width && teaser_image?.height}
-      <img
-        class="block bg-black w-full mt-4"
-        src={teaser_image.src}
-        width={teaser_image.width}
-        height={teaser_image.height}
-        alt={post.title}
-      />
+      <a href={`/posts/${post.slug}`}>
+        <img
+          class="block bg-black w-full mt-4"
+          src={teaser_image.src}
+          width={teaser_image.width}
+          height={teaser_image.height}
+          alt={post.title}
+        />
+      </a>
     {/if}
     <div class="pt-4">
       <div class={teaser_image?.src ? 'line-clamp-3' : 'line-clamp-5'}>
@@ -48,4 +51,4 @@
   <div class="pt-4 flex">
     <SecondaryButton size='sm' href={`/posts/${post.slug}`}>Continue reading →</SecondaryButton>
   </div>
-</a>
+</div>

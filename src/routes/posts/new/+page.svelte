@@ -49,10 +49,12 @@
   <title>New letter</title>
 </svelte:head>
 
-{#if editable}
-  <EditorToolbar {currentUser} on:cancel={discardDraft} on:save={createPost} confirmLabel='Send' />
-{/if}
 
 <RecipientsSelector bind:is_public bind:recipients />
+<div class="pt-8"></div>
 <Post bind:title bind:content bind:created_at {editable} />
 <Footer {editable} />
+
+{#if editable}
+  <EditorToolbar {currentUser} on:cancel={discardDraft} on:save={createPost} confirmLabel={is_public ? 'Publish' : recipients.length > 0 ? 'Send' : 'Save' } />
+{/if}

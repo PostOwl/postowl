@@ -31,7 +31,7 @@ export async function createPost(title, content, teaser, teaser_image, recipient
       let friend;
       let friend_id = recipient.friend_id;
       if (!friend_id) {
-        friend = db.prepare("INSERT INTO friends (name, email, created_at) values('', ?, ?) RETURNING friend_id")
+        friend = db.prepare("INSERT INTO friends (email, created_at) values(?, ?) RETURNING friend_id")
           .get(recipient.email, new Date().toISOString());
         friend_id = friend.friend_id;
       }
@@ -75,7 +75,7 @@ export async function updatePost(slug, title, content, teaser, teaser_image, rec
       const recipient = recipients[i];
       let friend_id = recipient.friend_id;
       if (!friend_id) {
-        const friend = db.prepare("INSERT INTO friends (name, email, created_at) values('', ?, ?) RETURNING friend_id")
+        const friend = db.prepare("INSERT INTO friends (email, created_at) values(?, ?) RETURNING friend_id")
           .get(recipient.email, new Date().toISOString());
         friend_id = friend.friend_id;
       }
@@ -196,7 +196,7 @@ export async function createFriend(name, email, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
 
   const friend = db.prepare("INSERT INTO friends (name, email, created_at) VALUES (?, ?, ?) RETURNING friend_id, created_at")
-    .get(name, email, new Date().toISOString());
+    .get(name, email || null, new Date().toISOString());
   return friend;
 }
 

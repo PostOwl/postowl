@@ -97,32 +97,32 @@
   <meta name="robots" content="index, follow" />
 </svelte:head>
 
-{#if editable}
-  <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={savePost} />
-{/if}
+
+
 
 <WebsiteNav bind:editable {currentUser} bio={data.bio} />
 
+
 <div class="pt-8 sm:pt-16 "></div>
 
-{#if editable}
-  <RecipientsSelector bind:is_public bind:recipients />
-{:else}
-  <div class="max-w-screen-md mx-auto px-6 mb-2">
-    {#if currentUser}
-      {#if is_public}
-        <strong>To:</strong> Everyone
-      {:else if (recipients.length > 0)}
-        <strong>To:</strong>
-        {#each recipients as recipient, i}
-          <CopyableRecipient {recipient} slug={data.slug} />
-        {/each}
-      {:else}
-        <strong>To:</strong> Myself
-      {/if}
-    {/if}
-  </div>
+{#if currentUser}
+  <RecipientsSelector {editable} bind:is_public bind:recipients />
 {/if}
+
+<!-- <div class="max-w-screen-md mx-auto px-6 mb-2">
+  {#if currentUser}
+    {#if is_public}
+      <strong>To:</strong> Everyone
+    {:else if (recipients.length > 0)}
+      <strong>To:</strong>
+      {#each recipients as recipient, i}
+        <CopyableRecipient {recipient} slug={data.slug} />
+      {/each}
+    {:else}
+      <strong>To:</strong> Myself
+    {/if}
+  {/if}
+</div> -->
 
 <Post bind:title bind:content bind:created_at {editable} />
 
@@ -135,20 +135,25 @@
   {/if}
 </div>
 
-<NotEditable {editable}>
-  <div class="text-center max-w-screen-sm mx-auto px-6 py-12 sm:py-16">
-    <div class="pb-4 text-center">
-      <a href="/"><img src={data.bio.avatar} alt={data.bio.name} class="inline-block w-16 h-16 md:w-16 md:h-16 rounded-full" /></a>
+<!-- {#if !editable} -->
+  <NotEditable {editable}>
+    <div class="text-center max-w-screen-sm mx-auto px-6 py-12 sm:py-16">
+      <div class="pb-4 text-center">
+        <a href="/"><img src={data.bio.avatar} alt={data.bio.name} class="inline-block w-16 h-16 md:w-16 md:h-16 rounded-full" /></a>
+      </div>
+
+      <div class="text-center pb-4 sm:pb-8">
+        <a href="/" class="text-2xl font-bold underline">
+          {data.bio.name}
+        </a>
+      </div>
+
+      <p class="sm:text-lg prose">{@html data.bio.bio}</p>
     </div>
+  </NotEditable>
+  <Footer {editable} counter={`/blog/${data.slug}`} />
+<!-- {/if} -->
 
-    <div class="text-center pb-4 sm:pb-8">
-      <a href="/" class="text-2xl font-bold underline">
-        {data.bio.name}
-      </a>
-    </div>
-
-    <p class="sm:text-lg prose">{@html data.bio.bio}</p>
-  </div>
-</NotEditable>
-
-<Footer {editable} counter={`/blog/${data.slug}`} />
+{#if editable}
+  <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={savePost} />
+{/if}

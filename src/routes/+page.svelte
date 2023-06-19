@@ -5,8 +5,6 @@
   import { fetchJSON, extendQueryParams } from '$lib/util';
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import WebsiteNav from '$lib/components/WebsiteNav.svelte';
-  import Modal from '$lib/components/Modal.svelte';
-  import LoginMenu from '$lib/components/LoginMenu.svelte';
   import Footer from '$lib/components/Footer.svelte';
   import Image from '$lib/components/Image.svelte';
   import NotEditable from '$lib/components/NotEditable.svelte';
@@ -94,25 +92,8 @@
 
 </svelte:head>
 
-{#if editable}
-  <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={saveBio} />
-{/if}
 
 <WebsiteNav bind:showUserMenu {currentUser} bio={{ avatar, name, bio }} bind:editable />
-
-{#if showUserMenu}
-  <Modal on:close={() => (showUserMenu = false)}>
-    <form class="w-full block" method="POST">
-      <div class="w-full flex flex-col space-y-4 p-4 sm:p-6">
-        <PrimaryButton type="button" on:click={() => goto('/posts/new')}>
-          New letter
-        </PrimaryButton>
-        <PrimaryButton on:click={toggleEdit}>Edit page</PrimaryButton>
-        <LoginMenu {currentUser} />
-      </div>
-    </form>
-  </Modal>
-{/if}
 
 <!-- Bio -->
 <div class="bg-white">
@@ -139,11 +120,8 @@
     </div>
     {#if currentUser}
       {#if !editable}
-        <div class="flex justify-center py-4"><PrimaryButton size='sm' on:click={() => editable = true}>Edit bio</PrimaryButton></div>
-      {:else}
-        <div class="flex justify-center py-4"><PrimaryButton size='sm' on:click={saveBio}>Save bio</PrimaryButton></div>
+        <div class="flex justify-center py-2"><PrimaryButton size='sm' on:click={() => editable = true}>Edit bio</PrimaryButton></div>
       {/if}
-
     {/if}
   </div>
 </div>
@@ -160,6 +138,7 @@
       <div class="my-6 space-y-8">
         {#each data.posts.slice(0, postLimit) as post, i}
           <PostTeaser {post} {currentUser} />
+          <!-- <div class="h-[600px] bg-gray-200"></div> -->
         {/each}
       </div>
     </div>
@@ -178,3 +157,7 @@
 </NotEditable>
 
 <Footer counter="/" {editable} />
+
+{#if editable}
+  <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={saveBio} />
+{/if}
