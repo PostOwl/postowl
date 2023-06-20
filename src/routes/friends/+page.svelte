@@ -1,10 +1,16 @@
 <script>
+  import { invalidateAll } from '$app/navigation';
+  import { onMount } from 'svelte';
   import WebsiteNav from '$lib/components/WebsiteNav.svelte';
   import FriendTeaser from '$lib/components/FriendTeaser.svelte';
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
 
   export let data;
   $: bio = data.bio;
+
+  onMount(() => {
+    invalidateAll();
+  });
 </script>
 
 <svelte:head>

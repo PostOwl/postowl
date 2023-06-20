@@ -1,4 +1,6 @@
 <script>
+  import { invalidateAll } from '$app/navigation';
+  import { onMount } from 'svelte';
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
   import { extractTeaser, extractTeaserImage, fetchJSON } from '$lib/util';
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
@@ -20,6 +22,10 @@
     data = data;
     initOrReset();
   }
+
+  onMount(() => {
+    invalidateAll();
+  });
 
   function initOrReset() {
     title = data.title;

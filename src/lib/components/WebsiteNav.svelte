@@ -9,12 +9,9 @@
   export let bio = undefined;
 
   let showMenu = false;
-  $: currentUser = $page.data.currentUser;
-  $: latestBio = bio || $page.data.bio;
-
-  $: {
-    bio = bio;
-  }
+  $: data = $page.data;
+  $: currentUser = data.currentUser;
+  $: latestBio = bio || data.bio;
 
   function onKeyDown(e) {
     // Turn on editing
@@ -35,10 +32,13 @@
     'bg-white bg-opacity-95'
   )}
 >
+
   <div class="max-w-screen-md mx-auto py-4 px-6">
     <NotEditable {editable}>
       <div class="flex items-center relative">
-        <a href="/" class="text-sm font-bold uppercase">{latestBio.name}</a>
+        <a href="/" class="text-sm font-bold uppercase">
+          {latestBio.name}
+        </a>
         <div class="flex-1" />
         {#if currentUser}
           <PrimaryButton size="sm" href="/posts/new">New letter</PrimaryButton>

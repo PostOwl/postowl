@@ -1,8 +1,16 @@
 <script>
   import Limiter from '$lib/components/Limiter.svelte';
+  import { invalidateAll } from '$app/navigation';
+  import { onMount } from 'svelte';
+  
   export let form;
   export let data;
   $: bio = data.bio;
+
+  onMount(() => {
+    invalidateAll();
+  });
+
 </script>
 
 
