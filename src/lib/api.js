@@ -1,12 +1,15 @@
 import slugify from 'slugify';
 import Database from 'better-sqlite3';
-import { nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 import { DEFAULT_BIO } from '$lib/constants';
 import { DB_PATH, ADMIN_NAME, ADMIN_PASSWORD } from '$env/static/private';
 import { PUBLIC_ORIGIN } from '$env/static/public';
 import sendMail from '$lib/sendMail';
 import { dev } from '$app/environment';
 import { Blob } from 'node:buffer';
+
+// We don't use "_" and "-" for better readability
+const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 21);
 
 const db = new Database(DB_PATH, {
   /*verbose: console.log*/
@@ -29,10 +32,17 @@ export async function createPost(
   if (!currentUser) throw new Error('Not authorized');
 
   return db.transaction(() => {
-    const slug = slugify(title, {
+    let slug = slugify(title, {
       lower: true,
       strict: true
     });
+
+    // If slug is already used, we add a unique postfix
+    const postExists = db.prepare('SELECT * FROM posts WHERE slug = ?').get(slug);
+    if (postExists) {
+      slug = slug + '-' + nanoid();
+    }
+
     const post = db
       .prepare(
         'INSERT INTO posts (slug, title, content, teaser, teaser_image, is_public, created_at) values(?, ?, ?, ?, ?, ?, ?) RETURNING slug, post_id, created_at'
