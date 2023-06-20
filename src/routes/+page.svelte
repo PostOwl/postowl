@@ -19,9 +19,9 @@
   $: postLimit = $page.url.searchParams.get('postLimit') || 30;
 
   function initOrReset() {
-    avatar = data.currentUser.avatar;
-    name = data.currentUser.name;
-    bio = data.currentUser.bio;
+    avatar = data.bio.avatar;
+    name = data.bio.name;
+    bio = data.bio.bio;
     editable = false;
   }
 
@@ -96,7 +96,7 @@
   <EditorToolbar on:cancel={initOrReset} on:save={saveBio} />
 {/if}
 
-<WebsiteNav bind:showUserMenu {currentUser} bio={{ avatar, name, bio }} bind:editable />
+<WebsiteNav bio={{ avatar, name, bio }} bind:editable />
 
 <!-- Bio -->
 <div class="bg-white">

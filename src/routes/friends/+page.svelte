@@ -4,15 +4,13 @@
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
 
   export let data;
-  $: currentUser = data.currentUser;
-  $: bio = data.bio;
 </script>
 
 <svelte:head>
   <title>Friends</title>
 </svelte:head>
 
-<WebsiteNav {currentUser} {bio} />
+<WebsiteNav />
 
 <div class="max-w-screen-md mx-auto px-6 pb-8">
   <h1 class="text-center font-bold text-2xl sm:text-4xl pt-14">{data.friends.length} Friends</h1>

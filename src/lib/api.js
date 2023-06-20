@@ -8,7 +8,7 @@ import sendMail from '$lib/sendMail';
 import { dev } from '$app/environment';
 import { Blob } from 'node:buffer';
 
-const db = new Database(DB_PATH, { verbose: console.log });
+const db = new Database(DB_PATH, { /*verbose: console.log*/ });
 db.pragma('journal_mode = WAL');
 db.pragma('case_sensitive_like = true');
 
@@ -184,7 +184,8 @@ export async function getFriends(currentUser) {
 /**
  * Get friend for a given friendId
  */
-export async function getFriend(friend_id) {
+export async function getFriend(friend_id, currentUser) {
+  if (!currentUser) throw new Error('Not authorized');
   const friend = db.prepare("SELECT * FROM friends WHERE friend_id = ?").get(friend_id);
   return { ...friend };
 }
@@ -278,7 +279,7 @@ export async function getCurrentUser(session_id) {
   const bio = await getBio();
   
   if (session) {
-    return bio || { name: 'Admin'};
+    return { name: bio.name || 'Admin' };
   } else {
     return null;
   }

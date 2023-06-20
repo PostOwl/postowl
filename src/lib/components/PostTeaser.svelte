@@ -9,9 +9,9 @@
 
 <div href={`/posts/${post.slug}`} class={classNames('md:text-xl rounded-lg border shadow-md bg-white p-4 sm:p-8', post.is_public ? 'border-gray-300': post.recipients.length > 0 ? 'border-yellow-300' : 'border-red-300' )}>
   <div>
-    <div class="text-sm py-2">
-      <!-- Only show this for the site owner -->
-      {#if currentUser}
+    {#if currentUser}
+      <div class="text-sm py-2">
+        <!-- Only show this for the site owner -->
         {#if post.is_public}
           <strong>To:</strong> Everyone
         {:else if (post.recipients.length > 0)}
@@ -19,8 +19,8 @@
         {:else}
           <strong>To:</strong> Myself
         {/if}
-      {/if}
-    </div>
+      </div>
+    {/if}
     <div>
       <a
         href={`/posts/${post.slug}`}

@@ -15,7 +15,6 @@
     <img class={className} {src} {alt} />
   {:then ImageEditor}
     <ImageEditor.default
-      {currentUser}
       class={className}
       bind:src
       {alt}

@@ -6,8 +6,9 @@
 
   export let data;
   let editable, name, email, created_at, updated_at;
-
+  
   $: currentUser = data.currentUser;
+  $: bio = data.bio;
   $: {
     // HACK: To make sure this is only run when the parent passes in new data
     data = data;
@@ -58,12 +59,12 @@
 
 <svelte:head>
   <title>{name || email}</title>
-  <link rel="icon" type="image/png" sizes="300x300" href={currentUser.avatar}>
-  <link rel="apple-touch-icon" sizes="300x300" href={currentUser.avatar}>
+  <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar}>
+  <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar}>
 </svelte:head>
 
 {#if editable}
-  <EditorToolbar {currentUser} on:cancel={() => goto('/friends')} on:save={saveFriend} />
+  <EditorToolbar on:cancel={() => goto('/friends')} on:save={saveFriend} />
 {/if}
 
 <div class="max-w-screen-md mx-auto px-6 pb-8 sm:text-xl">

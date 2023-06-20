@@ -5,8 +5,12 @@
   import PrimaryButton from './PrimaryButton.svelte';
   export let editable = false;
 
+  // Explicitly set by home page, so we get live updates
+  export let bio = undefined;
+
   let showMenu = false;
   $: currentUser = $page.data.currentUser;
+  $: latestBio = bio || $page.data.bio;
 
   function onKeyDown(e) {
     // Turn on editing
@@ -30,7 +34,7 @@
   <div class="max-w-screen-md mx-auto py-4 px-6">
     <NotEditable {editable}>
       <div class="flex items-center relative">
-        <a href="/" class="text-sm font-bold uppercase">{currentUser.name}</a>
+        <a href="/" class="text-sm font-bold uppercase">{latestBio.name}</a>
         <div class="flex-1" />
         {#if currentUser}
           <PrimaryButton size="sm" href="/posts/new">New letter</PrimaryButton>

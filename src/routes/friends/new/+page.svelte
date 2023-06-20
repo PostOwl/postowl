@@ -1,12 +1,13 @@
 <script>
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
-  import { fetchJSON, classNames } from '$lib/util';
+  import { fetchJSON } from '$lib/util';
   import { goto } from '$app/navigation';
   import PlainText from '$lib/components/PlainText.svelte';
 
   export let data;
   let editable = true, name = '', email = '';
   $: currentUser = data.currentUser;
+  $: bio = data.bio;
 
   async function createFriend() {
     if (!currentUser) return alert('Sorry, you are not authorized.');
@@ -27,12 +28,12 @@
 
 <svelte:head>
   <title>{name}</title>
-  <link rel="icon" type="image/png" sizes="300x300" href={currentUser.avatar}>
-  <link rel="apple-touch-icon" sizes="300x300" href={currentUser.avatar}>
+  <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar}>
+  <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar}>
 </svelte:head>
 
 {#if editable}
-  <EditorToolbar {currentUser} on:cancel={() => goto('/friends')} on:save={createFriend} confirmLabel='Create'/>
+  <EditorToolbar on:cancel={() => goto('/friends')} on:save={createFriend} confirmLabel='Create'/>
 {/if}
 
 <div class="max-w-screen-md mx-auto px-6 pb-8 sm:text-xl">
