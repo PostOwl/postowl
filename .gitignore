@@ -6,7 +6,7 @@ node_modules
 .env
 .env.*
 !.env.example
-*.sqlite3
+*.sqlite3*
 .tool-versions
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*

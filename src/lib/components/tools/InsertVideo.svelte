@@ -96,7 +96,10 @@
 <button
   on:click={() => fileInput.click()}
   {disabled}
-  class={classNames('hover:bg-gray-100 sm:mx-1 rounded-full p-2 disabled:opacity-30')}
+  class={classNames(
+    'text-white hover:bg-white hover:text-black',
+    'sm:mx-1 rounded-full p-2 disabled:opacity-30'
+  )}
 >
   <slot />
   {progress || ''}

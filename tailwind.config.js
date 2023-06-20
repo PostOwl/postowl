@@ -19,16 +19,16 @@ export default {
       typography: {
         DEFAULT: {
           css: {
-            h1: {
-              fontWeight: 500 // font-medium
-            },
-            h2: {
-              fontWeight: 500, // font-medium
-              fontSize: em(20, 14),
-              marginTop: em(32, 20),
-              marginBottom: em(4, 20),
-              lineHeight: round(28 / 20)
-            },
+            // h1: {
+            //   fontWeight: 500 // font-medium
+            // },
+            // h2: {
+            //   fontWeight: 500, // font-medium
+            //   fontSize: em(20, 14),
+            //   marginTop: em(32, 20),
+            //   marginBottom: em(4, 20),
+            //   lineHeight: round(28 / 20)
+            // },
             blockquote: {
               fontWeight: 'normal',
               fontStyle: 'normal',
@@ -47,30 +47,30 @@ export default {
         },
         lg: {
           css: {
-            h1: {
-              fontWeight: 500 // font-medium
-            },
-            h2: {
-              fontWeight: 500,
-              fontSize: em(30, 18),
-              marginTop: em(56, 30),
-              marginBottom: em(4, 20),
-              lineHeight: round(40 / 30)
-            }
+            // h1: {
+            //   fontWeight: 500 // font-medium
+            // },
+            // h2: {
+            //   fontWeight: 500,
+            //   fontSize: em(30, 18),
+            //   marginTop: em(56, 30),
+            //   marginBottom: em(4, 20),
+            //   lineHeight: round(40 / 30)
+            // }
           }
         },
         xl: {
           css: {
-            h1: {
-              fontWeight: 500 // font-medium
-            },
-            h2: {
-              fontWeight: 500, // font-medium
-              fontSize: em(30, 18),
-              marginTop: em(56, 30),
-              marginBottom: em(4, 20),
-              lineHeight: round(40 / 30)
-            }
+            // h1: {
+            //   fontWeight: 500 // font-medium
+            // },
+            // h2: {
+            //   fontWeight: 500, // font-medium
+            //   fontSize: em(30, 18),
+            //   marginTop: em(56, 30),
+            //   marginBottom: em(4, 20),
+            //   lineHeight: round(40 / 30)
+            // }
           }
         }
       }

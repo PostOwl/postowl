@@ -2,10 +2,12 @@
   import { onMount } from 'svelte';
   import { debounce, classNames, isEmailValid } from '$lib/util';
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
+  import CopyableRecipient from './CopyableRecipient.svelte';
   
   export let recipients = [];
   export let is_public;
   export let editable;
+  export let slug = undefined;
   
   let value;
   let result = [];
@@ -128,25 +130,16 @@
         {/if}
       </div>
     {/if}
-    {#each recipients as recipient, i}
-      <div class="rounded-full bg-yellow-100 px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base text-yellow-800 inline-flex items-center space-x-1">
-        <span>{recipient.email}</span>
-        {#if editable}
-          <button on:click={() => removeRecipient(i) }>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        {/if}
-      </div>
+    {#each recipients as recipient, i }
+      <CopyableRecipient {recipient} {editable} {slug} on:delete={() => removeRecipient(i) } />
     {/each}
-
   </div>
 
   {#if editable}
     <div class="relative border-gray-100 flex space-x-4 items-center py-2">
       <input
         bind:this={input}
+        on:keydown={onKeyDown}
         bind:value
         use:debounce={{ value, func: search, duration: 50 }}
         on:blur={onBlur}
@@ -182,4 +175,4 @@
   {/if}
 </div>
 
-<!-- <svelte:window on:keydown={onKeyDown} /> -->
+<!-- <svelte:window  /> -->

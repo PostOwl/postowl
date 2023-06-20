@@ -5,7 +5,7 @@
   import PlainText from '$lib/components/PlainText.svelte';
 
   export let data;
-  let editable = true, name = 'Unnamed', email = 'x@y.com';
+  let editable = true, name = '', email = '';
   $: currentUser = data.currentUser;
 
   async function createFriend() {
@@ -36,12 +36,13 @@
 <div class="max-w-screen-md mx-auto px-6 pb-8 sm:text-xl">
   <div class="pt-24 text-sm font-bold">Name</div>
   
-  <div class={classNames("font-bold text-2xl", name === "Unnamed" ? "text-gray-400": "")}>
+  <div class="border-b py-2">
     <PlainText {editable} bind:content={name} />
   </div>
   
   <div class="pt-8 text-sm font-bold">Email</div>
-  <div class={classNames(email === "x@y.com" ? "text-gray-400": "")}>
+  <div class="border-b py-2">
   <PlainText {editable} bind:content={email} />
   </div>
 </div>
+

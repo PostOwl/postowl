@@ -93,6 +93,10 @@
 </svelte:head>
 
 
+{#if editable}
+  <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={saveBio} />
+{/if}
+
 <WebsiteNav bind:showUserMenu {currentUser} bio={{ avatar, name, bio }} bind:editable />
 
 <!-- Bio -->
@@ -158,6 +162,3 @@
 
 <Footer counter="/" {editable} />
 
-{#if editable}
-  <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={saveBio} />
-{/if}

@@ -7,7 +7,7 @@
   $: teaser_image = JSON.parse(post.teaser_image);
 </script>
 
-<div href={`/posts/${post.slug}`} class={classNames('md:text-xl rounded-lg border-2 shadow-md bg-white p-4 sm:p-8', post.is_public ? 'border-gray-300': post.recipients.length > 0 ? 'border-yellow-300' : 'border-red-300' )}>
+<div href={`/posts/${post.slug}`} class={classNames('md:text-xl rounded-lg border shadow-md bg-white p-4 sm:p-8', post.is_public ? 'border-gray-300': post.recipients.length > 0 ? 'border-yellow-300' : 'border-red-300' )}>
   <div>
     <div class="text-sm py-2">
       <!-- Only show this for the site owner -->

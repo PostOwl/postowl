@@ -24,7 +24,7 @@
   on:click={handleClick}
   {disabled}
   class={classNames(
-    active ? 'bg-gray-900 text-white' : 'hover:bg-gray-100',
+    active ? 'bg-white text-black' : 'text-white hover:bg-white hover:text-black',
     'sm:mx-1 rounded-full p-2 disabled:opacity-30'
   )}
 >

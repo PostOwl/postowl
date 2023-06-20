@@ -2,6 +2,7 @@
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
   import { extractTeaser, extractTeaserImage, fetchJSON, toDateString } from '$lib/util';
   import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
+    import WebsiteNav from '$lib/components/WebsiteNav.svelte';
   import { goto } from '$app/navigation';
   import Footer from '$lib/components/Footer.svelte';
   import Post from '$lib/components/Post.svelte';
@@ -49,12 +50,13 @@
   <title>New letter</title>
 </svelte:head>
 
-
-<RecipientsSelector bind:is_public bind:recipients />
-<div class="pt-8"></div>
-<Post bind:title bind:content bind:created_at {editable} />
-<Footer {editable} />
-
 {#if editable}
   <EditorToolbar {currentUser} on:cancel={discardDraft} on:save={createPost} confirmLabel={is_public ? 'Publish' : recipients.length > 0 ? 'Send' : 'Save' } />
 {/if}
+
+<WebsiteNav bind:editable {currentUser} bio={data.bio} />
+<div class="pt-8 sm:pt-16 "></div>
+<RecipientsSelector {editable} bind:is_public bind:recipients />
+<div class="pt-8"></div>
+<Post bind:title bind:content bind:created_at {editable} />
+<Footer {editable} />

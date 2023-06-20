@@ -17,7 +17,11 @@
 <button
   on:click={handleClick}
   {disabled}
-  class={classNames('disabled:opacity-30 rounded-full p-2 sm:mx-1 hover:bg-gray-100')}
+  
+  class={classNames(
+    'text-white hover:bg-white hover:text-black',
+    'sm:mx-1 rounded-full p-2 disabled:opacity-30'
+  )}
 >
   <slot />
 </button>
