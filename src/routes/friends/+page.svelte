@@ -4,10 +4,13 @@
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
 
   export let data;
+  $: bio = data.bio;
 </script>
 
 <svelte:head>
   <title>Friends</title>
+  <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar} />
+  <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar} />
 </svelte:head>
 
 <WebsiteNav />

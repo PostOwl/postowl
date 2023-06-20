@@ -23,7 +23,7 @@
       <div class="text-sm py-2">
         <!-- Only show this for the site owner -->
         {#if post.is_public}
-          <strong>To:</strong> Everyone
+          <strong>To:</strong> Everyone{#if post.recipients.length > 0}, {post.recipients.map(r => r.name).join(', ')}{/if}
         {:else if post.recipients.length > 0}
           <strong>To:</strong> {post.recipients.map(r => r.name).join(', ')}
         {:else}

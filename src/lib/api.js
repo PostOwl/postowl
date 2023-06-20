@@ -12,7 +12,7 @@ import { Blob } from 'node:buffer';
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 21);
 
 const db = new Database(DB_PATH, {
-  /*verbose: console.log*/
+  // verbose: console.log
 });
 db.pragma('journal_mode = WAL');
 db.pragma('case_sensitive_like = true');
@@ -283,9 +283,9 @@ export async function updateFriend(friend_id, name, email, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
   return db
     .prepare(
-      'UPDATE friends SET name= ?, email = ?, updated_at = NOW() WHERE friend_id = ? RETURNING friend_id, updated_at'
+      'UPDATE friends SET name= ?, email = ?, updated_at = ? WHERE friend_id = ? RETURNING friend_id, updated_at'
     )
-    .get(name, email, friend_id);
+    .get(name, email, new Date().toISOString(), friend_id);
 }
 
 /**
@@ -421,6 +421,16 @@ export async function getPage(page_id) {
 export async function getBio() {
   const bio = await getPage('bio');
   return bio || DEFAULT_BIO;
+}
+
+
+export async function getCounts() {
+  const counts = db.prepare(`
+    SELECT
+    (SELECT COUNT(*) FROM friends) AS friend_count,
+    (SELECT COUNT(*) FROM posts) AS post_count;
+  `).get();
+  return counts;
 }
 
 /**

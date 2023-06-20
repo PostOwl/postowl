@@ -3,10 +3,15 @@
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import Input from '$lib/components/Input.svelte';
   export let form;
+  export let data;
+  $: bio = data.bio;
 </script>
 
+
 <svelte:head>
-  <title>Anmelden</title>
+  <title>Sign in</title>
+  <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar} />
+  <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar} />
 </svelte:head>
 
 <Limiter>
@@ -15,10 +20,6 @@
   {/if}
   <div class="w-full flex flex-col space-y-4 mt-12 mb-4">
     <form method="POST" class="flex flex-col space-y-8">
-      <!-- <div class="flex flex-col">
-				<label for="email" class="font-semibold mb-2">E-Mail</label>
-				<Input type="text" name="email" id="email" />
-			</div> -->
       <div class="flex flex-col">
         <label for="password" class="font-semibold mb-2 text-2xl">Enter Admin password</label>
         <Input type="password" name="password" id="password" />

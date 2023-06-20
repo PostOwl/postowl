@@ -12,6 +12,10 @@
   $: currentUser = $page.data.currentUser;
   $: latestBio = bio || $page.data.bio;
 
+  $: {
+    bio = bio;
+  }
+
   function onKeyDown(e) {
     // Turn on editing
     if (e.key === 'e' && (e.metaKey || e.ctrlKey)) {
@@ -61,7 +65,7 @@
 </div>
 
 {#if showMenu}
-  <div class="bg-white fixed inset-0 z-50">
+  <div class="bg-black text-white fixed inset-0 z-50">
     <div class="max-w-screen-md mx-auto py-4 px-6 flex flex-col space-y-4">
       <div class="text-right mb-8">
         <button on:click={() => (showMenu = false)}>
@@ -81,11 +85,21 @@
         <a class="text-3xl font-bold underline" href="/" on:click={toggleMenu}>About</a>
       </div>
       <div class="text-center">
-        <a class="text-3xl font-bold underline" href="/#letters" on:click={toggleMenu}>Letters</a>
+        <a class="inline-flex space-x-2 items-center" href="/#letters" on:click={toggleMenu}>
+          <span class="font-bold text-3xl underline">Letters</span>
+          {#if currentUser}
+            <div class="bg-gray-800 rounded-full w-6 h-6 text-gray-400">{$page.data.counts.post_count}</div>
+          {/if}
+        </a>
       </div>
       {#if currentUser}
         <div class="text-center">
-          <a class="text-3xl font-bold underline" href="/friends" on:click={toggleMenu}>Friends</a>
+          <a class="inline-flex space-x-2 items-center" href="/friends" on:click={toggleMenu}>
+            <span class="font-bold text-3xl underline">Friends</span>
+            {#if currentUser}
+              <div class="bg-gray-800 rounded-full w-6 h-6 text-gray-400">{$page.data.counts.friend_count}</div>
+            {/if}
+          </a>
         </div>
         <div class="pt-14 text-center">
           <div class="pb-2">Logged in as <strong>{currentUser.name}</strong>.</div>
