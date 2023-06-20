@@ -1,5 +1,5 @@
 import { getAsset } from '$lib/api';
-import { json, error } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 export const GET = (async ({ params, setHeaders }) => {
   const path = params.path;

@@ -27,6 +27,8 @@
 
 <svelte:head>
   <title>{name}</title>
+  <link rel="icon" type="image/png" sizes="300x300" href={currentUser.avatar}>
+  <link rel="apple-touch-icon" sizes="300x300" href={currentUser.avatar}>
 </svelte:head>
 
 {#if editable}

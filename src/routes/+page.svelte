@@ -19,9 +19,9 @@
   $: postLimit = $page.url.searchParams.get('postLimit') || 30;
 
   function initOrReset() {
-    avatar = data.bio.avatar;
-    name = data.bio.name;
-    bio = data.bio.bio;
+    avatar = data.currentUser.avatar;
+    name = data.currentUser.name;
+    bio = data.currentUser.bio;
     editable = false;
   }
 
@@ -89,12 +89,11 @@
 
   <link rel="icon" type="image/png" sizes="300x300" href={avatar}>
   <link rel="apple-touch-icon" sizes="300x300" href={avatar}>
-
 </svelte:head>
 
 
 {#if editable}
-  <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={saveBio} />
+  <EditorToolbar on:cancel={initOrReset} on:save={saveBio} />
 {/if}
 
 <WebsiteNav bind:showUserMenu {currentUser} bio={{ avatar, name, bio }} bind:editable />
@@ -142,7 +141,6 @@
       <div class="my-6 space-y-8">
         {#each data.posts.slice(0, postLimit) as post, i}
           <PostTeaser {post} {currentUser} />
-          <!-- <div class="h-[600px] bg-gray-200"></div> -->
         {/each}
       </div>
     </div>
@@ -161,4 +159,3 @@
 </NotEditable>
 
 <Footer counter="/" {editable} />
-

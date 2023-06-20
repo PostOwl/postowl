@@ -1,7 +1,7 @@
 import { getFriends, getBio } from '$lib/api';
 
 export async function load({ locals }) {
-  const currentUser = locals.user;
+  const currentUser = locals.currentUser;
   const friends = await getFriends(currentUser);
   const bio = await getBio();
   return {

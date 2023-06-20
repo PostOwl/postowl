@@ -1,9 +1,9 @@
 <script>
+  import { page } from '$app/stores';
   import uuid from '$lib/uuid';
   import { resizeImage } from '$lib/util';
   import uploadAsset from '$lib/uploadAsset';
 
-  export let currentUser;
   export let src;
   export let alt;
   export let maxWidth;
@@ -14,6 +14,8 @@
 
   let fileInput; // for uploading an image
   let progress = undefined; // file upload progress
+
+  $: currentUser = $page.data.currentUser;
 
   async function uploadImage() {
     const file = fileInput.files[0];

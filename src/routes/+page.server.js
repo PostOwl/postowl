@@ -1,13 +1,9 @@
-import { getPosts, getBio } from '$lib/api';
+import { getPosts } from '$lib/api';
 
 export async function load({ locals }) {
-  const currentUser = locals.user;
-  const posts = await getPosts(currentUser);
-  const bio = await getBio();
+  const posts = await getPosts(locals.currentUser);
 
   return {
-    currentUser,
-    posts,
-    bio
+    posts
   };
 }

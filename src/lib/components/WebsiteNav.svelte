@@ -1,17 +1,16 @@
 <script>
+  import { page } from '$app/stores';
   import { classNames } from '$lib/util';
   import NotEditable from './NotEditable.svelte';
   import PrimaryButton from './PrimaryButton.svelte';
   export let editable = false;
-  export let currentUser;
-  export let bio;
-  export let isDark = undefined;
 
   let showMenu = false;
+  $: currentUser = $page.data.currentUser;
 
   function onKeyDown(e) {
     // Turn on editing
-    if (e.key === 'e' && e.metaKey) {
+    if (e.key === 'e' && (e.metaKey || e.ctrlKey)) {
       editable = true;
     }
   }
@@ -25,13 +24,13 @@
   class={classNames(
     'backdrop-blur-sm  z-10 text-sm lg:text-lg border-b',
     !editable ? 'sticky top-0' : '',
-    isDark ? 'bg-black text-white' : 'bg-white bg-opacity-95'
+    'bg-white bg-opacity-95'
   )}
 >
   <div class="max-w-screen-md mx-auto py-4 px-6">
     <NotEditable {editable}>
       <div class="flex items-center relative">
-        <a href="/" class="text-sm font-bold uppercase">{bio.name}</a>
+        <a href="/" class="text-sm font-bold uppercase">{currentUser.name}</a>
         <div class="flex-1" />
         {#if currentUser}
           <PrimaryButton size="sm" href="/posts/new">New letter</PrimaryButton>
@@ -66,7 +65,7 @@
       {#if currentUser}
         <div class="text-center"><a class="text-3xl font-bold underline" href="/friends" on:click={toggleMenu}>Friends</a></div>
         <div class="pt-14 text-center">
-          <div class="pb-2">Logged in as <strong>Admin</strong>.</div>
+          <div class="pb-2">Logged in as <strong>{currentUser.name}</strong>.</div>
           <div><a class="text-3xl font-bold underline" href="/logout">Sign out</a></div>
         </div>
       {:else}

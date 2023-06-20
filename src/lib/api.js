@@ -275,9 +275,10 @@ export async function deletePost(slug, currentUser) {
 export async function getCurrentUser(session_id) {
   const stmt = db.prepare('SELECT session_id, expires FROM sessions WHERE session_id = ? AND expires > ?');
   const session = stmt.get(session_id, new Date().toISOString());
+  const bio = await getBio();
   
   if (session) {
-    return { name: 'Admin' };
+    return bio || { name: 'Admin'};
   } else {
     return null;
   }

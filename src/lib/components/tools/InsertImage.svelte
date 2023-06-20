@@ -1,4 +1,5 @@
 <script>
+  import { page } from '$app/stores';
   import { classNames, resizeImage, getDimensions } from '$lib/util';
   import uuid from '$lib/uuid';
   import uploadAsset from '$lib/uploadAsset';
@@ -6,13 +7,14 @@
 
   export let editorView;
   export let editorState;
-  export let currentUser;
+  // export let currentUser;
 
   let fileInput; // for uploading an image
   let progress = undefined; // file upload progress
 
   $: schema = editorState.schema;
   $: disabled = !insertImage(editorState, null, editorView);
+  $: currentUser = $page.data.currentUser;
 
   async function uploadImage() {
     const file = fileInput.files[0];

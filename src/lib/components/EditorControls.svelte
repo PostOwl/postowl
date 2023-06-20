@@ -13,8 +13,6 @@
   import InsertImage from './tools/InsertImage.svelte';
   import CreateLink from './tools/CreateLink.svelte';
 
-  export let currentUser = undefined;
-  export let isDark = false;
   export let confirmLabel = 'Save';
 
   let editorView = null;
@@ -143,7 +141,7 @@
               >
             </ToggleOrderedList>
             <div class="hidden sm:block w-px bg-gray-700 mx-3" />
-            <InsertImage {currentUser} {editorState} {editorView}>
+            <InsertImage {editorState} {editorView}>
               <svg
                 class="h-3 w-3 sm:h-4 sm:w-4"
                 fill="currentColor"
