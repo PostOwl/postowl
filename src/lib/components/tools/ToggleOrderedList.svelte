@@ -20,6 +20,7 @@
   class={classNames(
     'text-white hover:bg-white hover:text-black',
     'sm:mx-1 rounded-full p-2 disabled:opacity-30'
-  )}>
+  )}
+>
   <slot />
 </button>

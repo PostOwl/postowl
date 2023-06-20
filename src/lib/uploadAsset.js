@@ -1,8 +1,7 @@
 function upload(file, path, progressCallback) {
-
   const formData = new FormData();
-  formData.append("file", file);
-  formData.append("path", path);
+  formData.append('file', file);
+  formData.append('path', path);
 
   return new Promise(function (resolve, reject) {
     const xhr = new XMLHttpRequest();

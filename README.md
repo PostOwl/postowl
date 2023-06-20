@@ -76,8 +76,8 @@ This repo contains the files you need to deploy your PostOwl site to [fly.io](ht
 1. Clone this repo to a directory on your computer: `git clone https://github.com/PostOwl/postowl.git`
 1. Enter the directory you cloned the repo to: `cd postowl`
 1. Run `fly apps create`
-    1. Enter a name for your application at the prompt (e.g. `myapp`)
-    1. Choose a Fly organization to deploy to
+   1. Enter a name for your application at the prompt (e.g. `myapp`)
+   1. Choose a Fly organization to deploy to
 1. Run `fly deploy` as shown below. **Substitute your own values for the secrets** and make sure to replace all instances of `myapp` with the name you chose when creating the application above):
 
 ```

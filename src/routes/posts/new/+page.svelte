@@ -38,7 +38,9 @@
     } catch (err) {
       console.error(err);
       // HACK: This is guesswork
-      alert('Error. Likely a document with that title has already been published. Choose a different title.');
+      alert(
+        'Error. Likely a document with that title has already been published. Choose a different title.'
+      );
     }
   }
 
@@ -49,17 +51,21 @@
 
 <svelte:head>
   <title>New letter</title>
-  <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar}>
-  <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar}>
+  <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar} />
+  <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar} />
 </svelte:head>
 
 {#if editable}
-  <EditorToolbar on:cancel={discardDraft} on:save={createPost} confirmLabel={is_public ? 'Publish' : recipients.length > 0 ? 'Send' : 'Save' } />
+  <EditorToolbar
+    on:cancel={discardDraft}
+    on:save={createPost}
+    confirmLabel={is_public ? 'Publish' : recipients.length > 0 ? 'Send' : 'Save'}
+  />
 {/if}
 
 <WebsiteNav bind:editable />
-<div class="pt-8 sm:pt-16 "></div>
+<div class="pt-8 sm:pt-16" />
 <RecipientsSelector {editable} bind:is_public bind:recipients />
-<div class="pt-8"></div>
+<div class="pt-8" />
 <Post bind:title bind:content bind:created_at {editable} />
 <Footer {editable} />

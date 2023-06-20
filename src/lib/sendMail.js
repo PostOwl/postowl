@@ -17,8 +17,8 @@ export default async function sendMail(to, subject, message) {
     secure: parseInt(SMTP_PORT) === 465 ? true : false, // SSL is reserved for SMPT_PORT 465
     auth: {
       user: SMTP_USERNAME,
-      pass: SMTP_PASSWORD,
-    },
+      pass: SMTP_PASSWORD
+    }
   });
   // send mail with defined transport object
   let info = await transporter.sendMail({
@@ -26,8 +26,8 @@ export default async function sendMail(to, subject, message) {
     to,
     subject,
     // text: 'Plain text version'
-    html: message,
+    html: message
   });
-  console.log("Message sent: %s", info.messageId);
+  console.log('Message sent: %s', info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 }

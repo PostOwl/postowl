@@ -1,8 +1,7 @@
 import { json } from '@sveltejs/kit';
-import { createPost } from '$lib/api';
 import { storeAsset } from '$lib/api';
 
-export async function PUT({ request, locals, params }) {
+export async function PUT({ request }) {
   const data = await request.formData();
   const asset_id = data.get('path');
   const file = data.get('file')?.valueOf();

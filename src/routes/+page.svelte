@@ -63,16 +63,9 @@
 
 <svelte:head>
   <title>{name}</title>
-  <meta
-    name="description"
-    content="The story of my life"
-  />
+  <meta name="description" content="The story of my life" />
   <meta name="og:title" property="og:title" content={name} />
-  <meta
-    name="og:description"
-    property="og:description"
-    content="The story of my life"
-  />
+  <meta name="og:description" property="og:description" content="The story of my life" />
   <meta
     name="og:image"
     property="og:image"
@@ -80,17 +73,13 @@
   />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content={name} />
-  <meta
-    name="twitter:description"
-    content="The story of my life"
-  />
+  <meta name="twitter:description" content="The story of my life" />
   <meta name="twitter:image" content="%sveltekit.assets%/favicon/favicon-512x512.png" />
   <meta name="robots" content="index, follow" />
 
-  <link rel="icon" type="image/png" sizes="300x300" href={avatar}>
-  <link rel="apple-touch-icon" sizes="300x300" href={avatar}>
+  <link rel="icon" type="image/png" sizes="300x300" href={avatar} />
+  <link rel="apple-touch-icon" sizes="300x300" href={avatar} />
 </svelte:head>
-
 
 {#if editable}
   <EditorToolbar on:cancel={initOrReset} on:save={saveBio} />
@@ -123,7 +112,9 @@
     </div>
     {#if currentUser}
       {#if !editable}
-        <div class="flex justify-center py-2"><PrimaryButton size='sm' on:click={() => editable = true}>Edit bio</PrimaryButton></div>
+        <div class="flex justify-center py-2">
+          <PrimaryButton size="sm" on:click={() => (editable = true)}>Edit bio</PrimaryButton>
+        </div>
       {/if}
     {/if}
   </div>

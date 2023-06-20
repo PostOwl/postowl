@@ -6,7 +6,7 @@
 
   export let data;
   let editable, name, email, created_at, updated_at;
-  
+
   $: currentUser = data.currentUser;
   $: bio = data.bio;
   $: {
@@ -59,8 +59,8 @@
 
 <svelte:head>
   <title>{name || email}</title>
-  <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar}>
-  <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar}>
+  <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar} />
+  <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar} />
 </svelte:head>
 
 {#if editable}
@@ -72,13 +72,16 @@
   <div class="border-b py-2">
     <PlainText {editable} bind:content={name} />
   </div>
-  
+
   <div class="pt-8 text-sm font-bold">Email</div>
   <div class="border-b py-2">
     <PlainText {editable} bind:content={email} />
   </div>
 
   <div class="text-center pt-12">
-    <button class="font-medium text-sm sm:text-base rounded-full w-full py-3 bg-rose-600 hover:bg-rose-500 text-white" on:click={deleteFriend}>Delete friend</button>
+    <button
+      class="font-medium text-sm sm:text-base rounded-full w-full py-3 bg-rose-600 hover:bg-rose-500 text-white"
+      on:click={deleteFriend}>Delete friend</button
+    >
   </div>
 </div>

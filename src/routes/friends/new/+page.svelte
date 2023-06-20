@@ -5,7 +5,9 @@
   import PlainText from '$lib/components/PlainText.svelte';
 
   export let data;
-  let editable = true, name = '', email = '';
+  let editable = true,
+    name = '',
+    email = '';
   $: currentUser = data.currentUser;
   $: bio = data.bio;
 
@@ -16,7 +18,7 @@
         name,
         email
       });
-      goto('/friends')
+      goto('/friends');
     } catch (err) {
       console.error(err);
       alert(
@@ -28,24 +30,23 @@
 
 <svelte:head>
   <title>{name}</title>
-  <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar}>
-  <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar}>
+  <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar} />
+  <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar} />
 </svelte:head>
 
 {#if editable}
-  <EditorToolbar on:cancel={() => goto('/friends')} on:save={createFriend} confirmLabel='Create'/>
+  <EditorToolbar on:cancel={() => goto('/friends')} on:save={createFriend} confirmLabel="Create" />
 {/if}
 
 <div class="max-w-screen-md mx-auto px-6 pb-8 sm:text-xl">
   <div class="pt-24 text-sm font-bold">Name</div>
-  
+
   <div class="border-b py-2">
     <PlainText {editable} bind:content={name} />
   </div>
-  
+
   <div class="pt-8 text-sm font-bold">Email</div>
   <div class="border-b py-2">
-  <PlainText {editable} bind:content={email} />
+    <PlainText {editable} bind:content={email} />
   </div>
 </div>
-

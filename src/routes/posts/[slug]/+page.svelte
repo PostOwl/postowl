@@ -9,7 +9,7 @@
   import Post from '$lib/components/Post.svelte';
   import NotEditable from '$lib/components/NotEditable.svelte';
   import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
-  
+
   export let data;
 
   let editable, title, content, created_at, updated_at, teaser_image, teaser, is_public, recipients;
@@ -80,30 +80,24 @@
   <meta name="description" content={teaser} />
   <meta name="og:title" property="og:title" content={title} />
   <meta name="og:description" property="og:description" content={teaser} />
-  <meta
-    name="og:image"
-    property="og:image"
-    content={data.teaser_image || data.bio.avatar}
-  />
+  <meta name="og:image" property="og:image" content={data.teaser_image || data.bio.avatar} />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={teaser} />
   <meta name="twitter:image" content={data.teaser_image || data.bio.avatar} />
 
-  <link rel="icon" type="image/png" sizes="300x300" href={data.bio.avatar}>
-  <link rel="apple-touch-icon" sizes="300x300" href={data.bio.avatar}>
+  <link rel="icon" type="image/png" sizes="300x300" href={data.bio.avatar} />
+  <link rel="apple-touch-icon" sizes="300x300" href={data.bio.avatar} />
 
   <meta name="robots" content="index, follow" />
 </svelte:head>
-
 
 {#if editable}
   <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={savePost} />
 {/if}
 
-
 <WebsiteNav bind:editable {currentUser} bio={data.bio} />
-<div class="pt-8 sm:pt-16 "></div>
+<div class="pt-8 sm:pt-16" />
 
 {#if currentUser}
   <RecipientsSelector slug={data.slug} {editable} bind:is_public bind:recipients />
@@ -114,8 +108,8 @@
 <div class="max-w-screen-md mx-auto px-6">
   {#if currentUser && !editable}
     <div class="flex justify-center py-4 space-x-4">
-      <PrimaryButton size='sm' on:click={() => editable = true}>Edit</PrimaryButton>
-      <SecondaryButton size='sm' on:click={deletePost}>Delete</SecondaryButton>
+      <PrimaryButton size="sm" on:click={() => (editable = true)}>Edit</PrimaryButton>
+      <SecondaryButton size="sm" on:click={deletePost}>Delete</SecondaryButton>
     </div>
   {/if}
 </div>
@@ -123,7 +117,13 @@
 <NotEditable {editable}>
   <div class="text-center max-w-screen-sm mx-auto px-6 py-12 sm:py-16">
     <div class="pb-4 text-center">
-      <a href="/"><img src={data.bio.avatar} alt={data.bio.name} class="inline-block w-16 h-16 md:w-16 md:h-16 rounded-full" /></a>
+      <a href="/"
+        ><img
+          src={data.bio.avatar}
+          alt={data.bio.name}
+          class="inline-block w-16 h-16 md:w-16 md:h-16 rounded-full"
+        /></a
+      >
     </div>
 
     <div class="text-center pb-4 sm:pb-8">
@@ -136,4 +136,3 @@
   </div>
 </NotEditable>
 <Footer {editable} counter={`/blog/${data.slug}`} />
-

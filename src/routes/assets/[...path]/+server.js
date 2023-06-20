@@ -1,7 +1,7 @@
 import { getAsset } from '$lib/api';
 import { error } from '@sveltejs/kit';
 
-export const GET = (async ({ params, setHeaders }) => {
+export const GET = async ({ params, setHeaders }) => {
   const path = params.path;
   const file = getAsset(path);
 
@@ -18,4 +18,4 @@ export const GET = (async ({ params, setHeaders }) => {
   });
 
   return new Response(file.data);
-});
+};

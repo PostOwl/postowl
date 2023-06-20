@@ -7,15 +7,25 @@
   $: teaser_image = JSON.parse(post.teaser_image);
 </script>
 
-<div href={`/posts/${post.slug}`} class={classNames('md:text-xl rounded-lg border shadow-md bg-white p-4 sm:p-8', post.is_public ? 'border-gray-300': post.recipients.length > 0 ? 'border-yellow-300' : 'border-red-300' )}>
+<div
+  href={`/posts/${post.slug}`}
+  class={classNames(
+    'md:text-xl rounded-lg border shadow-md bg-white p-4 sm:p-8',
+    post.is_public
+      ? 'border-gray-300'
+      : post.recipients.length > 0
+      ? 'border-yellow-300'
+      : 'border-red-300'
+  )}
+>
   <div>
     {#if currentUser}
       <div class="text-sm py-2">
         <!-- Only show this for the site owner -->
         {#if post.is_public}
           <strong>To:</strong> Everyone
-        {:else if (post.recipients.length > 0)}
-          <strong>To:</strong> {post.recipients.map(r => r.name ).join(', ')}
+        {:else if post.recipients.length > 0}
+          <strong>To:</strong> {post.recipients.map(r => r.name).join(', ')}
         {:else}
           <strong>To:</strong> Myself
         {/if}
@@ -49,6 +59,6 @@
     </div>
   </div>
   <div class="pt-4 flex">
-    <SecondaryButton size='sm' href={`/posts/${post.slug}`}>Continue reading →</SecondaryButton>
+    <SecondaryButton size="sm" href={`/posts/${post.slug}`}>Continue reading →</SecondaryButton>
   </div>
 </div>

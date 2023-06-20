@@ -3,12 +3,12 @@
   import { debounce, classNames, isEmailValid } from '$lib/util';
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
   import CopyableRecipient from './CopyableRecipient.svelte';
-  
+
   export let recipients = [];
   export let is_public;
   export let editable;
   export let slug = undefined;
-  
+
   let value;
   let result = [];
   let selectedResult = 0;
@@ -35,10 +35,7 @@
       // Double check that the email is not already in your contacts
       const isInResult = Boolean(result.find(f => f.email === value));
       if (!isInResult) {
-        result = [
-          { email: value },
-          ...result
-        ];
+        result = [{ email: value }, ...result];
       }
     }
     selectedResult = 0;
@@ -89,7 +86,7 @@
   // HACK: This is not ideal, may cancel clicks on results when pressed too long
   function onBlur() {
     setTimeout(() => {
-      value = ''
+      value = '';
     }, 200);
   }
 
@@ -114,24 +111,35 @@
   <div>
     <div class="font-bold inline">To:</div>
     {#if recipients.length === 0 && !is_public}
-      <div class="rounded-full bg-rose-100 inline-block px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base text-rose-800">
+      <div
+        class="rounded-full bg-rose-100 inline-block px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base text-rose-800"
+      >
         <span>Myself</span>
       </div>
     {/if}
     {#if is_public}
-      <div class="rounded-full bg-green-100 px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base text-green-800 inline-flex items-center space-x-1">
+      <div
+        class="rounded-full bg-green-100 px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base text-green-800 inline-flex items-center space-x-1"
+      >
         <span>Everyone</span>
         {#if editable}
           <button on:click={togglePublic}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-5 h-5">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="inline-block w-5 h-5"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         {/if}
       </div>
     {/if}
-    {#each recipients as recipient, i }
-      <CopyableRecipient {recipient} {editable} {slug} on:delete={() => removeRecipient(i) } />
+    {#each recipients as recipient, i}
+      <CopyableRecipient {recipient} {editable} {slug} on:delete={() => removeRecipient(i)} />
     {/each}
   </div>
 
@@ -151,10 +159,12 @@
         type="text"
       />
       {#if !is_public}
-        <SecondaryButton size='sm' on:click={togglePublic}><span class="whitespace-nowrap">Make public</span></SecondaryButton>
+        <SecondaryButton size="sm" on:click={togglePublic}
+          ><span class="whitespace-nowrap">Make public</span></SecondaryButton
+        >
       {/if}
     </div>
-    
+
     <div class="overflow-y-auto" bind:this={resultsEl}>
       {#each result as friend, i}
         <button
