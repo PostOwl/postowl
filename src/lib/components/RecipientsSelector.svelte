@@ -174,5 +174,3 @@
     </div>
   {/if}
 </div>
-
-<!-- <svelte:window  /> -->

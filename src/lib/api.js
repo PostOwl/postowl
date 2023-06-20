@@ -221,34 +221,37 @@ export async function deleteFriend(friend_id, currentUser) {
     // Delete the friend record itself
     db.prepare("DELETE FROM friends WHERE friend_id = ?").run(friend_id);
     return true;
-  })()
+  })();
 }
 
 /**
  * Get post for a given slug (and secret for private posts)
  */
 export async function getPostBySlug(slug, secret = undefined, currentUser) {
-  const post = db.prepare("SELECT * FROM posts WHERE slug = ?")
-    .get(slug);
-  
-  // Check if authorized to view
-  let hasAccess = false;
-  if (currentUser || post.is_public) {
-    hasAccess = true;
-  } else {
-    const validSecret = db.prepare("SELECT recipient_id FROM recipients WHERE post_id = ? AND secret = ?").get(post.post_id, secret);
-    if (validSecret) hasAccess = true;
-  }
-  if (!hasAccess) throw new Error('Not authorized');
-  
-  let recipients = [];
-  // Only expose recipients for the admin
-  if (currentUser) {
-    recipients = db.prepare("SELECT f.name, f.email, f.friend_id, secret FROM recipients r INNER JOIN friends f ON (r.friend_id=f.friend_id) WHERE r.post_id = ?")
-      .all(post.post_id);
-  }
-
-  return { ...post, recipients };
+  return db.transaction(() => {
+    const post = db.prepare("SELECT * FROM posts WHERE slug = ?").get(slug);
+    // Check if authorized to view
+    let hasAccess = false;
+    if (currentUser || post.is_public) {
+      hasAccess = true;
+    } else {
+      const { recipient_id } = db.prepare("SELECT recipient_id FROM recipients WHERE post_id = ? AND secret = ?").get(post.post_id, secret);
+      if (recipient_id) {
+        hasAccess = true;
+        // Mark as read
+        db.prepare("UPDATE recipients SET has_seen = TRUE WHERE recipient_id = ?").run(recipient_id);
+      }
+    }
+    if (!hasAccess) throw new Error('Not authorized');
+    
+    let recipients = [];
+    // Only expose recipients for the admin
+    if (currentUser) {
+      recipients = db.prepare("SELECT f.name, f.email, f.friend_id, secret, has_seen FROM recipients r INNER JOIN friends f ON (r.friend_id=f.friend_id) WHERE r.post_id = ?")
+        .all(post.post_id);
+    }
+    return { ...post, recipients };
+  })();
 }
 
 /**

@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS recipients (
   secret TEXT NOT NULL, -- this will serve as the secret for accessing private posts
   post_id INTEGER REFERENCES posts NOT NULL,
   friend_id INTEGER REFERENCES friends NOT NULL,
+  has_seen INTEGER DEFAULT FALSE,
   UNIQUE(post_id, friend_id)
 );
 
