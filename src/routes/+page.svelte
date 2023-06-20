@@ -14,7 +14,7 @@
   import PostTeaser from '$lib/components/PostTeaser.svelte';
 
   export let data;
-  let editable, name, avatar, bio, showUserMenu;
+  let editable, name, avatar, bio;
   $: currentUser = data.currentUser;
   $: postLimit = $page.url.searchParams.get('postLimit') || 30;
 
@@ -28,11 +28,6 @@
   // --------------------------------------------------------------------------
   // Page logic
   // --------------------------------------------------------------------------
-
-  function toggleEdit() {
-    editable = true;
-    showUserMenu = false;
-  }
 
   function showMoreposts() {
     goto(extendQueryParams({ postLimit: postLimit + 50 }), { noScroll: true });

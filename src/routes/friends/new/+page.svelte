@@ -14,7 +14,7 @@
   async function createFriend() {
     if (!currentUser) return alert('Sorry, you are not authorized.');
     try {
-      const result = await fetchJSON('POST', '/api/create-friend', {
+      await fetchJSON('POST', '/api/create-friend', {
         name,
         email
       });

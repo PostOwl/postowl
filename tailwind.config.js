@@ -1,13 +1,6 @@
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
 
-const round = num =>
-  num
-    .toFixed(7)
-    .replace(/(\.[0-9]+?)0+$/, '$1')
-    .replace(/\.0$/, '');
-const em = (px, base) => `${round(px / base)}em`;
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
@@ -19,16 +12,6 @@ export default {
       typography: {
         DEFAULT: {
           css: {
-            // h1: {
-            //   fontWeight: 500 // font-medium
-            // },
-            // h2: {
-            //   fontWeight: 500, // font-medium
-            //   fontSize: em(20, 14),
-            //   marginTop: em(32, 20),
-            //   marginBottom: em(4, 20),
-            //   lineHeight: round(28 / 20)
-            // },
             blockquote: {
               fontWeight: 'normal',
               fontStyle: 'normal',
@@ -43,34 +26,6 @@ export default {
             'blockquote p:last-of-type::after': {
               content: ''
             }
-          }
-        },
-        lg: {
-          css: {
-            // h1: {
-            //   fontWeight: 500 // font-medium
-            // },
-            // h2: {
-            //   fontWeight: 500,
-            //   fontSize: em(30, 18),
-            //   marginTop: em(56, 30),
-            //   marginBottom: em(4, 20),
-            //   lineHeight: round(40 / 30)
-            // }
-          }
-        },
-        xl: {
-          css: {
-            // h1: {
-            //   fontWeight: 500 // font-medium
-            // },
-            // h2: {
-            //   fontWeight: 500, // font-medium
-            //   fontSize: em(30, 18),
-            //   marginTop: em(56, 30),
-            //   marginBottom: em(4, 20),
-            //   lineHeight: round(40 / 30)
-            // }
           }
         }
       }
