@@ -13,7 +13,7 @@ PostOwl is a [sveltekit](https://kit.svelte.dev/) application that uses [SQLite]
 ### Requirements
 
 - [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org) (minimum 16.20.0 LTS or 18.16.0 LTS recommended) or other Javascript runtime (not tested).
+- [Node.js](https://nodejs.org) (minimum 16.20.0 LTS or 18.16.0 LTS recommended) or other JavaScript runtime (not tested).
 - [SQLite](https://www.sqlite.org)
 
 ### How to run PostOwl in development mode on your computer
@@ -63,7 +63,7 @@ If you have success **deploying to other platforms**, please [let us know](https
 
 ### Sending email in production
 
-PostOwl uses [nodemailer](https://nodemailer.com/about/) to send email notifications when you send lettera to friends. The application will run without a real SMTP server configured so you can enter dummy data for the SMTP settings when deploying if you don't need to send emails.
+PostOwl uses [nodemailer](https://nodemailer.com/about/) to send email notifications when you send letters to friends. The application will run without a real SMTP server configured so you can enter dummy data for the SMTP settings when deploying if you don't need to send emails.
 
 If you'd like to send emails but don't have an SMTP server to use, we recommend [mailgun](https://www.mailgun.com/). Their free tier will cover usage for a personal PostOwl site. You'll need to own a domain name to get set up with mailgun. Follow their documentation to activate your domain for email sending. Then generate an SMTP password from their admin interface (click 'Reset password' under Sending > Domain Settings > SMTP credentials to get a password for a new domain).
 
@@ -78,7 +78,7 @@ This repo contains the files you need to deploy your PostOwl site to [fly.io](ht
 1. Run `fly apps create`
    1. Enter a name for your application at the prompt (e.g. `myapp`)
    1. Choose a Fly organization to deploy to
-1. Run `fly deploy` as shown below. **Substitute your own values for the secrets** and make sure to replace all instances of `myapp` with the name you chose when creating the application above):
+1. Run `fly deploy` as shown below. **Substitute your own values for the secrets** and make sure to replace all instances of `myapp` with the name you chose when creating the application above:
 
 ```
 fly deploy -a myapp \
