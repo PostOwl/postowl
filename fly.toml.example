@@ -1,11 +1,14 @@
-# fly.toml app configuration file generated for postowldev on 2023-06-12T17:45:42+01:00
+# fly.toml app configuration
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-# 'app' can be overridden at deploy time with `fly deploy -a yourappname`
-app = "postowldev"
-primary_region = "lhr"
+# //// BEGIN EDITS ////
+# Choose your application name - it will be available at https://yourapp.fly.dev
+app = "yourapp"
+# Choose the region to deploy to: https://fly.io/docs/reference/regions/
+primary_region = "iad"
+# //// END EDITS ////
 
 # Specify the multistage Docker build target
 [build]
@@ -20,7 +23,7 @@ primary_region = "lhr"
   PORT = "3000"
 
 [[mounts]]
-  source = "postowldev_data"
+  source = "postowl_data"
   destination = "/app/data"
 
 [http_service]

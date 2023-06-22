@@ -75,16 +75,17 @@ This repo contains the files you need to deploy your PostOwl site to [fly.io](ht
 1. [Install `flyctl`](https://fly.io/docs/hands-on/install-flyctl/) and sign in with `fly auth login`
 1. Clone this repo to a directory on your computer: `git clone https://github.com/PostOwl/postowl.git`
 1. Enter the directory you cloned the repo to: `cd postowl`
-1. Run `fly apps create`
-   1. Enter a name for your application at the prompt (e.g. `myapp`)
-   1. Choose a Fly organization to deploy to
-1. Run `fly deploy` as shown below. **Substitute your own values for the secrets** and make sure to replace all instances of `myapp` with the name you chose when creating the application above:
+1. Run `fly apps create` and respond to the prompts:
+   1. Choose a name for your app (e.g. `yourapp`) or hit enter to let fly auto generate a name (app names need to be unique across all of fly.io)
+   1. Choose a Fly organization to deploy to if prompted
+1. Rename `fly.toml.example` to `fly.toml` and edit the lines between 'BEGIN EDITS' and 'END EDITS' - make sure to set the app name to the name you chose in the previous step
+1. Run `fly deploy` as shown below. **Substitute your own values for the secrets** and make sure to replace all instances of `yourapp` with the name you chose when creating the application above:
 
 ```
-fly deploy -a myapp \
+fly deploy \
     --build-secret DB_PATH="./data/db.sqlite3" \
-    --build-secret ORIGIN="https://myapp.fly.dev" \
-    --build-secret PUBLIC_ORIGIN="myapp.fly.dev" \
+    --build-secret ORIGIN="https://yourapp.fly.dev" \
+    --build-secret PUBLIC_ORIGIN="yourapp.fly.dev" \
     --build-secret ADMIN_NAME="Your Name" \
     --build-secret ADMIN_EMAIL="you@your.domain" \
     --build-secret ADMIN_PASSWORD="your-super-secret-admin-password" \
@@ -93,8 +94,6 @@ fly deploy -a myapp \
     --build-secret SMTP_USERNAME="postmaster@your.smtp.server" \
     --build-secret SMTP_PASSWORD="your-super-secret-smtp-password"
 ```
-
-The `-a` option in `fly deploy` lets you override the app name specified in `fly.toml`.
 
 Fly will let you know when the app is deployed. Visit the URL shown in your terminal and sign in with the `ADMIN_PASSWORD` you set above.
 
