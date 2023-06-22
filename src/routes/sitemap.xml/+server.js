@@ -10,7 +10,7 @@ export async function GET({ setHeaders }) {
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${sitemap
       .map(
-        s => `<url><loc>https://${PUBLIC_ORIGIN}${s.url}</loc><lastmod>${s.lastmod}</lastmod></url>`
+        s => `<url><loc>${PUBLIC_ORIGIN}${s.url}</loc><lastmod>${s.lastmod}</lastmod></url>`
       )
       .join('\n')}
   </urlset>`);

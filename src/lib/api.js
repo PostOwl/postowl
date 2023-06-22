@@ -79,9 +79,7 @@ export async function createPost(
         recipient.email,
         title,
         `<p>${teaser}</p>
-        <p><a href="${`${
-          dev ? 'http' : 'https'
-        }://${PUBLIC_ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
+        <p><a href="${`${PUBLIC_ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
         <p>Best, ${ADMIN_NAME}</p>`
       );
     }
@@ -154,9 +152,7 @@ export async function updatePost(
           recipient.email,
           title,
           `<p>${teaser}</p>
-          <p><a href="${`${
-            dev ? 'http' : 'https'
-          }://${PUBLIC_ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
+          <p><a href="${`${PUBLIC_ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
           <p>Best, ${ADMIN_NAME}</p>`
         );
         new_recipients.push(recipient_id);

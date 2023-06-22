@@ -30,7 +30,7 @@
 
   async function copySecretUrl() {
     await navigator.clipboard.writeText(
-      `${dev ? 'http' : 'https'}://${PUBLIC_ORIGIN}/posts/${slug}?secret=${recipient.secret}`
+      `${PUBLIC_ORIGIN}/posts/${slug}?secret=${recipient.secret}`
     );
     flashCopied();
   }

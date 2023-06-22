@@ -79,13 +79,12 @@ This repo contains the files you need to deploy your PostOwl site to [fly.io](ht
    1. Choose a name for your app (e.g. `yourapp`) or hit enter to let fly auto generate a name (app names need to be unique across all of fly.io)
    1. Choose a Fly organization to deploy to if prompted
 1. Rename `fly.toml.example` to `fly.toml` and edit the lines between 'BEGIN EDITS' and 'END EDITS' - make sure to set the app name to the name you chose in the previous step
-1. Run `fly deploy` as shown below. **Substitute your own values for the secrets** and make sure to replace all instances of `yourapp` with the name you chose when creating the application above:
+1. Run `fly deploy` as shown below. **Substitute your own values for the secrets** and make sure to replace `yourapp` with the name you chose when creating the application above:
 
 ```
 fly deploy \
     --build-secret DB_PATH="./data/db.sqlite3" \
-    --build-secret ORIGIN="https://yourapp.fly.dev" \
-    --build-secret PUBLIC_ORIGIN="yourapp.fly.dev" \
+    --build-secret PUBLIC_ORIGIN="https://yourapp.fly.dev" \
     --build-secret ADMIN_NAME="Your Name" \
     --build-secret ADMIN_EMAIL="you@your.domain" \
     --build-secret ADMIN_PASSWORD="your-super-secret-admin-password" \
