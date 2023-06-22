@@ -39,6 +39,24 @@
     }
   }
 
+  function transformPasted(slice, view) {
+    // For now, we just replace pasted external images
+    // TODO: Alternatively we could remove all external images from the slice,
+    // try to get a file instance, then resize and upload them. But that's abit
+    // more involved. Post MVP stuff! :)
+    const nodes = slice?.content?.content
+    if (nodes) {
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        // Everything that starts with a "/" can be considered an owned asset
+        if (node.type?.name === 'image' && !/^\//.test(node.attrs.src)) {
+          node.attrs.src = '/images/image-placeholder.png';
+        }
+      }
+    }
+    return slice;
+  }
+
   function dispatchTransaction(transaction) {
     const editorState = this.state.apply(transaction);
     this.updateState(editorState);
@@ -64,7 +82,8 @@
   onMount(() => {
     editorView = new EditorView(prosemirrorNode, {
       state: editorState,
-      dispatchTransaction
+      dispatchTransaction,
+      transformPasted
     });
     activeEditorView.set(editorView);
   });

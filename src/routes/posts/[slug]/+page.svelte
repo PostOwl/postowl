@@ -99,10 +99,10 @@
 </svelte:head>
 
 {#if editable}
-  <EditorToolbar {currentUser} on:cancel={initOrReset} on:save={savePost} />
+  <EditorToolbar on:cancel={initOrReset} on:save={savePost} />
 {/if}
 
-<WebsiteNav bind:editable {currentUser} bio={data.bio} />
+<WebsiteNav bind:editable bio={data.bio} />
 <div class="pt-8 sm:pt-16" />
 
 {#if currentUser}
