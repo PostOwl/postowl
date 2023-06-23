@@ -83,10 +83,10 @@ This repo contains the files you need to deploy your PostOwl site to [fly.io](ht
    1. Choose a Fly organization to deploy to if prompted
 1. Rename `fly.toml.example` to `fly.toml` and edit the lines between 'BEGIN EDITS' and 'END EDITS' - make sure to set the app name to the name you chose in the previous step
 1. Edit the values in the 'fly deploy' command below and then run it in your terminal
-    1. Don't change the DB_PATH
-    1. Edit all values with `your` in them
+    1. Don't change the value of `DB_PATH`
     1. Make sure to replace `yourapp` with the name you chose when creating the application above
-    1. For the SMTP details, see the section above [Sending email in production](#sending-email-in-production). You don't have to use real details to try the app
+    1. Edit all remaining values with `your` in them
+    1. For the SMTP details, see the section above [Sending email in production](#sending-email-in-production). You don't need to use real values to try the app
 
 ```
 fly deploy \
