@@ -2,8 +2,7 @@ import slugify from 'slugify';
 import Database from 'better-sqlite3';
 import { customAlphabet } from 'nanoid';
 import { DEFAULT_BIO } from '$lib/constants';
-import { DB_PATH, ADMIN_NAME, ADMIN_PASSWORD } from '$env/static/private';
-import { PUBLIC_ORIGIN } from '$env/static/public';
+import { DB_PATH, ADMIN_NAME, ADMIN_PASSWORD, ORIGIN } from '$env/static/private';
 import sendMail from '$lib/sendMail';
 import { dev } from '$app/environment';
 import { Blob } from 'node:buffer';
@@ -79,9 +78,7 @@ export async function createPost(
         recipient.email,
         title,
         `<p>${teaser}</p>
-        <p><a href="${`${
-          dev ? 'http' : 'https'
-        }://${PUBLIC_ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
+        <p><a href="${`${ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
         <p>Best, ${ADMIN_NAME}</p>`
       );
     }
@@ -154,9 +151,7 @@ export async function updatePost(
           recipient.email,
           title,
           `<p>${teaser}</p>
-          <p><a href="${`${
-            dev ? 'http' : 'https'
-          }://${PUBLIC_ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
+          <p><a href="${`${ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
           <p>Best, ${ADMIN_NAME}</p>`
         );
         new_recipients.push(recipient_id);
