@@ -1,5 +1,5 @@
 import { getSitemap } from '$lib/api';
-import { PUBLIC_ORIGIN } from '$env/static/public';
+import { ORIGIN } from '$env/static/private';
 
 export async function GET({ setHeaders }) {
   setHeaders({
@@ -10,7 +10,7 @@ export async function GET({ setHeaders }) {
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${sitemap
       .map(
-        s => `<url><loc>${PUBLIC_ORIGIN}${s.url}</loc><lastmod>${s.lastmod}</lastmod></url>`
+        s => `<url><loc>${ORIGIN}${s.url}</loc><lastmod>${s.lastmod}</lastmod></url>`
       )
       .join('\n')}
   </urlset>`);

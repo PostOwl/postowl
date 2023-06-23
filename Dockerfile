@@ -17,7 +17,7 @@ COPY . .
 
 RUN mkdir data
 RUN --mount=type=secret,id=DB_PATH \
-    --mount=type=secret,id=PUBLIC_ORIGIN \
+    --mount=type=secret,id=ORIGIN \
     --mount=type=secret,id=ADMIN_NAME \
     --mount=type=secret,id=ADMIN_EMAIL \
     --mount=type=secret,id=ADMIN_PASSWORD \
@@ -26,7 +26,7 @@ RUN --mount=type=secret,id=DB_PATH \
     --mount=type=secret,id=SMTP_USERNAME \
     --mount=type=secret,id=SMTP_PASSWORD \
     DB_PATH="$(cat /run/secrets/DB_PATH)" \
-    PUBLIC_ORIGIN="$(cat /run/secrets/PUBLIC_ORIGIN)" \
+    ORIGIN="$(cat /run/secrets/ORIGIN)" \
     ADMIN_NAME="$(cat /run/secrets/ADMIN_NAME)" \
     ADMIN_EMAIL="$(cat /run/secrets/ADMIN_EMAIL)" \
     ADMIN_PASSWORD="$(cat /run/secrets/ADMIN_PASSWORD)" \

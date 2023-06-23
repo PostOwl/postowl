@@ -1,6 +1,5 @@
 <script>
-  import { PUBLIC_ORIGIN } from '$env/static/public';
-  import { dev } from '$app/environment';
+  import { page } from '$app/stores';
   import { createEventDispatcher } from 'svelte';
   import { onDestroy } from 'svelte';
 
@@ -10,6 +9,8 @@
   export let recipient;
   export let slug;
   export let editable;
+
+  $: origin = $page.data.origin;
 
   const dispatch = createEventDispatcher();
 
@@ -30,7 +31,7 @@
 
   async function copySecretUrl() {
     await navigator.clipboard.writeText(
-      `${PUBLIC_ORIGIN}/posts/${slug}?secret=${recipient.secret}`
+      `${origin}/posts/${slug}?secret=${recipient.secret}`
     );
     flashCopied();
   }

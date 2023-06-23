@@ -84,7 +84,7 @@ This repo contains the files you need to deploy your PostOwl site to [fly.io](ht
 ```
 fly deploy \
     --build-secret DB_PATH="./data/db.sqlite3" \
-    --build-secret PUBLIC_ORIGIN="https://yourapp.fly.dev" \
+    --build-secret ORIGIN="https://yourapp.fly.dev" \
     --build-secret ADMIN_NAME="Your Name" \
     --build-secret ADMIN_EMAIL="you@your.domain" \
     --build-secret ADMIN_PASSWORD="your-super-secret-admin-password" \
