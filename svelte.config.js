@@ -6,7 +6,7 @@ const config = {
   kit: {
     adapter: adapter({
       /**
-       * We are setting sveltekit's adapter-node envPrefix to PUBLIC_
+       * We're setting sveltekit's adapter-node envPrefix to PUBLIC_
        * as a bit of a hack to help prevent repetition in our deployment
        * configuration. Our application code makes use of the deployed
        * URL in several places that are compiled into client side code.
