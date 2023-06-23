@@ -24,12 +24,10 @@
   },
   "type": "module",
   "dependencies": {
-    "@fontsource/jost": "^4.5.13",
     "@sveltejs/adapter-node": "^1.2.4",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.9",
     "autoprefixer": "^10.4.14",
-    "aws-sdk": "^2.619.0",
     "better-sqlite3": "^8.4.0",
     "camelcase-keys": "^8.0.2",
     "nanoid": "^4.0.2",
