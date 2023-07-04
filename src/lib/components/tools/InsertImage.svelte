@@ -1,13 +1,11 @@
 <script>
-  import { page } from '$app/stores';
-  import { classNames, resizeImage, getDimensions } from '$lib/util';
-  import uuid from '$lib/uuid';
+  import { classNames, resizeImage, getDimensions, nanoid, is_safari } from '$lib/util';
   import uploadAsset from '$lib/uploadAsset';
   import { insertImage } from '$lib/prosemirrorCommands';
+  import { page } from '$app/stores';
 
   export let editorView;
   export let editorState;
-  // export let currentUser;
 
   let fileInput; // for uploading an image
   let progress = undefined; // file upload progress
@@ -16,20 +14,26 @@
   $: disabled = !insertImage(editorState, null, editorView);
   $: currentUser = $page.data.currentUser;
 
+  console.log('currentUser', currentUser);
+
   async function uploadImage() {
     const file = fileInput.files[0];
 
+
     // We convert all uploads to the WEBP image format
-    const extension = 'webp';
-    const path = [['images', uuid()].join('/'), extension].join('.');
+    const content_type = is_safari() ? 'image/jpeg' : 'image/webp';
+
+    // We convert all uploads to the WEBP image format if possible
+    const extension = is_safari() ? 'jpg' : 'webp';
+    const path = [['images', nanoid()].join('/'), extension].join('.');
 
     const maxWidth = 1440;
     const maxHeight = 1440;
     const quality = 0.8;
 
-    const resizedBlob = await resizeImage(file, maxWidth, maxHeight, quality);
-    const resizedFile = new File([resizedBlob], `${file.name.split('.')[0]}.webp`, {
-      type: 'image/webp'
+    const resizedBlob = await resizeImage(file, maxWidth, maxHeight, quality, content_type);
+    const resizedFile = new File([resizedBlob], `${file.name.split('.')[0]}.${extension}`, {
+      type: content_type
     });
 
     const { width, height } = await getDimensions(resizedFile);

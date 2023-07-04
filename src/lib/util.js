@@ -1,5 +1,24 @@
+import { customAlphabet } from 'nanoid';
+
+export function is_safari() {
+  // Detect Chrome
+  let chrome_agent = navigator.userAgent.indexOf("Chrome") > -1;
+  // Detect Safari
+  let safari_agent = navigator.userAgent.indexOf("Safari") > -1;
+  // Discard Safari since it also matches Chrome
+  if ((chrome_agent) && (safari_agent)) safari_agent = false;
+  return safari_agent;
+}
+
 export function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
+}
+
+// We don't use "_" and "-" for better readability
+const _nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 21);
+
+export function nanoid() {
+  return _nanoid();
 }
 
 /*!
@@ -125,7 +144,7 @@ export const extendQueryParams = values => {
   return url;
 };
 
-export function resizeImage(file, maxWidth, maxHeight, quality) {
+export function resizeImage(file, maxWidth, maxHeight, quality, content_type) {
   const reader = new FileReader();
   reader.readAsDataURL(file);
   return new Promise((resolve, reject) => {
@@ -154,7 +173,7 @@ export function resizeImage(file, maxWidth, maxHeight, quality) {
           blob => {
             resolve(blob);
           },
-          'image/webp',
+          content_type,
           quality
         );
       };
@@ -165,18 +184,6 @@ export function resizeImage(file, maxWidth, maxHeight, quality) {
     reader.onerror = error => {
       reject(error);
     };
-  });
-}
-
-export async function toBlob(source, format, quality = 0.8) {
-  return new Promise(function (resolve) {
-    source.toBlob(
-      blob => {
-        resolve(blob);
-      },
-      'image/webp',
-      quality
-    );
   });
 }
 

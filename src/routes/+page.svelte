@@ -92,7 +92,6 @@
         maxHeight="384"
         quality="0.8"
         {editable}
-        {currentUser}
         bind:src={avatar}
         alt={undefined}
       />
