@@ -12,8 +12,8 @@
   let is_public = false,
     recipients = [],
     editable = true,
-    title = 'Untitled',
-    content = 'Copy and paste your text here.',
+    title = '',
+    content = '',
     created_at = toDateString();
 
   $: currentUser = data.currentUser;

@@ -8,7 +8,7 @@
   {#await import('./RichTextEditor.svelte')}
     {@html content}
   {:then RichTextEditor}
-    <RichTextEditor.default {multiLine} bind:content />
+    <RichTextEditor.default {multiLine} bind:content {...$$restProps} />
   {/await}
 {:else}
   <div>

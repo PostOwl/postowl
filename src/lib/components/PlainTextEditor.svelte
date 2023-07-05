@@ -9,9 +9,11 @@
   import { keymap } from 'prosemirror-keymap';
   import { baseKeymap } from 'prosemirror-commands';
   import { buildKeymap } from '$lib/prosemirrorKeymap';
+  import { placeholderPlugin } from '$lib/proseMirrorPlugins';
 
   export let content = '';
   export let multiLine = false;
+  export let placeholder = 'Enter text';
 
   let editorChange = false;
   let prosemirrorNode, editorView, editorState;
@@ -23,7 +25,7 @@
     editorState = EditorState.create({
       doc,
       schema,
-      plugins: [keymap(buildKeymap(schema)), keymap(baseKeymap), history(), onUpdatePlugin]
+      plugins: [keymap(buildKeymap(schema)), keymap(baseKeymap), history(), onUpdatePlugin, placeholderPlugin(placeholder)]
     });
     // Only if there is already an editorView and the content change was external
     // update editorView with the new editorState

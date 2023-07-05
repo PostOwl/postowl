@@ -8,7 +8,7 @@
   {#await import('./PlainTextEditor.svelte')}
     {@html content}
   {:then PlainTextEditor}
-    <PlainTextEditor.default {multiLine} bind:content />
+    <PlainTextEditor.default {multiLine} bind:content {...$$restProps} />
   {/await}
 {:else}
   {@html content}

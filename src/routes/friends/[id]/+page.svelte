@@ -70,12 +70,12 @@
 <div class="max-w-screen-md mx-auto px-6 pb-8 sm:text-xl">
   <div class="pt-24 text-sm font-bold">Name</div>
   <div class="border-b py-2">
-    <PlainText {editable} bind:content={name} />
+    <PlainText {editable} bind:content={name} placeholder="Enter name" />
   </div>
 
   <div class="pt-8 text-sm font-bold">Email</div>
   <div class="border-b py-2">
-    <PlainText {editable} bind:content={email} />
+    <PlainText {editable} bind:content={email} placeholder="Enter email" />
   </div>
 
   <div class="text-center pt-12">

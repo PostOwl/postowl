@@ -78,3 +78,29 @@ li.ProseMirror-selectednode:after {
   border: 2px solid #8cf;
   pointer-events: none;
 }
+
+.ProseMirror[data-placeholder]::before {
+  color: #bbb;
+  position: absolute;
+  content: attr(data-placeholder);
+  pointer-events: none;
+}
+
+/* ProseMirror */
+/* .ProseMirror .empty::before {
+  position: absolute;
+  color: #aaa;
+  cursor: text;
+} */
+
+/* .ProseMirror > h1.empty::before {
+  content: 'Title';
+} */
+
+/* .ProseMirror > .empty:nth-child(1)::before {
+  content: 'Enter text.';
+} */
+
+/* .message > .empty:nth-child(1)::before {
+  content: 'Your message.';
+} */
