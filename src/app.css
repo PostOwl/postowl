@@ -86,6 +86,11 @@ li.ProseMirror-selectednode:after {
   pointer-events: none;
 }
 
+/* HACK to fix centered placeholders in bio */
+.__bio .ProseMirror[data-placeholder]::before {
+  position: static;
+}
+
 /* ProseMirror */
 /* .ProseMirror .empty::before {
   position: absolute;

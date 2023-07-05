@@ -83,7 +83,7 @@
 <WebsiteNav bio={{ avatar, name, bio }} bind:editable />
 
 <!-- Bio -->
-<div class="bg-white">
+<div class="bg-white __bio">
   <div class="max-w-screen-md mx-auto px-6">
     <div class="pt-6 sm:pt-12 pb-2 sm:pb-6 text-center">
       <Image
