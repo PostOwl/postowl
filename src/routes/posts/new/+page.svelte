@@ -63,9 +63,9 @@
   />
 {/if}
 
-<WebsiteNav bind:editable />
+<!-- <WebsiteNav bind:editable /> -->
 <div class="pt-8 sm:pt-16" />
 <RecipientsSelector {editable} bind:is_public bind:recipients />
-<div class="pt-8" />
+
 <Post bind:title bind:content bind:created_at {editable} />
-<Footer {editable} />
+<!-- <Footer {editable} /> -->
