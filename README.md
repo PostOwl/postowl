@@ -18,7 +18,6 @@ PostOwl is a [sveltekit](https://kit.svelte.dev/) application that uses [SQLite]
 
 ### How to run PostOwl in development mode on your computer
 
-1. Make sure you have a supported version of Node.js installed (minimum 16.20.0 LTS, 18.16.0 LTS or newer recommended)
 1. Clone this repo to a directory on your computer: `git clone https://github.com/PostOwl/postowl.git`
 1. Enter the directory you cloned the repo to: `cd postowl`
 1. Run `npm install`
