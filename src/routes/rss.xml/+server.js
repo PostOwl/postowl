@@ -13,7 +13,7 @@ export async function GET({ setHeaders }) {
   <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:webfeeds="http://webfeeds.org/rss/1.0" version="2.0">
     <channel>
     <title>${feed.name}</title>
-    <description>${feed.description}</description>
+    <description>${feed.bio}</description>
     <link>${ORIGIN}</link>
     <atom:link href="${ORIGIN}/rss.xml" rel="self" type="application/rss+xml"/>
     <webfeeds:accentColor>000000</webfeeds:accentColor>
