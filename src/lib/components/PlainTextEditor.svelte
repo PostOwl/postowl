@@ -9,7 +9,7 @@
   import { keymap } from 'prosemirror-keymap';
   import { baseKeymap } from 'prosemirror-commands';
   import { buildKeymap } from '$lib/prosemirrorKeymap';
-  import { placeholderPlugin } from '$lib/proseMirrorPlugins';
+  import { placeholderPlugin } from '$lib/prosemirrorPlugins';
 
   export let content = '';
   export let multiLine = false;

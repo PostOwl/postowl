@@ -10,7 +10,7 @@
   import { baseKeymap } from 'prosemirror-commands';
   import { buildKeymap } from '$lib/prosemirrorKeymap';
   import { buildInputRules } from '$lib/prosemirrorInputrules';
-  import { placeholderPlugin } from '$lib/proseMirrorPlugins';
+  import { placeholderPlugin } from '$lib/prosemirrorPlugins';
 
   export let content = '<p></p>';
   export let multiLine = false;
