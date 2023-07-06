@@ -510,6 +510,16 @@ export async function getSitemap() {
   })();
 }
 
+export async function getRSSFeedData() {
+  const bio = await getBio();
+  const posts = db.prepare('SELECT * FROM posts WHERE is_public IS TRUE ORDER BY created_at DESC LIMIT 20').all();
+  const result = {
+    ...bio,
+    posts
+  }
+  return result;
+}
+
 /**
  * Helpers
  */

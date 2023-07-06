@@ -99,6 +99,38 @@ export function toDateString(value) {
   return date.toLocaleDateString('en-GB').split('/').reverse().join('-');
 }
 
+
+
+// add a leading 0 to a number if it is only one digit
+function addLeadingZero(num) {
+  num = num.toString();
+  while (num.length < 2) num = "0" + num;
+  return num;
+}
+
+// We will use 00:00:00 +0000 for time and time zone, as we are only interested in the publication date
+export function buildRFC822Date(dateString) {
+  const dayStrings = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const monthStrings = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const timeStamp = Date.parse(dateString);
+  const date = new Date(timeStamp);
+
+  const day = dayStrings[date.getDay()];
+  const dayNumber = addLeadingZero(date.getDate());
+  const month = monthStrings[date.getMonth()];
+  const year = date.getFullYear();
+  const time = `${addLeadingZero(date.getHours())}:${addLeadingZero(date.getMinutes())}:00`;
+
+  //Wed, 02 Oct 2002 13:00:00 +0000
+  return `${day}, ${dayNumber} ${month} ${year} 00:00:00 +0000`;
+}
+
+// Used for the RSS feed
+export function encodeHTMLEntities(rawStr) {
+  return rawStr.replace(/[\u00A0-\u9999<>\&]/g, i => '&#'+i.charCodeAt(0)+';');
+}
+
 export function debounce(node, params) {
   let timer;
 
