@@ -39,7 +39,7 @@
       console.error(err);
       // HACK: This is guesswork
       alert(
-        'Error. Likely a document with that title has already been published. Choose a different title.'
+        'Oops there was an error. Did you specify a title for your letter?'
       );
     }
   }

@@ -13,7 +13,6 @@
   import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
 
   export let data;
-
   let editable, title, content, created_at, updated_at, teaser_image, teaser, is_public, recipients;
 
   $: currentUser = data.currentUser;
@@ -72,6 +71,10 @@
       });
       updated_at = result.updated_at;
       editable = false;
+      // In case the slug has changed (title change) forward to the correct url
+      if (result.slug !== data.slug) {
+        goto(`/posts/${result.slug}`);
+      }
     } catch (err) {
       console.error(err);
       alert(

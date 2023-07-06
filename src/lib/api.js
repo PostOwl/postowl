@@ -26,6 +26,7 @@ export async function createPost(
   currentUser
 ) {
   if (!currentUser) throw new Error('Not authorized');
+  if (!title) throw new Error('Title mandatory');
 
   return db.transaction(() => {
     let slug = slugify(title, {
@@ -100,13 +101,32 @@ export async function updatePost(
   currentUser
 ) {
   if (!currentUser) throw new Error('Not authorized');
+  if (!title) throw new Error('Title is mandatory');
 
   return db.transaction(async () => {
+    let new_slug; // in case the post title has changed
+    const { title: old_title, post_id } = db.prepare('SELECT title, post_id FROM posts WHERE slug = ?').get(slug);
+
+    if (old_title !== title) {
+      // Title has changed, we need a new slug
+      new_slug = slugify(title, {
+        lower: true,
+        strict: true
+      });
+
+      // If new_slug is already used, we add a unique postfix
+      const new_slugExists = db.prepare('SELECT * FROM posts WHERE slug = ?').get(new_slug);
+      if (new_slugExists) {
+        new_slug = new_slug + '-' + nanoid();
+      }
+    }
+
     const post = db
       .prepare(
-        'UPDATE posts SET title= ?, content = ?, teaser = ?, teaser_image = ?, is_public = ?, updated_at = ? WHERE slug = ? RETURNING slug, post_id, updated_at'
+        'UPDATE posts SET slug = ?, title= ?, content = ?, teaser = ?, teaser_image = ?, is_public = ?, updated_at = ? WHERE slug = ? RETURNING slug, post_id, updated_at'
       )
       .get(
+        new_slug || slug,
         title,
         content,
         teaser,
@@ -115,6 +135,14 @@ export async function updatePost(
         new Date().toISOString(),
         slug
       );
+    
+    if (new_slug) {
+      // There's a possibilty that the new slug is already captured in old_post_slugs 
+      // (e.g. when xyz -> abc -> xyz)
+      // In this case we can safely remove the old_slug forward, because it is now current slug again
+      db.prepare('DELETE FROM old_post_slugs WHERE slug = ?').run(new_slug);
+      db.prepare('INSERT INTO old_post_slugs (slug, post_id) values(?, ?)').run(slug, post_id);
+    }
 
     const previous_recipients = db
       .prepare('SELECT recipient_id FROM recipients WHERE post_id = ?')
@@ -172,7 +200,10 @@ export async function updatePost(
       )
       .all(post.post_id);
 
-    return { slug, recipients: current_recipients };
+    return {
+      slug: new_slug || slug,
+      recipients: current_recipients
+    };
   })();
 }
 
@@ -300,7 +331,15 @@ export async function deleteFriend(friend_id, currentUser) {
  */
 export async function getPostBySlug(slug, secret = undefined, currentUser) {
   return db.transaction(() => {
-    const post = db.prepare('SELECT * FROM posts WHERE slug = ?').get(slug);
+    let post;
+    post = db.prepare('SELECT * FROM posts WHERE slug = ?').get(slug);
+
+    // If no post found, we might find it by resolving an old_slug
+    if (!post) {
+      const { post_id } = db.prepare('SELECT post_id FROM old_post_slugs WHERE slug = ?').get(slug);
+      post = db.prepare('SELECT * FROM posts WHERE post_id = ?').get(post_id);
+    }
+
     // Check if authorized to view
     let hasAccess = false;
     if (currentUser || post.is_public) {
