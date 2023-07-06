@@ -42,7 +42,7 @@
     {#if teaser_image?.src && teaser_image?.width && teaser_image?.height}
       <a href={`/posts/${post.slug}`}>
         <img
-          class="block bg-black w-full mt-4"
+          class="block w-full mt-4"
           src={teaser_image.src}
           width={teaser_image.width}
           height={teaser_image.height}
