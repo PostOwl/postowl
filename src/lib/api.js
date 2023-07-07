@@ -201,7 +201,7 @@ export async function updatePost(
       .all(post.post_id);
 
     return {
-      slug: new_slug || slug,
+      ...post, // slug, post_id, updated_at
       recipients: current_recipients
     };
   })();
@@ -378,7 +378,8 @@ export async function deletePost(slug, currentUser) {
   if (!currentUser) throw new Error('Not authorized');
   return db.transaction(() => {
     const { post_id } = db.prepare('SELECT post_id FROM posts WHERE slug = ?').get(slug);
-    // Remove recipients first
+    // Remove dependencies (old_post_slugs, recipients) first
+    db.prepare('DELETE FROM old_post_slugs WHERE post_id = ?').run(post_id);
     db.prepare('DELETE FROM recipients WHERE post_id = ?').run(post_id);
     db.prepare('DELETE FROM posts WHERE slug = ?').run(slug);
     return true;
