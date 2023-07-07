@@ -95,6 +95,7 @@
   <meta name="twitter:description" content={teaser} />
   <meta name="twitter:image" content={data.teaser_image || data.bio.avatar} />
 
+  <link href="/rss.xml" rel="alternate" type="application/rss+xml" title={data.bio.name}>
   <link rel="icon" type="image/png" sizes="300x300" href={data.bio.avatar} />
   <link rel="apple-touch-icon" sizes="300x300" href={data.bio.avatar} />
 

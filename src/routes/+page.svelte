@@ -72,6 +72,8 @@
   <meta name="twitter:image" content="%sveltekit.assets%/favicon/favicon-512x512.png" />
   <meta name="robots" content="index, follow" />
 
+  <link href="/rss.xml" rel="alternate" type="application/rss+xml" title={name}>
+
   <link rel="icon" type="image/png" sizes="300x300" href={avatar} />
   <link rel="apple-touch-icon" sizes="300x300" href={avatar} />
 </svelte:head>
