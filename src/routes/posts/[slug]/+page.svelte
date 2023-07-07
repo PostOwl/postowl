@@ -70,6 +70,7 @@
         is_public
       });
       updated_at = result.updated_at;
+      recipients = result.recipients;
       editable = false;
       // In case the slug has changed (title change) forward to the correct url
       if (result.slug !== data.slug) {
