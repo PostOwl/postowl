@@ -344,10 +344,13 @@ export async function getPostBySlug(slug, secret = undefined, currentUser) {
     let hasAccess = false;
     if (currentUser || post.is_public) {
       hasAccess = true;
-    } else {
+    }
+    
+    // If a secret is provided in the URL, always try to resolve it (even for public posts) and mark as read.
+    if (secret) {
       const { recipient_id } = db
-        .prepare('SELECT recipient_id FROM recipients WHERE post_id = ? AND secret = ?')
-        .get(post.post_id, secret);
+      .prepare('SELECT recipient_id FROM recipients WHERE post_id = ? AND secret = ?')
+      .get(post.post_id, secret);
       if (recipient_id) {
         hasAccess = true;
         // Mark as read
@@ -356,6 +359,7 @@ export async function getPostBySlug(slug, secret = undefined, currentUser) {
         );
       }
     }
+
     if (!hasAccess) throw new Error('Not authorized');
 
     let recipients = [];
