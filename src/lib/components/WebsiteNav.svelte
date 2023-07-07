@@ -41,7 +41,7 @@
         </a>
         <div class="flex-1" />
         {#if currentUser}
-          <PrimaryButton size="sm" href="/posts/new">New letter</PrimaryButton>
+          <PrimaryButton size="sm" href="/letters/new">New letter</PrimaryButton>
         {/if}
         <button on:click={() => (showMenu = true)} class="ml-0 pl-4" title={'Open Menu'}>
           <svg

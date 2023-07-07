@@ -2,9 +2,7 @@
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
   import { extractTeaser, extractTeaserImage, fetchJSON, toDateString } from '$lib/util';
   import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
-  import WebsiteNav from '$lib/components/WebsiteNav.svelte';
   import { goto } from '$app/navigation';
-  import Footer from '$lib/components/Footer.svelte';
   import Post from '$lib/components/Post.svelte';
 
   export let data;
@@ -34,7 +32,7 @@
         recipients,
         is_public
       });
-      goto(`/posts/${slug}`);
+      goto(`/letters/${slug}`);
     } catch (err) {
       console.error(err);
       // HACK: This is guesswork

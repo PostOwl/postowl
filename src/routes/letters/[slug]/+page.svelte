@@ -74,7 +74,7 @@
       editable = false;
       // In case the slug has changed (title change) forward to the correct url
       if (result.slug !== data.slug) {
-        goto(`/posts/${result.slug}`);
+        goto(`/letters/${result.slug}`);
       }
     } catch (err) {
       console.error(err);

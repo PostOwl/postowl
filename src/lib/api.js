@@ -76,7 +76,7 @@ export async function createPost(
         recipient.email,
         title,
         `<p>${teaser}</p>
-        <p><a href="${`${ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
+        <p><a href="${`${ORIGIN}/letters/${slug}?secret=${secret}`}">Read more</a></p>
         <p>Best, ${ADMIN_NAME}</p>`
       );
     }
@@ -176,7 +176,7 @@ export async function updatePost(
           recipient.email,
           title,
           `<p>${teaser}</p>
-          <p><a href="${`${ORIGIN}/posts/${slug}?secret=${secret}`}">Read more</a></p>
+          <p><a href="${`${ORIGIN}/letters/${slug}?secret=${secret}`}">Read more</a></p>
           <p>Best, ${ADMIN_NAME}</p>`
         );
         new_recipients.push(recipient_id);
@@ -540,7 +540,7 @@ export async function getSitemap() {
     const sitemap = [];
     posts.forEach(a => {
       sitemap.push({
-        url: `/posts/${a.slug}`,
+        url: `/letters/${a.slug}`,
         lastmod: new Date(a.modified_at).toISOString()
       });
     });
