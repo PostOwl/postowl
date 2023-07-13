@@ -91,7 +91,7 @@ export function buildKeymap(schema, mapKeys) {
     bind('Enter', splitListItem(type));
   }
   if ((type = schema.nodes.paragraph)) bind('Shift-Ctrl-0', setBlockType(type));
-  if ((type = schema.nodes.code_block)) bind('Shift-Ctrl-\\', setBlockType(type));
+  if ((type = schema.nodes.code_block)) bind('Shift-Ctrl-c', setBlockType(type));
   if ((type = schema.nodes.heading))
     for (let i = 1; i <= 6; i++) bind('Shift-Ctrl-' + i, setBlockType(type, { level: i }));
   if ((type = schema.nodes.horizontal_rule)) {

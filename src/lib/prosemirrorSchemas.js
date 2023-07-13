@@ -2,6 +2,7 @@ import { Schema } from 'prosemirror-model';
 
 const pDOM = ['p', 0];
 const blockquoteDOM = ['blockquote', 0];
+const preDOM = ['pre', ['code', 0]]
 const brDOM = ['br'];
 const olDOM = ['ol', 0];
 const ulDOM = ['ul', 0];
@@ -196,6 +197,20 @@ export const multiLineRichTextSchema = new Schema({
       toDOM(node) {
         return ['h' + (parseInt(node.attrs.level) + 1), {}, 0];
       }
+    },
+
+
+    // :: NodeSpec A code listing. Disallows marks or non-text inline
+    // nodes by default. Represented as a `<pre>` element with a
+    // `<code>` element inside of it.
+    code_block: {
+      content: 'text*',
+      marks: '',
+      group: 'block',
+      code: true,
+      defining: true,
+      parseDOM: [{ tag: 'pre', preserveWhitespace: 'full' }],
+      toDOM () { return preDOM }
     },
 
     // :: NodeSpec The text node.
