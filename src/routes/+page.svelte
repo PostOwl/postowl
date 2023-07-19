@@ -84,19 +84,22 @@
 
 <WebsiteNav bio={{ avatar, name, bio }} bind:editable />
 
+
 <!-- Bio -->
 <div class="bg-white __bio">
   <div class="max-w-screen-md mx-auto px-6">
     <div class="pt-6 sm:pt-12 pb-2 sm:pb-6 text-center">
-      <Image
-        class="inline-block w-20 h-20 md:w-28 md:h-28 rounded-full"
-        maxWidth="384"
-        maxHeight="384"
-        quality="0.8"
-        {editable}
-        bind:src={avatar}
-        alt={undefined}
-      />
+      <div class="w-20 h-20 md:w-28 md:h-28 mx-auto overflow-hidden relative rounded-full">
+        <Image
+          class="block w-20 h-20 md:w-28 md:h-28 rounded-full"
+          maxWidth="384"
+          maxHeight="384"
+          quality="0.8"
+          {editable}
+          bind:src={avatar}
+          alt={undefined}
+        />
+      </div>
     </div>
     <div class="">
       <h1 class="text-center text-3xl md:text-6xl font-bold">

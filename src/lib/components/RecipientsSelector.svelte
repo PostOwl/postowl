@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte';
   import { debounce, classNames, isEmailValid } from '$lib/util';
-  import SecondaryButton from '$lib/components/SecondaryButton.svelte';
   import CopyableRecipient from './CopyableRecipient.svelte';
 
   export let recipients = [];
@@ -113,6 +112,7 @@
 <div class="max-w-screen-md mx-auto px-6 pb-8 relative">
     <div class="font-bold inline">To:</div>
 
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <svelte:element this={editable ? "button" : "div"}
       on:click={toggleVisibilitySelector}
       class={classNames(

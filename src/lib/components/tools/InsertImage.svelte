@@ -14,11 +14,8 @@
   $: disabled = !insertImage(editorState, null, editorView);
   $: currentUser = $page.data.currentUser;
 
-  console.log('currentUser', currentUser);
-
   async function uploadImage() {
     const file = fileInput.files[0];
-
 
     // We convert all uploads to the WEBP image format
     const content_type = is_safari() ? 'image/jpeg' : 'image/webp';
@@ -38,7 +35,6 @@
 
     const { width, height } = await getDimensions(resizedFile);
     const src = currentUser ? `/assets/${path}` : URL.createObjectURL(resizedFile);
-
     progress = 0;
     try {
       if (currentUser) {
@@ -46,7 +42,6 @@
           progress = p;
         });
       }
-
       editorView.dispatch(
         editorState.tr.replaceSelectionWith(
           schema.nodes.image.createAndFill({
