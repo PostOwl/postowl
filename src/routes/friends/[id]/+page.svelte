@@ -1,6 +1,6 @@
 <script>
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
-  import { fetchJSON } from '$lib/util';
+  import { fetchJSON, isEmailValid } from '$lib/util';
   import { goto } from '$app/navigation';
   import PlainText from '$lib/components/PlainText.svelte';
 
@@ -64,7 +64,7 @@
 </svelte:head>
 
 {#if editable}
-  <EditorToolbar on:cancel={() => goto('/friends')} on:save={saveFriend} />
+  <EditorToolbar on:cancel={() => goto('/friends')} on:save={saveFriend} canConfirm={isEmailValid(email)} />
 {/if}
 
 <div class="max-w-screen-md mx-auto px-6 pb-8 sm:text-xl">

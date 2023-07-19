@@ -15,6 +15,7 @@
   import CreateLink from './tools/CreateLink.svelte';
 
   export let confirmLabel = 'Save';
+  export let canConfirm = true;
 
   let editorView = null;
   let editorState = null;
@@ -170,7 +171,7 @@
         <div class="flex-1 h-8" />
         <PrimaryButton type="button" on:click={handleCancel}>Cancel</PrimaryButton>
         <div class="shrink-0 w-2 sm:w-4" />
-        <SecondaryButton type="button" on:click={handleSave}>{confirmLabel}</SecondaryButton>
+        <SecondaryButton type="button" on:click={handleSave} disabled={!canConfirm}>{confirmLabel}</SecondaryButton>
       </div>
     </div>
   </div>
