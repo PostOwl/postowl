@@ -11,7 +11,7 @@ const db = new Database(DB_PATH, {
   // verbose: console.log
 });
 db.pragma('journal_mode = WAL');
-db.pragma('case_sensitive_like = true');
+db.pragma('case_sensitive_like = false');
 
 /**
  * Creates a post
