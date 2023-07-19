@@ -104,7 +104,7 @@
 </svelte:head>
 
 {#if editable}
-  <EditorToolbar on:cancel={initOrReset} on:save={savePost} />
+  <EditorToolbar on:cancel={initOrReset} on:save={savePost} canConfirm={!!title} />
 {/if}
 
 <WebsiteNav bind:editable bio={data.bio} />
