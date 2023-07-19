@@ -80,7 +80,7 @@
 
   <div class="text-center pt-12">
     <button
-      class="font-medium text-sm sm:text-base rounded-full w-full py-3 bg-rose-600 hover:bg-rose-500 text-white"
+      class="font-medium text-sm sm:text-base rounded-full w-full py-3 border border-rose-600 text-rose-600"
       on:click={deleteFriend}>Delete friend</button
     >
   </div>
