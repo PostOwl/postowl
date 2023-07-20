@@ -57,7 +57,7 @@
       />
     </svg>
   {/if}
-  <span>{recipient.email}</span>
+  <span title={recipient.name ? recipient.email: ''}>{recipient.name || recipient.email}</span>
   {#if editable}
     <button on:click={() => handleDelete()}>
       <svg

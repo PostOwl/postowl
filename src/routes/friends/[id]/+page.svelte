@@ -51,7 +51,7 @@
     } catch (err) {
       console.error(err);
       alert(
-        'There was an error. You can try again, but before that, please just copy and paste your article into a safe place.'
+        "Could not save. Make sure that the name or email you provided haven't been used already."
       );
     }
   }
