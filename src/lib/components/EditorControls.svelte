@@ -38,8 +38,8 @@
   onDestroy(unsubscribe);
 
   function onKeyDown(e) {
-    // Trigger save
-    if (e.key === 's' && e.metaKey) {
+    // Trigger save/confirm
+    if (canConfirm && (e.key === 's' || e.key === 'Enter') && e.metaKey) {
       dispatch('save', {});
       e.preventDefault();
       e.stopPropagation();
