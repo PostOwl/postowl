@@ -37,7 +37,7 @@ PostOwl sends emails when you share a letter with friends.
 In development we recommend using [mailpit](https://github.com/axllent/mailpit) to test email without sending real emails.
 
 1. Install [mailpit](https://github.com/axllent/mailpit)
-1. Make sure mailpit is running (if installed with Homebrew on macOS run `brew services start axllent/apps/mailpit`)
+1. Make sure mailpit is running (if installed with Homebrew on macOS run `mailpit`)
 1. Configure `.env` with the examples shown for mailpit in `.env.example`
 1. Start the local development server with `npm run dev` - the app is now running in `dev` mode and emails can be sent without encryption
 1. Use PostOwl to add a friend at http://localhost:5173/friends
