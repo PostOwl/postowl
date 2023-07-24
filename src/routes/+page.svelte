@@ -85,8 +85,8 @@
 <WebsiteNav bio={{ avatar, name, bio }} bind:editable />
 
 
-<!-- Bio -->
-<div class="bg-white __bio">
+<!-- __bio is there to make placeholder work with centered text -->
+<div class="__bio">
   <div class="max-w-screen-md mx-auto px-6">
     <div class="pt-6 sm:pt-12 pb-2 sm:pb-6 text-center">
       <div class="w-20 h-20 md:w-28 md:h-28 mx-auto overflow-hidden relative rounded-full">
@@ -120,10 +120,13 @@
 </div>
 
 <NotEditable {editable}>
-  <div class="bg-white" id="letters">
+  <div  id="letters">
     <div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">
       {#if data.posts.length === 0}
         <div class="md:text-xl py-4 text-center">No letters so far.</div>
+        {#if !currentUser}
+          <div class="text-sm md:text-base text-center border p-4 rounded-md text-gray-500 my-8">If this is your PostOwl, use the menu to sign in.</div>
+        {/if}
       {/if}
     </div>
 

@@ -3,6 +3,7 @@
   import { classNames } from '$lib/util';
   import NotEditable from './NotEditable.svelte';
   import PrimaryButton from './PrimaryButton.svelte';
+  import SecondaryButton from './SecondaryButton.svelte';
   export let editable = false;
 
   // Explicitly set by home page, so we get live updates
@@ -40,9 +41,6 @@
           {latestBio.name}
         </a>
         <div class="flex-1" />
-        {#if currentUser}
-          <PrimaryButton size="sm" href="/letters/new">New letter</PrimaryButton>
-        {/if}
         <button on:click={() => (showMenu = true)} class="ml-0 pl-4" title={'Open Menu'}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -65,9 +63,9 @@
 </div>
 
 {#if showMenu}
-  <div class="bg-black text-white fixed inset-0 z-50">
+  <div class="bg-black bg-opacity-[95%] fixed inset-0 z-50">
     <div class="max-w-screen-md mx-auto py-4 px-6 flex flex-col space-y-4">
-      <div class="text-right mb-8">
+      <div class="text-right mb-8 text-white">
         <button on:click={() => (showMenu = false)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -81,32 +79,54 @@
           </svg>
         </button>
       </div>
-      <div class="text-center">
+      <!-- <div class="text-center">
         <a class="text-3xl font-bold underline" href="/" on:click={toggleMenu}>About</a>
-      </div>
-      <div class="text-center">
-        <a class="inline-flex space-x-2 items-center" href="/#letters" on:click={toggleMenu}>
-          <span class="font-bold text-3xl underline">Letters</span>
-          {#if currentUser}
-            <div class="bg-gray-800 rounded-full w-6 h-6 text-gray-400">{$page.data.counts.post_count}</div>
-          {/if}
-        </a>
-      </div>
+      </div> -->
+
       {#if currentUser}
         <div class="text-center">
-          <a class="inline-flex space-x-2 items-center" href="/friends" on:click={toggleMenu}>
+          <a class="text-white inline-flex space-x-2 items-center" href="/#letters" on:click={toggleMenu}>
+            <span class="font-bold text-3xl underline">Letters</span>
+            {#if currentUser}
+              <div class="bg-gray-800 rounded-full w-6 h-6 text-gray-400">{$page.data.counts.post_count}</div>
+            {/if}
+          </a>
+        </div>
+
+        <div class="text-center">
+          <a class="text-white inline-flex space-x-2 items-center" href="/friends" on:click={toggleMenu}>
             <span class="font-bold text-3xl underline">Friends</span>
             {#if currentUser}
               <div class="bg-gray-800 rounded-full w-6 h-6 text-gray-400">{$page.data.counts.friend_count}</div>
             {/if}
           </a>
         </div>
+
+        <div class="text-center">
+          <SecondaryButton href="/letters/new">New letter</SecondaryButton>
+        </div>
+        
+
+        <!-- <div class="text-center">
+          <a class="inline-flex space-x-2 items-center" href="/letters/new">
+            <span class="font-bold text-3xl underline">New letter</span>
+          </a>
+        </div> -->
+
+        <!-- {#if currentUser}
+          <PrimaryButton size="sm" href="/letters/new">New letter</PrimaryButton>
+        {/if} -->
+
         <div class="pt-14 text-center">
-          <div class="pb-2">Logged in as <strong>{currentUser.name}</strong>.</div>
-          <div><a class="text-3xl font-bold underline" href="/logout">Sign out</a></div>
+          <div class="pb-2 text-white">Logged in as <strong>{currentUser.name}</strong>.</div>
+
+          <div class="text-center">
+            <SecondaryButton href="/logout">Sign out</SecondaryButton>
+          </div>
+
         </div>
       {:else}
-        <div class="pt-14 text-center">
+        <div class="pt-14 text-center text-white">
           <div class="pb-2">
             <a class="font-bold underline" href="/login">Sign in</a> as an admin.
           </div>
