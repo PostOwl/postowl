@@ -38,7 +38,7 @@
 </script>
 
 <div
-  class="relative rounded-full bg-yellow-100 px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base text-yellow-800 inline-flex items-center space-x-1"
+  class="relative rounded-full bg-gray-100 px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base inline-flex items-center space-x-1 border"
 >
   <!-- TODO: hide when not seen -->
   {#if recipient.has_seen}

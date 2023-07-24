@@ -57,7 +57,7 @@
   <EditorToolbar
     on:cancel={discardDraft}
     on:save={createPost}
-    confirmLabel={is_public ? 'Publish' : recipients.length > 0 ? 'Send' : 'Save'}
+    confirmLabel='Send'
     canConfirm={!!title}
   />
 {/if}

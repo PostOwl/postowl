@@ -116,8 +116,7 @@
     <svelte:element this={editable ? "button" : "div"}
       on:click={toggleVisibilitySelector}
       class={classNames(
-        "relative rounded-full px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base inline-flex items-center space-x-1",
-        is_public ? "bg-green-100 text-green-800" : "bg-rose-100 text-rose-800",
+        "relative rounded-full px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base inline-flex items-center space-x-1 border bg-gray-100",
         chooseVisibility ? "z-50" :"" // pop to the top while editing visibility
       )}
     >
@@ -136,20 +135,18 @@
           <button
             on:click={togglePrivate}
             class={classNames(
-              "block px-4 py-2 rounded-full text-rose-800 mx-0 w-full text-left",
-              "bg-rose-50 hover:bg-rose-100"
+              "block px-4 py-2 rounded-full mx-0 w-full text-left bg-gray-100 hover:bg-gray-200",
             )}
           >
-            Myself — Private letters and drafts
+          Myself <span class="text-sm">— Include yourself</span>
           </button>
           <button
           on:click={togglePublic}
             class={classNames(
-              "block px-4 py-2 rounded-full bg-green-100 text-green-800 mx-0 w-full text-left",
-              "bg-green-50 hover:bg-green-100"
+              "block px-4 py-2 rounded-full mx-0 w-full text-left bg-gray-100 hover:bg-gray-200"
             )}
           >
-            Everyone — Public blog
+            Everyone <span class="text-sm">— Make it a public letter</span>
           </button>
         </div>
       </div>
@@ -172,7 +169,7 @@
         id="search"
         name="search"
         class="block w-full border-none bg-transparent px-0 py-2 placeholder-gray-300 focus:border-black focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-0"
-        placeholder="Enter email to add recipient."
+        placeholder="Enter email or name to add friends."
         type="text"
       />
     </div>
