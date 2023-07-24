@@ -14,6 +14,7 @@
 
   export let data;
   let editable, title, content, created_at, updated_at, teaser_image, teaser, is_public, recipients;
+  let showMenu;
 
   $: currentUser = data.currentUser;
   $: {
@@ -107,7 +108,16 @@
   <EditorToolbar on:cancel={initOrReset} on:save={savePost} canConfirm={!!title} />
 {/if}
 
-<WebsiteNav bind:editable bio={data.bio} />
+<WebsiteNav bio={data.bio} bind:editable bind:showMenu>
+  {#if currentUser}
+    <div class="text-white md:text-lg">{title}</div>
+    <div class="space-y-4 flex flex-col pb-16">
+      <button class="rounded-full border border-white text-center text-white py-2 font-bold" on:click={() => {editable = true; showMenu = false; }}>Edit</button>
+      <button class="rounded-full border border-white text-center text-white py-2 font-bold" on:click={deletePost}>Delete</button>
+    </div>
+  {/if}
+</WebsiteNav>
+
 <div class="pt-8 sm:pt-16" />
 
 {#if currentUser}
@@ -115,15 +125,6 @@
 {/if}
 
 <Post bind:title bind:content bind:created_at {editable} />
-
-<div class="max-w-screen-md mx-auto px-6">
-  {#if currentUser && !editable}
-    <div class="flex justify-center py-4 space-x-4">
-      <PrimaryButton size="sm" on:click={() => (editable = true)}>Edit</PrimaryButton>
-      <SecondaryButton size="sm" on:click={deletePost}>Delete</SecondaryButton>
-    </div>
-  {/if}
-</div>
 
 <NotEditable {editable}>
   <div class="text-center max-w-screen-sm mx-auto px-6 py-12 sm:py-16">

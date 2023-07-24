@@ -6,8 +6,7 @@
 <a
   href={`/friends/${friend.friend_id}`}
   class={classNames(
-    'block md:text-xl rounded-lg border shadow-md bg-white p-4 sm:p-8',
-    'border-gray-300'
+    'block md:text-xl rounded-lg border bg-white p-4 sm:p-8'
   )}
 >
   <div>
