@@ -8,8 +8,7 @@
 
   // Explicitly set by home page, so we get live updates
   export let bio = undefined;
-
-  let showMenu = false;
+  export let showMenu = false;
   $: data = $page.data;
   $: currentUser = data.currentUser;
   $: latestBio = bio || data.bio;
@@ -28,7 +27,7 @@
 
 <div
   class={classNames(
-    'backdrop-blur-sm  z-10 text-sm lg:text-lg border-b',
+    'backdrop-blur-sm z-10 text-sm lg:text-lg border-b',
     !editable ? 'sticky top-0' : '',
     'bg-white bg-opacity-95'
   )}
@@ -62,7 +61,7 @@
   </div>
 </div>
 
-{#if showMenu}
+{#if showMenu && !editable}
   <div class="bg-black bg-opacity-[95%] fixed inset-0 z-50">
     <div class="max-w-screen-md mx-auto py-4 px-6 flex flex-col space-y-4">
       <div class="text-right mb-8 text-white">
@@ -79,56 +78,48 @@
           </svg>
         </button>
       </div>
-      <!-- <div class="text-center">
-        <a class="text-3xl font-bold underline" href="/" on:click={toggleMenu}>About</a>
-      </div> -->
+
+
+      <slot />
+      <div class="text-white md:text-lg">Navigate to ...</div>
+      <div>
+        <a class="text-white inline-flex space-x-2 items-center" href="/" on:click={toggleMenu}>
+          <span class="font-bold text-3xl underline">Letters</span>
+          {#if currentUser}
+            <div class="bg-gray-800 rounded-full w-6 h-6 text-gray-400 text-center">{$page.data.counts.post_count}</div>
+          {/if}
+        </a>
+      </div>
+
 
       {#if currentUser}
-        <div class="text-center">
-          <a class="text-white inline-flex space-x-2 items-center" href="/#letters" on:click={toggleMenu}>
-            <span class="font-bold text-3xl underline">Letters</span>
-            {#if currentUser}
-              <div class="bg-gray-800 rounded-full w-6 h-6 text-gray-400">{$page.data.counts.post_count}</div>
-            {/if}
-          </a>
-        </div>
-
-        <div class="text-center">
+        <div>
           <a class="text-white inline-flex space-x-2 items-center" href="/friends" on:click={toggleMenu}>
             <span class="font-bold text-3xl underline">Friends</span>
             {#if currentUser}
-              <div class="bg-gray-800 rounded-full w-6 h-6 text-gray-400">{$page.data.counts.friend_count}</div>
+              <div class="bg-gray-800 rounded-full w-6 h-6 text-gray-400 text-center">{$page.data.counts.friend_count}</div>
             {/if}
           </a>
         </div>
 
-        <div class="text-center">
-          <SecondaryButton href="/letters/new">New letter</SecondaryButton>
+        <div class="space-y-4 flex flex-col pt-4">
+          <a href="/letters/new" class="rounded-full border bg-white text-center py-2 font-bold">New letter</a>
         </div>
-        
 
-        <!-- <div class="text-center">
-          <a class="inline-flex space-x-2 items-center" href="/letters/new">
-            <span class="font-bold text-3xl underline">New letter</span>
-          </a>
-        </div> -->
-
-        <!-- {#if currentUser}
-          <PrimaryButton size="sm" href="/letters/new">New letter</PrimaryButton>
-        {/if} -->
-
-        <div class="pt-14 text-center">
+        <div class="pt-14">
           <div class="pb-2 text-white">Logged in as <strong>{currentUser.name}</strong>.</div>
 
-          <div class="text-center">
-            <SecondaryButton href="/logout">Sign out</SecondaryButton>
+          <div class="space-y-4 flex flex-col pt-4">
+            <a href="/logout" class="rounded-full border bg-white text-center py-2 font-bold">Sign out</a>
           </div>
 
         </div>
       {:else}
-        <div class="pt-14 text-center text-white">
-          <div class="pb-2">
-            <a class="font-bold underline" href="/login">Sign in</a> as an admin.
+        <div class="pt-14">
+          <div class="text-white md:text-lg">If you are the owner of this PostOwl ...</div>
+
+          <div class="space-y-4 flex flex-col pt-4">
+            <a href="/login" class="rounded-full border bg-white text-center py-2 font-bold">Sign in</a>
           </div>
         </div>
       {/if}

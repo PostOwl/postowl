@@ -15,6 +15,7 @@
 
   export let data;
   let editable, name, avatar, bio;
+  let showMenu;
   $: currentUser = data.currentUser;
   $: postLimit = $page.url.searchParams.get('postLimit') || 30;
 
@@ -82,8 +83,14 @@
   <EditorToolbar on:cancel={initOrReset} on:save={saveBio} />
 {/if}
 
-<WebsiteNav bio={{ avatar, name, bio }} bind:editable />
-
+<WebsiteNav bio={{ avatar, name, bio }} bind:editable bind:showMenu>
+  {#if currentUser}
+    <div class="text-white md:text-lg">Profile</div>
+    <div class="space-y-4 flex flex-col pb-16">
+      <button class="rounded-full border border-white text-center text-white py-2 font-bold" on:click={() => {editable = true; showMenu = false; }}>Edit</button>
+    </div>
+  {/if}
+</WebsiteNav>
 
 <!-- __bio is there to make placeholder work with centered text -->
 <div class="__bio">
@@ -109,13 +116,6 @@
     <div class="prose text-center py-2 sm:text-xl">
       <RichText {editable} bind:content={bio} />
     </div>
-    {#if currentUser}
-      {#if !editable}
-        <div class="flex justify-center py-2">
-          <PrimaryButton size="sm" on:click={() => (editable = true)}>Edit bio</PrimaryButton>
-        </div>
-      {/if}
-    {/if}
   </div>
 </div>
 
@@ -125,7 +125,7 @@
       {#if data.posts.length === 0}
         <div class="md:text-xl py-4 text-center">No letters so far.</div>
         {#if !currentUser}
-          <div class="text-sm md:text-base text-center border p-4 rounded-md text-gray-500 my-8">If this is your PostOwl, use the menu to sign in.</div>
+          <div class="text-sm md:text-base text-center border p-4 rounded-md my-8 bg-gray-50 text-gray-500">If this is your PostOwl, use the menu to sign in.</div>
         {/if}
       {/if}
     </div>
