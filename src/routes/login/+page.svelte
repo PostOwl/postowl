@@ -24,7 +24,7 @@
         <label for="password" class="font-semibold mb-2 text-2xl">Enter Admin password</label>
         <Input type="password" name="password" id="password" />
       </div>
-      <PrimaryButton type="submit">Login</PrimaryButton>
+      <PrimaryButton type="submit">Sign in</PrimaryButton>
       <div><a class="underline" href="/">Return to the homepage</a></div>
     </form>
   </div>
