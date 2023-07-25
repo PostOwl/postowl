@@ -74,7 +74,6 @@
   <meta name="robots" content="index, follow" />
 
   <link href="/rss.xml" rel="alternate" type="application/rss+xml" title={name}>
-
   <link rel="icon" type="image/png" sizes="300x300" href={avatar} />
   <link rel="apple-touch-icon" sizes="300x300" href={avatar} />
 </svelte:head>
@@ -125,9 +124,9 @@
       {#if data.posts.length === 0}
         <div class="md:text-xl py-4 text-center">
           {#if currentUser}
-            <a class="underline" href={currentUser ? "/letters/new" : "/login"}>Create</a> the first letters.
+            <a class="underline" href={"/letters/new"}>Create</a> the first letter.
           {:else}
-            <a class="underline" href={currentUser ? "/letters/new" : "/login"}>Login</a> to start writing letters.
+            <a class="underline" href={"/login"}>Login</a> to start writing letters.
           {/if}
         </div>
       {/if}
