@@ -2,16 +2,16 @@
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
   import PlainText from '$lib/components/PlainText.svelte';
   import RichText from '$lib/components/RichText.svelte';
-  import { fetchJSON, extendQueryParams } from '$lib/util';
-  import PrimaryButton from '$lib/components/PrimaryButton.svelte';
+  import SecondaryButton from '$lib/components/SecondaryButton.svelte';
   import WebsiteNav from '$lib/components/WebsiteNav.svelte';
   import Footer from '$lib/components/Footer.svelte';
   import Image from '$lib/components/Image.svelte';
   import NotEditable from '$lib/components/NotEditable.svelte';
+  import PostTeaser from '$lib/components/PostTeaser.svelte';
 
+  import { fetchJSON, extendQueryParams } from '$lib/util';
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
-  import PostTeaser from '$lib/components/PostTeaser.svelte';
 
   export let data;
   let editable, name, avatar, bio;
@@ -85,9 +85,9 @@
 
 <WebsiteNav bio={{ avatar, name, bio }} bind:editable bind:showMenu>
   {#if currentUser}
-    <div class="text-white md:text-lg">Update your name, bio and avatar</div>
-    <div class="space-y-4 flex flex-col pb-16">
-      <button class="rounded-full border bg-white border-black text-center text-black py-2 font-bold" on:click={() => {editable = true; showMenu = false; }}>Edit</button>
+    <div class="md:text-lg">Update your name, bio and avatar...</div>
+    <div class="space-y-4 flex flex-col pb-8">
+      <SecondaryButton size="sm" on:click={() => {editable = true; showMenu = false; }}>Edit</SecondaryButton>
     </div>
   {/if}
 </WebsiteNav>
@@ -104,7 +104,7 @@
           quality="0.8"
           {editable}
           bind:src={avatar}
-          alt={undefined}
+          alt={name}
         />
       </div>
     </div>
@@ -123,10 +123,13 @@
   <div  id="letters">
     <div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">
       {#if data.posts.length === 0}
-        <div class="md:text-xl py-4 text-center">No letters so far.</div>
-        {#if !currentUser}
-          <div class="text-sm md:text-base text-center border p-4 rounded-md my-8 bg-gray-50 text-gray-500">If this is your PostOwl, use the menu to sign in.</div>
-        {/if}
+        <div class="md:text-xl py-4 text-center">
+          {#if currentUser}
+            <a class="underline" href={currentUser ? "/letters/new" : "/login"}>Create</a> the first letters.
+          {:else}
+            <a class="underline" href={currentUser ? "/letters/new" : "/login"}>Login</a> to start writing letters.
+          {/if}
+        </div>
       {/if}
     </div>
 

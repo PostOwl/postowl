@@ -32,7 +32,7 @@
   role="dialog"
   aria-modal="true"
 >
-  <div class="fixed inset-0 bg-gray-500 bg-opacity-75" />
+  <div class="fixed inset-0 bg-black bg-opacity-80" />
 
   <div class="fixed inset-0 z-50 overflow-y-auto" on:mouseup={onMouseUp}>
     <div
