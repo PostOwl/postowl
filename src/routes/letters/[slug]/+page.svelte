@@ -109,7 +109,7 @@
 
 <WebsiteNav bio={data.bio} bind:editable bind:showMenu>
   {#if currentUser}
-    <div class="md:text-lg">Make changes to <strong>{title}</strong> ...</div>
+    <div class="md:text-lg">Make changes to <strong>{title}</strong>...</div>
     <div class="space-y-4 flex flex-col pb-16">
       <SecondaryButton size="sm" on:click={() => {editable = true; showMenu = false; }}>Edit</SecondaryButton>
       <SecondaryButton size="sm" on:click={deletePost}>Delete</SecondaryButton>
