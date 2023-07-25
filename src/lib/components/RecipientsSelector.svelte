@@ -129,7 +129,8 @@
     </svelte:element>
 
     {#if chooseVisibility}
-      <button class="z-40 fixed inset-0 bg-black opacity-80 cursor-default" on:click={toggleVisibilitySelector}></button>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <div class="z-40 fixed inset-0 bg-black opacity-80 cursor-default" on:click={toggleVisibilitySelector}></div>
       <div class="absolute top-10 left-6 right-6 sm:left-12 sm:right-12 z-50">
         <div class="max-w-lg space-y-2 text-sm sm:text-base">
           <button
