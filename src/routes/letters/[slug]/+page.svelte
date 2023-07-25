@@ -110,7 +110,7 @@
 
 <WebsiteNav bio={data.bio} bind:editable bind:showMenu>
   {#if currentUser}
-    <div class="text-white md:text-lg">{title}</div>
+    <div class="text-white md:text-lg">Make changes to <strong>{title}</strong></div>
     <div class="space-y-4 flex flex-col pb-16">
       <button class="rounded-full border bg-white border-black text-center text-black py-2 font-bold" on:click={() => {editable = true; showMenu = false; }}>Edit</button>
       <button class="rounded-full border bg-white border-black text-center text-black py-2 font-bold" on:click={deletePost}>Delete</button>
