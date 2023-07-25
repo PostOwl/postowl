@@ -85,9 +85,9 @@
 
 <WebsiteNav bio={{ avatar, name, bio }} bind:editable bind:showMenu>
   {#if currentUser}
-    <div class="text-white md:text-lg">Profile</div>
+    <div class="text-white md:text-lg">Update your name, bio and avatar</div>
     <div class="space-y-4 flex flex-col pb-16">
-      <button class="rounded-full border border-white text-center text-white py-2 font-bold" on:click={() => {editable = true; showMenu = false; }}>Edit</button>
+      <button class="rounded-full border bg-white border-black text-center text-black py-2 font-bold" on:click={() => {editable = true; showMenu = false; }}>Edit</button>
     </div>
   {/if}
 </WebsiteNav>
