@@ -62,7 +62,7 @@
 </div>
 
 {#if showMenu && !editable}
-  <div class="bg-black bg-opacity-[95%] fixed inset-0 z-50">
+  <div class="bg-black bg-opacity-80 fixed inset-0 z-50">
     <div class="max-w-screen-md mx-auto py-4 px-6 flex flex-col space-y-4">
       <div class="text-right mb-8 text-white">
         <button on:click={() => (showMenu = false)}>
