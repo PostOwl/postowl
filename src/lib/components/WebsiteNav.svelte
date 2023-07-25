@@ -2,6 +2,7 @@
   import { page } from '$app/stores';
   import { classNames } from '$lib/util';
   import NotEditable from './NotEditable.svelte';
+  import Modal from './Modal.svelte';
   import PrimaryButton from './PrimaryButton.svelte';
   import SecondaryButton from './SecondaryButton.svelte';
   export let editable = false;
@@ -61,32 +62,31 @@
   </div>
 </div>
 
-{#if showMenu && !editable}
-  <div class="bg-black bg-opacity-80 fixed inset-0 z-50">
-    <div class="max-w-screen-md mx-auto py-4 px-6 flex flex-col space-y-4">
-      <div class="text-right mb-8 text-white">
-        <button on:click={() => (showMenu = false)}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
 
+{#if showMenu && !editable}
+  <Modal on:close={() => (showMenu = false)}>
+    <div class="p-8 flex flex-col space-y-4 relative">
+      <button class="absolute right-8 top-8" on:click={() => (showMenu = false)}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
 
       <slot />
-      <div class="text-white md:text-lg">Navigate to ...</div>
+      
+      <div class="md:text-lg">Navigate to...</div>
       <div>
-        <a class="text-white inline-flex space-x-2 items-center" href="/" on:click={toggleMenu}>
+        <a class="inline-flex space-x-2 items-center" href="/" on:click={toggleMenu}>
           <span class="font-bold text-3xl underline">Letters</span>
           {#if currentUser}
-            <div class="bg-gray-800 rounded-full w-6 h-6 text-gray-400 text-center">{$page.data.counts.post_count}</div>
+            <div class="bg-gray-200 rounded-full w-6 h-6 text-gray-400 text-center">{$page.data.counts.post_count}</div>
           {/if}
         </a>
       </div>
@@ -94,37 +94,38 @@
 
       {#if currentUser}
         <div>
-          <a class="text-white inline-flex space-x-2 items-center" href="/friends" on:click={toggleMenu}>
+          <a class="inline-flex space-x-2 items-center" href="/friends" on:click={toggleMenu}>
             <span class="font-bold text-3xl underline">Friends</span>
             {#if currentUser}
-              <div class="bg-gray-800 rounded-full w-6 h-6 text-gray-400 text-center">{$page.data.counts.friend_count}</div>
+              <div class="bg-gray-200 rounded-full w-6 h-6 text-gray-400 text-center">{$page.data.counts.friend_count}</div>
             {/if}
           </a>
         </div>
+        <div class="md:text-lg pt-8">Got something to share?</div>
 
-        <div class="space-y-4 flex flex-col pt-4">
-          <a href="/letters/new" class="rounded-full border bg-white text-center py-2 font-bold">New letter</a>
+        <div class="space-y-4 flex flex-col">
+          <PrimaryButton size="sm" href="/letters/new">New letter</PrimaryButton>
         </div>
 
-        <div class="pt-14">
-          <div class="pb-2 text-white">Logged in as <strong>{currentUser.name}</strong>.</div>
+        <div class="pt-8">
+          <div class="pb-2 ">Logged in as <strong>{currentUser.name}</strong>.</div>
 
           <div class="space-y-4 flex flex-col pt-4">
-            <a href="/logout" class="rounded-full border bg-white text-center py-2 font-bold">Sign out</a>
+            <SecondaryButton size="sm" href="/logout">Sign out</SecondaryButton>
           </div>
 
         </div>
       {:else}
-        <div class="pt-14">
-          <div class="text-white md:text-lg">If you are the owner of this PostOwl ...</div>
+        <div class="pt-8">
+          <div class="md:text-lg">If this is your PostOwl...</div>
 
           <div class="space-y-4 flex flex-col pt-4">
-            <a href="/login" class="rounded-full border bg-white text-center py-2 font-bold">Sign in</a>
+            <PrimaryButton size="sm" href="/login">Sign in</PrimaryButton>
           </div>
         </div>
       {/if}
     </div>
-  </div>
+  </Modal>
 {/if}
 
 <svelte:window on:keydown={onKeyDown} />
