@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
   import { extractTeaser, extractTeaserImage, fetchJSON } from '$lib/util';
-  import SecondaryButton from '$lib/components/SecondaryButton.svelte';
+  import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import WebsiteNav from '$lib/components/WebsiteNav.svelte';
   import { goto } from '$app/navigation';
   import Footer from '$lib/components/Footer.svelte';
@@ -109,10 +109,10 @@
 
 <WebsiteNav bio={data.bio} bind:editable bind:showMenu>
   {#if currentUser}
-    <div class="md:text-lg">Make changes to <strong>{title}</strong>...</div>
-    <div class="space-y-4 flex flex-col pb-16">
-      <SecondaryButton size="sm" on:click={() => {editable = true; showMenu = false; }}>Edit</SecondaryButton>
-      <SecondaryButton size="sm" on:click={deletePost}>Delete</SecondaryButton>
+    <div class="md:text-lg">Make changes to <strong>"{title}"</strong>…</div>
+    <div class="space-y-4 flex flex-col">
+      <PrimaryButton size="sm" on:click={() => {editable = true; showMenu = false; }}>Edit</PrimaryButton>
+      <PrimaryButton size="sm" on:click={deletePost}>Delete</PrimaryButton>
     </div>
   {/if}
 </WebsiteNav>

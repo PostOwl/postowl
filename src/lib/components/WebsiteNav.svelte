@@ -80,49 +80,34 @@
       </button>
 
       <slot />
-      
-      <div class="md:text-lg">Navigate to...</div>
-      <div>
-        <a class="inline-flex space-x-2 items-center" href="/" on:click={toggleMenu}>
-          <span class="font-bold text-3xl underline">Letters</span>
-          {#if currentUser}
-            <div class="bg-gray-200 rounded-full w-6 h-6 text-gray-400 text-center">{$page.data.counts.post_count}</div>
-          {/if}
-        </a>
+
+
+      <div class="text-lg pt-8">
+        {#if currentUser}
+        <p>Create <a class="inline-flex space-x-2 items-center" href="/letters/new" on:click={toggleMenu}>
+          <span class="font-bold text-blue-500 hover:text-blue-600 underline">new letter</span>
+        </a></p>
+        <p>Manage <a class="inline-flex space-x-2 items-center" href="/friends" on:click={toggleMenu}>
+          <span class="font-bold text-blue-500 hover:text-blue-600 underline">friends list</span>
+        </a></p>
+        {/if}
+        <p>Go to <a class="inline-flex space-x-2 items-center" href="/" on:click={toggleMenu}>
+          <span class="font-bold text-blue-500 hover:text-blue-600 underline">home page</span>
+        </a></p>
       </div>
 
-
       {#if currentUser}
-        <div>
-          <a class="inline-flex space-x-2 items-center" href="/friends" on:click={toggleMenu}>
-            <span class="font-bold text-3xl underline">Friends</span>
-            {#if currentUser}
-              <div class="bg-gray-200 rounded-full w-6 h-6 text-gray-400 text-center">{$page.data.counts.friend_count}</div>
-            {/if}
-          </a>
-        </div>
-        <div class="md:text-lg pt-8">Got something to share?</div>
-
-        <div class="space-y-4 flex flex-col">
-          <PrimaryButton size="sm" href="/letters/new">New letter</PrimaryButton>
-        </div>
-
-        <div class="pt-8">
-          <div class="pb-2 ">Logged in as <strong>{currentUser.name}</strong>.</div>
-
-          <div data-sveltekit-preload-data="false" class="space-y-4 flex flex-col pt-4">
-            <SecondaryButton size="sm" href="/logout">Sign out</SecondaryButton>
-          </div>
-
-        </div>
+      <div data-sveltekit-preload-data="false" class="pt-8">
+        <div class="pb-2 ">Signed in as <strong>{currentUser.name}</strong> <a class="inline-flex space-x-2 items-center" href="/logout" on:click={toggleMenu}>
+          <span class="font-bold text-blue-500 hover:text-blue-600 underline">(Sign out)</span>
+        </a></div>
+      </div>
       {:else}
-        <div class="pt-8">
-          <div class="md:text-lg">If this is your PostOwl...</div>
-
-          <div class="space-y-4 flex flex-col pt-4">
-            <PrimaryButton size="sm" href="/login">Sign in</PrimaryButton>
-          </div>
-        </div>
+      <div class="pt-8">
+        <div class="md:text-lg">If this is your PostOwl, <a class="inline-flex space-x-2 items-center" href="/login" on:click={toggleMenu}>
+          <span class="font-bold text-blue-500 hover:text-blue-600 underline">sign in…</span>
+        </a></div>
+      </div>
       {/if}
     </div>
   </Modal>
