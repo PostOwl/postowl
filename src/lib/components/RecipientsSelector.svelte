@@ -110,10 +110,9 @@
 </script>
 
 <div class="max-w-screen-md mx-auto px-6 pb-8 relative">
-    <div class="font-bold inline">To:</div>
 
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    {#if editable || is_public}
+    {#if editable || is_public || !is_public}
       <svelte:element this={editable ? "button" : "div"}
         on:click={toggleVisibilitySelector}
         class={classNames(
@@ -121,7 +120,7 @@
           chooseVisibility ? "z-50" :"" // pop to the top while editing visibility
         )}
       >
-        <span>{is_public ? "Everyone" : "Myself"}</span>
+        <span>{is_public ? "Public" : "Private"}</span>
         {#if editable}
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 inline-block">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -141,7 +140,7 @@
               "block px-4 py-2 rounded-full mx-0 w-full text-left bg-gray-100 hover:bg-gray-200",
             )}
           >
-          Myself <span class="text-sm">— Include yourself</span>
+          Private <span class="text-sm">— Journal and drafts</span>
           </button>
           <button
           on:click={togglePublic}
@@ -149,7 +148,7 @@
               "block px-4 py-2 rounded-full mx-0 w-full text-left bg-gray-100 hover:bg-gray-200"
             )}
           >
-            Everyone <span class="text-sm">— Make it a public letter</span>
+            Public <span class="text-sm">— Everyone can read</span>
           </button>
         </div>
       </div>
