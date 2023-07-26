@@ -110,7 +110,7 @@
         <div class="pt-8">
           <div class="pb-2 ">Logged in as <strong>{currentUser.name}</strong>.</div>
 
-          <div class="space-y-4 flex flex-col pt-4">
+          <div data-sveltekit-preload-data="false" class="space-y-4 flex flex-col pt-4">
             <SecondaryButton size="sm" href="/logout">Sign out</SecondaryButton>
           </div>
 
