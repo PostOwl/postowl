@@ -14,16 +14,25 @@
   $: currentUser = data.currentUser;
   $: latestBio = bio || data.bio;
 
-  function onKeyDown(e) {
-    // Turn on editing
-    if (e.key === 'e' && (e.metaKey || e.ctrlKey)) {
+  function onKeyDown(key) {
+    // Activate editing with cmd/ctrl + e
+    if (key.key === 'e' && (key.metaKey || key.ctrlKey)) {
       editable = true;
+    }
+    // Toggle menu with m key
+    if (key.key === 'm' && editable != true) {
+      toggleMenu();
+    }
+    // Go to home with h key
+    if (key.key === 'h' && editable != true) {
+      window.location = '/';
     }
   }
 
   function toggleMenu() {
     showMenu = !showMenu;
   }
+
 </script>
 
 <div
