@@ -1,5 +1,7 @@
+import { ADMIN_NAME } from '$env/static/private';
+
 export const DEFAULT_BIO = {
   avatar: '/images/person-placeholder.jpg',
-  name: 'Jamie Doe',
-  bio: `<p>No, I'm not Jamie Doe. This PostOwl just hasn't been set up yet.</p>`
+  name: ADMIN_NAME,
+  bio: '<p>Here you can put a few words describing yourself.</p>'
 };
