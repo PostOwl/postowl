@@ -111,6 +111,9 @@
 
       {#if currentUser}
       <div data-sveltekit-preload-data="false" class="pt-8">
+        <div class="pb-2 ">Get <a class="inline-flex space-x-2 items-center" target="_blank" href="https://www.postowl.com/docs/">
+          <span class="font-bold text-blue-500 hover:text-blue-600 underline">help↗</span>
+        </a></div>
         <div class="pb-2 ">Signed in as <strong>{currentUser.name}</strong> <a class="inline-flex space-x-2 items-center" href="/logout" on:click={toggleMenu}>
           <span class="font-bold text-blue-500 hover:text-blue-600 underline">(Sign out)</span>
         </a></div>
