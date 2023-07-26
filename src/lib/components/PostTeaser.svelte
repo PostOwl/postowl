@@ -5,6 +5,7 @@
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
 
   $: teaser_image = JSON.parse(post.teaser_image);
+  const lf = new Intl.ListFormat('en');
 </script>
 
 <div
@@ -19,11 +20,11 @@
         <div class="flex-1">
           <!-- Only show this for the site owner -->
           {#if post.is_public}
-            <strong>To:</strong> Everyone{#if post.recipients.length > 0},  {post.recipients.map(r => r.name).join(', ')}{/if}
+            <strong>Public</strong> {#if post.recipients.length > 0} (And sent to {lf.format(post.recipients.map(r => r.name))}){/if}
           {:else if post.recipients.length > 0}
-            <strong>To:</strong> {post.recipients.map(r => r.name).join(', ')}
+            <strong>Shared</strong> (Sent to {lf.format(post.recipients.map(r => r.name))})
           {:else}
-            <strong>To:</strong> Myself
+            Private
           {/if}
         </div> 
         {#if post.is_public}
