@@ -32,6 +32,14 @@
     if (key.key === 'h' && editable != true) {
       goto('/');
     }
+    // Go to new letter with n key
+    if (key.key === 'n' && editable != true) {
+      goto('/letters/new');
+    }
+    // Go to friends list with f key
+    if (key.key === 'f' && editable != true) {
+      goto('/friends');
+    }
   }
 
   function toggleMenu() {
