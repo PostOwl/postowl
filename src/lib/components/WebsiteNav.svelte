@@ -98,30 +98,30 @@
       <div class="text-lg pt-8">
         {#if currentUser}
         <p>Create <a class="inline-flex space-x-2 items-center" href="/letters/new" on:click={toggleMenu}>
-          <span class="font-bold text-blue-500 hover:text-blue-600 underline">new letter</span>
+          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">new letter</span>
         </a></p>
         <p>Manage <a class="inline-flex space-x-2 items-center" href="/friends" on:click={toggleMenu}>
-          <span class="font-bold text-blue-500 hover:text-blue-600 underline">friends list</span>
+          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">friends list</span>
         </a></p>
         {/if}
         <p>Go to <a class="inline-flex space-x-2 items-center" href="/" on:click={toggleMenu}>
-          <span class="font-bold text-blue-500 hover:text-blue-600 underline">home page</span>
+          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">home page</span>
         </a></p>
       </div>
 
       {#if currentUser}
       <div data-sveltekit-preload-data="false" class="pt-8">
         <div class="pb-2 ">Get <a class="inline-flex space-x-2 items-center" target="_blank" href="https://www.postowl.com/docs/">
-          <span class="font-bold text-blue-500 hover:text-blue-600 underline">help↗</span>
+          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">help↗</span>
         </a></div>
-        <div class="pb-2 ">Signed in as <strong>{currentUser.name}</strong> <a class="inline-flex space-x-2 items-center" href="/logout" on:click={toggleMenu}>
-          <span class="font-bold text-blue-500 hover:text-blue-600 underline">(Sign out)</span>
+        <div class="pb-2 ">Signed in as {currentUser.name} <a class="inline-flex space-x-2 items-center" href="/logout" on:click={toggleMenu}>
+          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">(sign out)</span>
         </a></div>
       </div>
       {:else}
       <div class="pt-8">
         <div class="md:text-lg">If this is your PostOwl, <a class="inline-flex space-x-2 items-center" href="/login" on:click={toggleMenu}>
-          <span class="font-bold text-blue-500 hover:text-blue-600 underline">sign in…</span>
+          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">sign in…</span>
         </a></div>
       </div>
       {/if}
