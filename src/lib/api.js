@@ -241,10 +241,10 @@ export async function destroySession(sessionId) {
 /**
  * List posts (either public, or all if you are the site owner)
  */
-export async function getPosts(currentUser) {
+export async function getPosts(currentUser, searchQuery) {
   let posts;
   if (currentUser) {
-    posts = db.prepare('SELECT * FROM posts ORDER BY created_at DESC').all();
+    posts = db.prepare('SELECT * FROM posts WHERE title LIKE ? OR content LIKE ? ORDER BY created_at DESC').all(`%${searchQuery}%`, `%${searchQuery}%`);
   } else {
     posts = db
       .prepare('SELECT * FROM posts WHERE is_public IS TRUE ORDER BY created_at DESC')
@@ -254,15 +254,13 @@ export async function getPosts(currentUser) {
   for (let i = 0; i < posts.length; i++) {
     const post = posts[i];
     post.recipients = db
-      .prepare(
-        `
+      .prepare(`
       SELECT
       coalesce(f.name, f.email) AS name
       FROM recipients r
       INNER JOIN friends f ON (r.friend_id=f.friend_id)
       WHERE r.post_id = ?
-    `
-      )
+      `)
       .all(post.post_id);
   }
   return posts;
