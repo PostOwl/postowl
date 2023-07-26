@@ -20,9 +20,9 @@
         <div class="flex-1">
           <!-- Only show this for the site owner -->
           {#if post.is_public}
-            <strong>Public</strong> {#if post.recipients.length > 0} (And sent to {lf.format(post.recipients.map(r => r.name))}){/if}
+            <strong>Public</strong> {#if post.recipients.length > 0} (and sent to {lf.format(post.recipients.map(r => r.name))}){/if}
           {:else if post.recipients.length > 0}
-            <strong>Shared</strong> (Sent to {lf.format(post.recipients.map(r => r.name))})
+            <strong>Shared</strong> (sent to {lf.format(post.recipients.map(r => r.name))})
           {:else}
             Private
           {/if}
