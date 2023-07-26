@@ -11,7 +11,7 @@
 <div
   href={`/letters/${post.slug}`}
   class={classNames(
-    'md:text-xl rounded-lg border bg-white p-4 sm:p-8',
+    'md:text-xl rounded-2xl border bg-white p-4 sm:p-8 border-black',
   )}
 >
   <div>

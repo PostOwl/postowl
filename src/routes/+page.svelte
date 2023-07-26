@@ -10,12 +10,13 @@
   import NotEditable from '$lib/components/NotEditable.svelte';
   import PostTeaser from '$lib/components/PostTeaser.svelte';
 
-  import { fetchJSON, extendQueryParams } from '$lib/util';
+  import { fetchJSON, extendQueryParams, classNames } from '$lib/util';
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
 
   export let data;
   let editable, name, avatar, bio;
+  let searchInput;
   let showMenu;
   $: currentUser = data.currentUser;
   $: postLimit = $page.url.searchParams.get('postLimit') || 30;
@@ -54,6 +55,10 @@
       alert('There was an error. Please try again.');
     }
   }
+
+  function onInput(e) {
+		goto('/?q=' + searchInput.value, { keepFocus: true });
+	}
 
   initOrReset();
 </script>
@@ -120,13 +125,55 @@
 </div>
 
 <NotEditable {editable}>
+  <!-- Search bar -->
+	<div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">
+		<div class={classNames(data.searchQuery ? '' : '', 'relative')}>
+			{#if !data.searchQuery}
+				<div class="pointer-events-none absolute inset-y-0 left-3 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+          </svg>          
+				</div>
+			{:else}
+				<a href="/" class="absolute inset-y-0 left-3 flex items-center">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="w-6 h-6"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+						/>
+					</svg>
+				</a>
+			{/if}
+			<input
+				bind:this={searchInput}
+				on:input={onInput}
+				value={data.searchQuery}
+				autocomplete="off"
+				id="search"
+				name="search"
+				class="block w-full rounded-full border-1 border-black bg-transparent py-2 pl-10 pr-3 placeholder-gray-400 focus:border-black focus:text-black focus:outline-none focus:ring-0"
+				placeholder={`Search ${data.posts.length} letters`}
+				type="text"
+			/>
+		</div>
+	</div>
+
+
   <div  id="letters">
     <div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">
       {#if data.posts.length === 0}
         <div class="md:text-xl py-4 text-center">
-          {#if currentUser}
+          {#if currentUser && !data.searchQuery}
             Use the ☰ menu to personalise your profile, then <a class="underline" href={"/letters/new"}>create</a> your first letter 💌
-          {:else}
+          {:else if (!currentUser)}
             <a class="underline" href={"/login"}>Sign in</a> to start writing.
           {/if}
         </div>

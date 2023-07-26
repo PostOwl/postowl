@@ -11,7 +11,7 @@
   {size}
   {disabled}
   {href}
-  styles="font-medium bg-zinc-500 shadow shadow-zinc-500/50 hover:bg-zinc-600 hover:shadow-none focus:ring-black border-2 border-transparent text-white"
+  styles="font-medium bg-black focus:ring-black border-2 border-transparent text-white"
   on:click
 >
   <slot />

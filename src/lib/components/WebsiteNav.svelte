@@ -20,26 +20,29 @@
     if (key.key === 'e' && (key.metaKey || key.ctrlKey)) {
       editable = true;
     }
-    // Toggle menu modal with m key
-    if (key.key === 'm' && editable != true) {
-      toggleMenu();
-    }
     // Deactivate menu modal with esc key
     if (key.key === 'Escape' && showMenu) {
       toggleMenu();
     }
+
+    // TODO: this brakes search functionality
+
+    // Toggle menu modal with m key
+    // if (key.key === 'm' && editable != true) {
+    //   toggleMenu();
+    // }
     // Go to home with h key
-    if (key.key === 'h' && editable != true) {
-      goto('/');
-    }
+    // if (key.key === 'h' && editable != true) {
+    //   goto('/');
+    // }
     // Go to new letter with n key
-    if (key.key === 'n' && editable != true) {
-      goto('/letters/new');
-    }
+    // if (key.key === 'n' && editable != true) {
+    //   goto('/letters/new');
+    // }
     // Go to friends list with f key
-    if (key.key === 'f' && editable != true) {
-      goto('/friends');
-    }
+    // if (key.key === 'f' && editable != true) {
+    //   goto('/friends');
+    // }
   }
 
   function toggleMenu() {
@@ -50,7 +53,7 @@
 
 <div
   class={classNames(
-    'backdrop-blur-sm z-10 text-sm lg:text-lg border-b',
+    'backdrop-blur-sm z-10 text-sm lg:text-lg',
     !editable ? 'sticky top-0' : '',
     'bg-white bg-opacity-95'
   )}

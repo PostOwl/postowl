@@ -116,7 +116,7 @@
       <svelte:element this={editable ? "button" : "div"}
         on:click={toggleVisibilitySelector}
         class={classNames(
-          "relative rounded-full px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base inline-flex items-center space-x-1 border bg-gray-100",
+          "relative rounded-full px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base inline-flex items-center space-x-1 bg-black text-white",
           chooseVisibility ? "z-50" :"" // pop to the top while editing visibility
         )}
       >
@@ -131,13 +131,14 @@
 
     {#if chooseVisibility && editable }
       <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div class="z-40 fixed inset-0 bg-black opacity-80 cursor-default" on:click={toggleVisibilitySelector}></div>
       <div class="absolute top-10 left-6 right-6 sm:left-12 sm:right-12 z-50">
         <div class="max-w-lg space-y-2 text-sm sm:text-base">
           <button
             on:click={togglePrivate}
             class={classNames(
-              "block px-4 py-2 rounded-full mx-0 w-full text-left bg-gray-100 hover:bg-gray-200",
+              "block px-4 py-2 rounded-full mx-0 w-full text-left bg-white border border-black",
             )}
           >
           Private <span class="text-sm">— Journal and drafts</span>
@@ -145,7 +146,7 @@
           <button
           on:click={togglePublic}
             class={classNames(
-              "block px-4 py-2 rounded-full mx-0 w-full text-left bg-gray-100 hover:bg-gray-200"
+              "block px-4 py-2 rounded-full mx-0 w-full text-left bg-white border border-black"
             )}
           >
             Public <span class="text-sm">— Everyone can read</span>
