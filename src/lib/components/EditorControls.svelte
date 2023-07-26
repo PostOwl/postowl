@@ -169,9 +169,9 @@
         {/if}
 
         <div class="flex-1 h-8" />
-        <PrimaryButton type="button" on:click={handleCancel}>Cancel</PrimaryButton>
+        <SecondaryButton type="button" on:click={handleCancel}>Cancel</SecondaryButton>
         <div class="shrink-0 w-2 sm:w-4" />
-        <SecondaryButton type="button" on:click={handleSave} disabled={!canConfirm}>{confirmLabel}</SecondaryButton>
+        <PrimaryButton type="button" on:click={handleSave} disabled={!canConfirm}>{confirmLabel}</PrimaryButton>
       </div>
     </div>
   </div>
