@@ -1,6 +1,7 @@
 <script>
   import { page } from '$app/stores';
   import { classNames } from '$lib/util';
+  import { goto } from '$app/navigation';
   import NotEditable from './NotEditable.svelte';
   import Modal from './Modal.svelte';
   import PrimaryButton from './PrimaryButton.svelte';
@@ -29,7 +30,7 @@
     }
     // Go to home with h key
     if (key.key === 'h' && editable != true) {
-      window.location = '/';
+      goto('/');
     }
   }
 
