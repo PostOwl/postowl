@@ -124,9 +124,9 @@
       {#if data.posts.length === 0}
         <div class="md:text-xl py-4 text-center">
           {#if currentUser}
-            <a class="underline" href={"/letters/new"}>Create</a> the first letter.
+            Use the ☰ menu to personalise your profile, then <a class="underline" href={"/letters/new"}>create</a> your first letter 💌
           {:else}
-            <a class="underline" href={"/login"}>Login</a> to start writing letters.
+            <a class="underline" href={"/login"}>Sign in</a> to start writing.
           {/if}
         </div>
       {/if}

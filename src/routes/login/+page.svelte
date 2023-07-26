@@ -16,12 +16,12 @@
 
 <Limiter>
   {#if form?.incorrect}
-    <p class="p-4 bg-red-100 text-red-600 my-4 rounded-md">Login incorrect. Please try again.</p>
+    <p class="p-4 bg-red-100 text-red-600 my-4 rounded-md">Password incorrect. Please try again.</p>
   {/if}
   <div class="w-full flex flex-col space-y-4 mt-12 mb-4">
     <form method="POST" class="flex flex-col space-y-8">
       <div class="flex flex-col">
-        <label for="password" class="font-semibold mb-2 text-2xl">Enter Admin password</label>
+        <label for="password" class="font-semibold mb-2 text-1xl">Enter your password</label>
         <Input type="password" name="password" id="password" />
       </div>
       <PrimaryButton type="submit">Sign in</PrimaryButton>
