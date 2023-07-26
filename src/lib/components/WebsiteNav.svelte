@@ -19,8 +19,12 @@
     if (key.key === 'e' && (key.metaKey || key.ctrlKey)) {
       editable = true;
     }
-    // Toggle menu with m key
+    // Toggle menu modal with m key
     if (key.key === 'm' && editable != true) {
+      toggleMenu();
+    }
+    // Deactivate menu modal with esc key
+    if (key.key === 'Escape' && showMenu) {
       toggleMenu();
     }
     // Go to home with h key
