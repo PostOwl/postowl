@@ -2,6 +2,7 @@
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
   import PlainText from '$lib/components/PlainText.svelte';
   import RichText from '$lib/components/RichText.svelte';
+  import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
   import WebsiteNav from '$lib/components/WebsiteNav.svelte';
   import Footer from '$lib/components/Footer.svelte';
@@ -84,9 +85,9 @@
 
 <WebsiteNav bio={{ avatar, name, bio }} bind:editable bind:showMenu>
   {#if currentUser}
-    <div class="md:text-lg">Update your name, bio and avatar...</div>
-    <div class="space-y-4 flex flex-col pb-8">
-      <SecondaryButton size="sm" on:click={() => {editable = true; showMenu = false; }}>Edit</SecondaryButton>
+    <div class="md:text-lg">Personalise your profile…</div>
+    <div class="space-y-4 flex flex-col">
+      <PrimaryButton size="sm" on:click={() => {editable = true; showMenu = false; }}>Edit</PrimaryButton>
     </div>
   {/if}
 </WebsiteNav>
