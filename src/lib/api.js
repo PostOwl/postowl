@@ -250,14 +250,12 @@ export async function getPosts(currentUser, searchQuery, searchFilter) {
     filterClause = ' AND is_public IS FALSE';
   }
 
-  console.log('filterClause', filterClause);
-
   if (currentUser) {
     posts = db.prepare(`SELECT * FROM posts WHERE (title LIKE ? OR content LIKE ?)${filterClause} ORDER BY created_at DESC`).all(`%${searchQuery}%`, `%${searchQuery}%`);
   } else {
     posts = db
-      .prepare('SELECT * FROM posts WHERE is_public IS TRUE ORDER BY created_at DESC')
-      .all();
+      .prepare('SELECT * FROM posts WHERE is_public IS TRUE AND content LIKE ? ORDER BY created_at DESC')
+      .all(`%${searchQuery}%`);
   }
 
   for (let i = 0; i < posts.length; i++) {
