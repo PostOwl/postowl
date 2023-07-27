@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  // import { onMount } from 'svelte';
   import { debounce, classNames, isEmailValid } from '$lib/util';
   import CopyableRecipient from './CopyableRecipient.svelte';
 
@@ -15,11 +15,11 @@
   let input;
   let resultsEl;
 
-  onMount(() => {
-    if (input) {
-      input.focus();
-    }
-  });
+  // onMount(() => {
+  //   if (input) {
+  //     input.focus();
+  //   }
+  // });
 
   async function search() {
     if (value) {
