@@ -15,34 +15,39 @@
   $: currentUser = data.currentUser;
   $: latestBio = bio || data.bio;
 
-  function onKeyDown(key) {
-    // Activate editing with cmd/ctrl + e
-    if (key.key === 'e' && (key.metaKey || key.ctrlKey)) {
-      editable = true;
-    }
+  function onKeyDown(e) {
     // Deactivate menu modal with esc key
-    if (key.key === 'Escape' && showMenu) {
-      toggleMenu();
+    if (e.key === 'Escape' && showMenu) {
+      return toggleMenu();
     }
 
-    // TODO: this brakes search functionality
+    // If focus is inside an input or Textrea don't handle 
+    const activeEl = document.activeElement?.tagName
+    if (activeEl === "INPUT" || activeEl === "TEXTAREA") {
+      return;
+    }
 
+    // Activate editing with e key
+    if (e.key === 'e' && editable != true && currentUser) {
+      editable = true;
+      return;
+    }
     // Toggle menu modal with m key
-    // if (key.key === 'm' && editable != true) {
-    //   toggleMenu();
-    // }
+    if (e.key === 'm' && editable != true) {
+      return toggleMenu();
+    }
     // Go to home with h key
-    // if (key.key === 'h' && editable != true) {
-    //   goto('/');
-    // }
+    if (e.key === 'h' && editable != true) {
+      return goto('/');
+    }
     // Go to new letter with n key
-    // if (key.key === 'n' && editable != true) {
-    //   goto('/letters/new');
-    // }
+    if (e.key === 'n' && editable != true) {
+      goto('/letters/new');
+    }
     // Go to friends list with f key
-    // if (key.key === 'f' && editable != true) {
-    //   goto('/friends');
-    // }
+    if (e.key === 'f' && editable != true) {
+      goto('/friends');
+    }
   }
 
   function toggleMenu() {
