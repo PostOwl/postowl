@@ -4,8 +4,6 @@
   import { goto } from '$app/navigation';
   import NotEditable from './NotEditable.svelte';
   import Modal from './Modal.svelte';
-  import PrimaryButton from './PrimaryButton.svelte';
-  import SecondaryButton from './SecondaryButton.svelte';
   export let editable = false;
 
   // Explicitly set by home page, so we get live updates
@@ -28,24 +26,25 @@
     }
 
     // Activate editing with e key
-    if (e.key === 'e' && editable != true && currentUser) {
+    if (e.key === 'e' && editable != true && !e.key.metaKey && !e.key.ctrlKey && currentUser) {
       editable = true;
       return;
     }
     // Toggle menu modal with m key
-    if (e.key === 'm' && editable != true) {
+    if (e.key === 'm' && editable != true && !e.key.metaKey && !e.key.ctrlKey) {
       return toggleMenu();
     }
     // Go to home with h key
-    if (e.key === 'h' && editable != true) {
+    if (e.key === 'h' && editable != true && !e.key.metaKey && !e.key.ctrlKey) {
       return goto('/');
     }
     // Go to new letter with n key
-    if (e.key === 'n' && editable != true) {
+    if (e.key === 'n' && editable != true && !e.key.metaKey && !e.key.ctrlKey && currentUser) {
       return goto('/letters/new');
     }
+    
     // Go to friends list with f key
-    if (e.key === 'f' && editable != true) {
+    if (e.key === 'f' && editable != true && !e.key.metaKey && !e.key.ctrlKey && currentUser) {
       return goto('/friends');
     }
   }
