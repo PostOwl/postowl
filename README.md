@@ -8,7 +8,7 @@ Share the story of your life.
 
 ## Developing
 
-PostOwl is a [sveltekit](https://kit.svelte.dev/) application that uses [SQLite](https://www.sqlite.org/) for the database. It's currently optimised for sveltekit's [adapter-node](https://github.com/sveltejs/kit/tree/master/packages/adapter-node) to enable [deployment to fly.io](#deployment-to-flyio).
+PostOwl is a [SvelteKit](https://kit.svelte.dev/) application inspired by [editable.website](https://editable.website) using [SQLite](https://www.sqlite.org/) for the database. It's currently optimised for SvelteKit's [adapter-node](https://github.com/sveltejs/kit/tree/master/packages/adapter-node) to enable [deployment to Fly.io](#deployment-to-flyio).
 
 ### Requirements
 
