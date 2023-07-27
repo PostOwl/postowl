@@ -98,6 +98,11 @@ fly deploy \
     --build-secret SMTP_PORT="465" \
     --build-secret SMTP_USERNAME="postmaster@your.smtp.server" \
     --build-secret SMTP_PASSWORD="your-super-secret-smtp-password"
+
+########################################################################################
+# ATTENTION: On each subsequent deploy you need to apply the previous command again,   #
+# including all the --build-secret entries. We are looking for ways to improve this.   #
+########################################################################################
 ```
 
 Fly will let you know when the app is deployed. Visit the URL shown in your terminal and sign in with the `ADMIN_PASSWORD` you set above.
