@@ -42,11 +42,11 @@
     }
     // Go to new letter with n key
     if (e.key === 'n' && editable != true) {
-      goto('/letters/new');
+      return goto('/letters/new');
     }
     // Go to friends list with f key
     if (e.key === 'f' && editable != true) {
-      goto('/friends');
+      return goto('/friends');
     }
   }
 
