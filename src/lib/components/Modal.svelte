@@ -43,7 +43,7 @@
       )}
     >
       <div
-        class="relative overflow-hidden rounded-lg bg-white text-left shadow-xl sm:my-8 w-full sm:max-w-lg"
+        class="relative rounded-lg bg-white text-left shadow-xl sm:my-8 w-full sm:max-w-lg"
       >
         <slot />
       </div>

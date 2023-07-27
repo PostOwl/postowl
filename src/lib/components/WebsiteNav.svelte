@@ -3,7 +3,10 @@
   import { classNames } from '$lib/util';
   import { goto } from '$app/navigation';
   import NotEditable from './NotEditable.svelte';
+  import PrimaryButton from './PrimaryButton.svelte';
   import Modal from './Modal.svelte';
+  import Input from './Input.svelte';
+  import SecondaryButton from './SecondaryButton.svelte';
   export let editable = false;
 
   // Explicitly set by home page, so we get live updates
@@ -70,75 +73,65 @@
           {latestBio.name}
         </a>
         <div class="flex-1" />
-        <button on:click={() => (showMenu = true)} class="ml-0 pl-4" title={'Open Menu'}>
-          <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-          >
-          <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          />
-        </svg>
-      </button>
-    </div>
-  </NotEditable>
+        <button on:click={() => (showMenu = true)} class="w-[26px] h-[26px] border border-black rounded-full" title={'Open Menu'}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+          </svg>          
+        </button>
+      </div>
+    </NotEditable>
   </div>
-  </div>
-
+</div>
 
 {#if showMenu && !editable}
   <Modal on:close={() => (showMenu = false)}>
     <div class="p-8 flex flex-col space-y-4 relative">
-      <button class="absolute right-8 top-8" on:click={() => (showMenu = false)}>
+      <button class="absolute right-6 sm:-right-4 -top-4 bg-black text-white rounded-full" on:click={() => (showMenu = false)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6"
+          class="w-8 h-8"
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
 
-      <slot />
+      {#if currentUser}
+        <slot />
 
+        <div class="space-y-4 flex flex-col pt-8">
+          <PrimaryButton size="sm" href="/letters/new">New letter</PrimaryButton>
+        </div>
 
-      <div class="text-lg pt-8">
-        {#if currentUser}
-        <p>Create <a class="inline-flex space-x-2 items-center" href="/letters/new" on:click={toggleMenu}>
-          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">new letter</span>
-        </a></p>
-        <p>Manage <a class="inline-flex space-x-2 items-center" href="/friends" on:click={toggleMenu}>
-          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">friends list</span>
-        </a></p>
-        {/if}
-        <p>Go to <a class="inline-flex space-x-2 items-center" href="/" on:click={toggleMenu}>
-          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">home page</span>
-        </a></p>
-      </div>
+        <div class="space-y-4 flex flex-col">
+          <SecondaryButton size="sm" href="/friends">Manage friends</SecondaryButton>
+        </div>
+      {/if}
 
       {#if currentUser}
-      <div data-sveltekit-preload-data="false" class="pt-8">
-        <div class="pb-2 ">Get <a class="inline-flex space-x-2 items-center" target="_blank" href="https://www.postowl.com/docs/">
-          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">help↗</span>
-        </a></div>
-        <div class="pb-2 ">Signed in as {currentUser.name} <a class="inline-flex space-x-2 items-center" href="/logout" on:click={toggleMenu}>
-          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">(sign out)</span>
-        </a></div>
+      <div  class="pt-8 flex">
+        <div>Signed in as {currentUser.name}</div>
+        <div class="flex-1"></div>
+        <div>
+          <a data-sveltekit-preload-data="off"class="underline" href="/logout" on:click={toggleMenu}>Sign out</a>
+        </div>
       </div>
       {:else}
-      <div class="pt-8">
-        <div class="md:text-lg">If this is your PostOwl, <a class="inline-flex space-x-2 items-center" href="/login" on:click={toggleMenu}>
-          <span class="font-bold text-zinc-500 hover:text-zinc-600 underline">sign in…</span>
-        </a></div>
+      <div class="">
+
+        <form method="POST" action="/login" class="flex flex-col space-y-8">
+          <div class="flex flex-col">
+            <label for="password" class="font-semibold mb-6 text-3xl">Sign in</label>
+            <Input type="password" name="password" id="password" placeholder="Enter your password"/>
+          </div>
+          <PrimaryButton type="submit">Sign in</PrimaryButton>
+          <div class="pt-8 text-sm sm:text-base">
+            Only the owner can sign in. But you can run <a class="underline" href="/">PostOwl</a> yourself.
+          </div>
+        </form>
       </div>
       {/if}
     </div>

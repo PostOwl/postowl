@@ -20,5 +20,5 @@
   {required}
   bind:value
   bind:this={inputRef}
-  class="border focus focus:border-gray-800 focus:ring-gray-800"
+  class="border rounded-full focus focus:border-gray-800 focus:ring-gray-800 py-3.5 px-5"
 />
