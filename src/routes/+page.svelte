@@ -96,9 +96,8 @@
 
 <WebsiteNav bio={{ avatar, name, bio }} bind:editable bind:showMenu>
   {#if currentUser}
-    <div class="md:text-lg">Personalise your profile…</div>
     <div class="space-y-4 flex flex-col">
-      <PrimaryButton size="sm" on:click={() => {editable = true; showMenu = false; }}>Edit</PrimaryButton>
+      <SecondaryButton size="sm" on:click={() => {editable = true; showMenu = false; }}>Edit Profile</SecondaryButton>
     </div>
   {/if}
 </WebsiteNav>
