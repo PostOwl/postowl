@@ -26,6 +26,23 @@ html {
   }
 }
 
+/* prosa */
+.prosa h2 {
+  font-weight: bold;
+  color: #c1cc00;
+}
+
+.prosa h3 {
+  font-weight: bold;
+  color: #c1cc00;
+  font-size: 18px;
+  margin-bottom: 3px;
+}
+
+.prosa a {
+  text-decoration: underline;
+}
+
 /* Prosemirror styles */
 
 .ProseMirror {
