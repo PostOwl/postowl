@@ -17,6 +17,7 @@
   export let data;
   let editable, name, avatar, bio;
   let searchInput;
+  let searchFilter = data.searchFilter;
   let showMenu;
   $: currentUser = data.currentUser;
   $: postLimit = $page.url.searchParams.get('postLimit') || 30;
@@ -57,8 +58,13 @@
   }
 
   function onInput(e) {
-		goto('/?q=' + searchInput.value, { keepFocus: true });
+		goto('/?q=' + searchInput.value + (currentUser ? '&f='+searchFilter : ''), { keepFocus: true });
 	}
+
+  function reset(e) {
+    searchFilter = '';
+    goto('/');
+  }
 
   initOrReset();
 </script>
@@ -118,7 +124,7 @@
         <PlainText {editable} bind:content={name} />
       </h1>
     </div>
-    <div class="prose text-center py-2 sm:text-xl">
+    <div class="prosa text-center py-4 sm:text-xl">
       <RichText {editable} bind:content={bio} />
     </div>
   </div>
@@ -128,14 +134,14 @@
   <!-- Search bar -->
 	<div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">
 		<div class={classNames(data.searchQuery ? '' : '', 'relative')}>
-			{#if !data.searchQuery}
+			{#if !data.searchQuery && !data.searchFilter}
 				<div class="pointer-events-none absolute inset-y-0 left-3 flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
           </svg>          
 				</div>
 			{:else}
-				<a href="/" class="absolute inset-y-0 left-3 flex items-center">
+				<a href='/' on:click={reset} class="absolute inset-y-0 left-3 flex items-center">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -159,17 +165,25 @@
 				autocomplete="off"
 				id="search"
 				name="search"
-				class="block w-full rounded-full border-1 border-black bg-transparent py-2 pl-10 pr-3 placeholder-gray-400 focus:border-black focus:text-black focus:outline-none focus:ring-0"
+				class="block w-full rounded-full border-1 border-black bg-transparent py-2 pl-10 pr-24 placeholder-gray-400 focus:border-black focus:text-black focus:outline-none focus:ring-0"
 				placeholder={`Search ${data.posts.length} letters`}
 				type="text"
 			/>
+      {#if currentUser}
+        <div class="absolute inset-y-0 right-3 pt-1.5">
+          <select bind:value={searchFilter} id="country" name="country" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-0 ring-inset focus:ring-1 focus:ring-inset focus:ring-black sm:max-w-xs sm:text-sm leading-4" on:change={onInput}>
+            <option value="">Show all</option>
+            <option value="private">Private</option>
+            <option value="public">Public</option>
+          </select>
+        </div>
+      {/if}
 		</div>
 	</div>
 
-
   <div  id="letters">
-    <div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">
-      {#if data.posts.length === 0}
+    {#if data.posts.length === 0}
+      <div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">      
         <div class="md:text-xl py-4 text-center">
           {#if currentUser && !data.searchQuery}
             Use the ☰ menu to personalise your profile, then <a class="underline" href={"/letters/new"}>create</a> your first letter 💌
@@ -177,8 +191,8 @@
             <a class="underline" href={"/login"}>Sign in</a> to start writing.
           {/if}
         </div>
-      {/if}
-    </div>
+      </div>
+    {/if}
 
     <div class="max-w-screen-md mx-auto px-6">
       <div class="my-6 space-y-8">

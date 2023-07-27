@@ -241,10 +241,19 @@ export async function destroySession(sessionId) {
 /**
  * List posts (either public, or all if you are the site owner)
  */
-export async function getPosts(currentUser, searchQuery) {
+export async function getPosts(currentUser, searchQuery, searchFilter) {
   let posts;
+  let filterClause = '';
+  if (searchFilter === 'public') {
+    filterClause = ' AND is_public IS TRUE';
+  } else if (searchFilter === 'private') {
+    filterClause = ' AND is_public IS FALSE';
+  }
+
+  console.log('filterClause', filterClause);
+
   if (currentUser) {
-    posts = db.prepare('SELECT * FROM posts WHERE title LIKE ? OR content LIKE ? ORDER BY created_at DESC').all(`%${searchQuery}%`, `%${searchQuery}%`);
+    posts = db.prepare(`SELECT * FROM posts WHERE (title LIKE ? OR content LIKE ?)${filterClause} ORDER BY created_at DESC`).all(`%${searchQuery}%`, `%${searchQuery}%`);
   } else {
     posts = db
       .prepare('SELECT * FROM posts WHERE is_public IS TRUE ORDER BY created_at DESC')
