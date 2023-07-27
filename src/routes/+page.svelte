@@ -170,7 +170,7 @@
 				type="text"
 			/>
       {#if currentUser}
-        <div class="absolute inset-y-0 right-3 pt-1.5">
+        <div class="absolute inset-y-0 right-3 pt-[5px]">
           <select bind:value={searchFilter} id="country" name="country" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-0 ring-inset focus:ring-1 focus:ring-inset focus:ring-black sm:max-w-xs sm:text-sm leading-4" on:change={onInput}>
             <option value="">Show all</option>
             <option value="private">Private</option>
