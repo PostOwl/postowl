@@ -102,6 +102,7 @@ fly deploy \
 ########################################################################################
 # ATTENTION: On each subsequent deploy you need to apply the previous command again,   #
 # including all the --build-secret entries. We are looking for ways to improve this.   #
+# We had situations where the deploy got stuck, but re-running the command fixed it.   #
 ########################################################################################
 ```
 
