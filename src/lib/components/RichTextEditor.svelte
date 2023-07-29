@@ -43,12 +43,12 @@
     }
   }
 
-  function transformPasted(slice, view) {
+  function transformPasted(slice) {
     // For now, we just replace pasted external images
     // TODO: Alternatively we could remove all external images from the slice,
     // try to get a file instance, then resize and upload them. But that's abit
     // more involved. Post MVP stuff! :)
-    const nodes = slice?.content?.content
+    const nodes = slice?.content?.content;
     if (nodes) {
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];

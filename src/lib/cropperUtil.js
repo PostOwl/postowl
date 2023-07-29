@@ -1,8 +1,8 @@
-/** 
+/**
  * Adapted from svelte-easy-crop
- * https://github.com/ValentinH/svelte-easy-crop 
+ * https://github.com/ValentinH/svelte-easy-crop
  */
-  
+
 /**
  * Compute the dimension of the crop area based on image size and aspect ratio
  * @param imgWidth width of the src image in pixels
@@ -215,7 +215,7 @@ export async function getCroppedImg(
   // return canvas.toDataURL('image/jpeg');
 
   // As a blob
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     canvas.toBlob(file => {
       resolve(file);
       // resolve(URL.createObjectURL(file));

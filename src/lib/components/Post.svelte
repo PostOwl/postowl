@@ -25,7 +25,7 @@
       <div class="pb-2 sm:text-lg">{formatDate(created_at)}</div>
     </NotEditable>
     <h1 bind:this={titleEl} class="text-3xl md:text-5xl font-bold">
-      <PlainText {editable} bind:content={title} placeholder="Letter title…"/>
+      <PlainText {editable} bind:content={title} placeholder="Letter title…" />
     </h1>
   </div>
 </div>

@@ -64,7 +64,11 @@
 </svelte:head>
 
 {#if editable}
-  <EditorToolbar on:cancel={() => goto('/friends')} on:save={saveFriend} canConfirm={isEmailValid(email)} />
+  <EditorToolbar
+    on:cancel={() => goto('/friends')}
+    on:save={saveFriend}
+    canConfirm={isEmailValid(email)}
+  />
 {/if}
 
 <div class="max-w-screen-md mx-auto px-6 pb-8 sm:text-xl">

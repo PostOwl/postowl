@@ -34,6 +34,7 @@
 >
   <div class="fixed inset-0 bg-black bg-opacity-80" />
 
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="fixed inset-0 z-50 overflow-y-auto" on:mouseup={onMouseUp}>
     <div
       bind:this={surface}
@@ -42,9 +43,7 @@
         position === 'bottom' ? 'items-end' : 'items-start'
       )}
     >
-      <div
-        class="relative rounded-lg bg-white text-left shadow-xl sm:my-8 w-full sm:max-w-lg"
-      >
+      <div class="relative rounded-lg bg-white text-left shadow-xl sm:my-8 w-full sm:max-w-lg">
         <slot />
       </div>
     </div>

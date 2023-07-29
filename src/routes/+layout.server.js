@@ -1,4 +1,3 @@
-
 import { ORIGIN } from '$env/static/private';
 
 export async function load({ locals }) {

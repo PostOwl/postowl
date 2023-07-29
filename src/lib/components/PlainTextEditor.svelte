@@ -25,7 +25,13 @@
     editorState = EditorState.create({
       doc,
       schema,
-      plugins: [keymap(buildKeymap(schema)), keymap(baseKeymap), history(), onUpdatePlugin, placeholderPlugin(placeholder)]
+      plugins: [
+        keymap(buildKeymap(schema)),
+        keymap(baseKeymap),
+        history(),
+        onUpdatePlugin,
+        placeholderPlugin(placeholder)
+      ]
     });
     // Only if there is already an editorView and the content change was external
     // update editorView with the new editorState

@@ -2,11 +2,11 @@ import { customAlphabet } from 'nanoid';
 
 export function is_safari() {
   // Detect Chrome
-  let chrome_agent = navigator.userAgent.indexOf("Chrome") > -1;
+  let chrome_agent = navigator.userAgent.indexOf('Chrome') > -1;
   // Detect Safari
-  let safari_agent = navigator.userAgent.indexOf("Safari") > -1;
+  let safari_agent = navigator.userAgent.indexOf('Safari') > -1;
   // Discard Safari since it also matches Chrome
-  if ((chrome_agent) && (safari_agent)) safari_agent = false;
+  if (chrome_agent && safari_agent) safari_agent = false;
   return safari_agent;
 }
 
@@ -15,7 +15,10 @@ export function classNames(...classes) {
 }
 
 // We don't use "_" and "-" for better readability
-const _nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 21);
+const _nanoid = customAlphabet(
+  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+  21
+);
 
 export function nanoid() {
   return _nanoid();
@@ -99,19 +102,30 @@ export function toDateString(value) {
   return date.toLocaleDateString('en-GB').split('/').reverse().join('-');
 }
 
-
-
 // add a leading 0 to a number if it is only one digit
 function addLeadingZero(num) {
   num = num.toString();
-  while (num.length < 2) num = "0" + num;
+  while (num.length < 2) num = '0' + num;
   return num;
 }
 
 // We will use 00:00:00 +0000 for time and time zone, as we are only interested in the publication date
 export function buildRFC822Date(dateString) {
-  const dayStrings = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const monthStrings = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const dayStrings = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const monthStrings = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
 
   const timeStamp = Date.parse(dateString);
   const date = new Date(timeStamp);
@@ -120,7 +134,6 @@ export function buildRFC822Date(dateString) {
   const dayNumber = addLeadingZero(date.getDate());
   const month = monthStrings[date.getMonth()];
   const year = date.getFullYear();
-  const time = `${addLeadingZero(date.getHours())}:${addLeadingZero(date.getMinutes())}:00`;
 
   //Wed, 02 Oct 2002 13:00:00 +0000
   return `${day}, ${dayNumber} ${month} ${year} 00:00:00 +0000`;
@@ -128,7 +141,7 @@ export function buildRFC822Date(dateString) {
 
 // Used for the RSS feed
 export function encodeHTMLEntities(rawStr) {
-  return rawStr.replace(/[\u00A0-\u9999<>\&]/g, i => '&#'+i.charCodeAt(0)+';');
+  return rawStr.replace(/[\u00A0-\u9999<>&]/g, i => '&#' + i.charCodeAt(0) + ';');
 }
 
 export function debounce(node, params) {

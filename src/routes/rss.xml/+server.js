@@ -1,7 +1,6 @@
-import { getSitemap, getRSSFeedData } from '$lib/api';
+import { getRSSFeedData } from '$lib/api';
 import { buildRFC822Date, encodeHTMLEntities } from '$lib/util';
 import { ORIGIN } from '$env/static/private';
-
 
 export async function GET({ setHeaders }) {
   setHeaders({

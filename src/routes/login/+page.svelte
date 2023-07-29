@@ -7,7 +7,6 @@
   $: bio = data.bio;
 </script>
 
-
 <svelte:head>
   <title>Sign in</title>
   <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar} />

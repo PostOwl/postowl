@@ -110,55 +110,64 @@
 </script>
 
 <div class="max-w-screen-md mx-auto px-6 pb-8 relative">
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  {#if editable || is_public || !is_public}
+    <svelte:element
+      this={editable ? 'button' : 'div'}
+      on:click={toggleVisibilitySelector}
+      class={classNames(
+        'relative rounded-full px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base inline-flex items-center space-x-1 bg-black text-white',
+        chooseVisibility ? 'z-50' : '' // pop to the top while editing visibility
+      )}
+    >
+      <span>{is_public ? 'Public' : 'Private'}</span>
+      {#if editable}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-3 h-3 inline-block"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>
+      {/if}
+    </svelte:element>
+  {/if}
 
+  {#if chooseVisibility && editable}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    {#if editable || is_public || !is_public}
-      <svelte:element this={editable ? "button" : "div"}
-        on:click={toggleVisibilitySelector}
-        class={classNames(
-          "relative rounded-full px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base inline-flex items-center space-x-1 bg-black text-white",
-          chooseVisibility ? "z-50" :"" // pop to the top while editing visibility
-        )}
-      >
-        <span>{is_public ? "Public" : "Private"}</span>
-        {#if editable}
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 inline-block">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-        {/if}
-      </svelte:element>
-    {/if}
-
-    {#if chooseVisibility && editable }
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <div class="z-40 fixed inset-0 bg-black opacity-80 cursor-default" on:click={toggleVisibilitySelector}></div>
-      <div class="absolute top-10 left-6 right-6 sm:left-12 sm:right-12 z-50">
-        <div class="max-w-lg space-y-2 text-sm sm:text-base">
-          <button
-            on:click={togglePrivate}
-            class={classNames(
-              "block px-4 py-2 rounded-full mx-0 w-full text-left bg-white border border-black",
-            )}
-          >
+    <div
+      class="z-40 fixed inset-0 bg-black opacity-80 cursor-default"
+      on:click={toggleVisibilitySelector}
+    />
+    <div class="absolute top-10 left-6 right-6 sm:left-12 sm:right-12 z-50">
+      <div class="max-w-lg space-y-2 text-sm sm:text-base">
+        <button
+          on:click={togglePrivate}
+          class={classNames(
+            'block px-4 py-2 rounded-full mx-0 w-full text-left bg-white border border-black'
+          )}
+        >
           Private <span class="text-sm">— Journal and drafts</span>
-          </button>
-          <button
+        </button>
+        <button
           on:click={togglePublic}
-            class={classNames(
-              "block px-4 py-2 rounded-full mx-0 w-full text-left bg-white border border-black"
-            )}
-          >
-            Public <span class="text-sm">— Everyone can read</span>
-          </button>
-        </div>
+          class={classNames(
+            'block px-4 py-2 rounded-full mx-0 w-full text-left bg-white border border-black'
+          )}
+        >
+          Public <span class="text-sm">— Everyone can read</span>
+        </button>
       </div>
-    {/if}
+    </div>
+  {/if}
 
-
-    {#each recipients as recipient, i}
-      <CopyableRecipient {recipient} {editable} {slug} on:delete={() => removeRecipient(i)} />
-    {/each}
+  {#each recipients as recipient, i}
+    <CopyableRecipient {recipient} {editable} {slug} on:delete={() => removeRecipient(i)} />
+  {/each}
 
   {#if editable}
     <div class="relative border-gray-100 flex space-x-4 items-center py-2">

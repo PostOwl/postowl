@@ -14,7 +14,7 @@
   let className = '';
 
   export { className as class };
-  
+
   let fileInput; // for uploading an image
   let progress = undefined; // file upload progress
   let overlayEl;
@@ -110,9 +110,13 @@
   on:dblclick={cancelCropping}
 >
   {#if is_safari()}
-    <span class="text-[#EF174C]">ATTENTION:</span> Use Google Chrome, Firefox, oder Microsoft Edge for optimized image quality and size.
+    <span class="text-[#EF174C]">ATTENTION:</span> Use Google Chrome, Firefox, oder Microsoft Edge for
+    optimized image quality and size.
   {:else}
     Confirm with ENTER. Cancel with ESC.
+  {/if}
+  {#if progress}
+    {progress} uploading...
   {/if}
 </div>
 
@@ -147,7 +151,8 @@
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <img
       on:mousedown={() => fileInput.click()}
-      class={className + ' cursor-pointer outline-[2px] hover:outline-dashed outline-[#EF174C] -outline-offset-[2px]'}
+      class={className +
+        ' cursor-pointer outline-[2px] hover:outline-dashed outline-[#EF174C] -outline-offset-[2px]'}
       {src}
       {alt}
       title={uploadPrompt}

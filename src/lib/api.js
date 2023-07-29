@@ -4,7 +4,6 @@ import { DEFAULT_BIO } from '$lib/constants';
 import { nanoid } from '$lib/util';
 import { DB_PATH, ADMIN_NAME, ADMIN_PASSWORD, ORIGIN } from '$env/static/private';
 import sendMail from '$lib/sendMail';
-import { dev } from '$app/environment';
 import { Blob } from 'node:buffer';
 
 const db = new Database(DB_PATH, {
@@ -105,7 +104,9 @@ export async function updatePost(
 
   return db.transaction(async () => {
     let new_slug; // in case the post title has changed
-    const { title: old_title, post_id } = db.prepare('SELECT title, post_id FROM posts WHERE slug = ?').get(slug);
+    const { title: old_title, post_id } = db
+      .prepare('SELECT title, post_id FROM posts WHERE slug = ?')
+      .get(slug);
 
     if (old_title !== title) {
       // Title has changed, we need a new slug
@@ -135,9 +136,9 @@ export async function updatePost(
         new Date().toISOString(),
         slug
       );
-    
+
     if (new_slug) {
-      // There's a possibilty that the new slug is already captured in old_post_slugs 
+      // There's a possibilty that the new slug is already captured in old_post_slugs
       // (e.g. when xyz -> abc -> xyz)
       // In this case we can safely remove the old_slug forward, because it is now current slug again
       db.prepare('DELETE FROM old_post_slugs WHERE slug = ?').run(new_slug);
@@ -251,23 +252,31 @@ export async function getPosts(currentUser, searchQuery, searchFilter) {
   }
 
   if (currentUser) {
-    posts = db.prepare(`SELECT * FROM posts WHERE (title LIKE ? OR content LIKE ?)${filterClause} ORDER BY created_at DESC`).all(`%${searchQuery}%`, `%${searchQuery}%`);
+    posts = db
+      .prepare(
+        `SELECT * FROM posts WHERE (title LIKE ? OR content LIKE ?)${filterClause} ORDER BY created_at DESC`
+      )
+      .all(`%${searchQuery}%`, `%${searchQuery}%`);
   } else {
     posts = db
-      .prepare('SELECT * FROM posts WHERE is_public IS TRUE AND content LIKE ? ORDER BY created_at DESC')
+      .prepare(
+        'SELECT * FROM posts WHERE is_public IS TRUE AND content LIKE ? ORDER BY created_at DESC'
+      )
       .all(`%${searchQuery}%`);
   }
 
   for (let i = 0; i < posts.length; i++) {
     const post = posts[i];
     post.recipients = db
-      .prepare(`
+      .prepare(
+        `
       SELECT
       coalesce(f.name, f.email) AS name
       FROM recipients r
       INNER JOIN friends f ON (r.friend_id=f.friend_id)
       WHERE r.post_id = ?
-      `)
+      `
+      )
       .all(post.post_id);
   }
   return posts;
@@ -350,12 +359,12 @@ export async function getPostBySlug(slug, secret = undefined, currentUser) {
     if (currentUser || post.is_public) {
       hasAccess = true;
     }
-    
+
     // If a secret is provided in the URL, always try to resolve it (even for public posts) and mark as read.
     if (secret) {
       const { recipient_id } = db
-      .prepare('SELECT recipient_id FROM recipients WHERE post_id = ? AND secret = ?')
-      .get(post.post_id, secret);
+        .prepare('SELECT recipient_id FROM recipients WHERE post_id = ? AND secret = ?')
+        .get(post.post_id, secret);
       if (recipient_id) {
         hasAccess = true;
         // Mark as read
@@ -464,13 +473,16 @@ export async function getBio() {
   return bio || DEFAULT_BIO;
 }
 
-
 export async function getCounts() {
-  const counts = db.prepare(`
+  const counts = db
+    .prepare(
+      `
     SELECT
     (SELECT COUNT(*) FROM friends) AS friend_count,
     (SELECT COUNT(*) FROM posts) AS post_count;
-  `).get();
+  `
+    )
+    .get();
   return counts;
 }
 
@@ -561,11 +573,13 @@ export async function getSitemap() {
 
 export async function getRSSFeedData() {
   const bio = await getBio();
-  const posts = db.prepare('SELECT * FROM posts WHERE is_public IS TRUE ORDER BY created_at DESC LIMIT 20').all();
+  const posts = db
+    .prepare('SELECT * FROM posts WHERE is_public IS TRUE ORDER BY created_at DESC LIMIT 20')
+    .all();
   const result = {
     ...bio,
     posts
-  }
+  };
   return result;
 }
 

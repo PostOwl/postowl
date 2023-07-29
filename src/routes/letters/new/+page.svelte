@@ -36,9 +36,7 @@
     } catch (err) {
       console.error(err);
       // HACK: This is guesswork
-      alert(
-        'Oops there was an error. Did you specify a title for your letter?'
-      );
+      alert('Oops there was an error. Did you specify a title for your letter?');
     }
   }
 
@@ -57,7 +55,7 @@
   <EditorToolbar
     on:cancel={discardDraft}
     on:save={createPost}
-    confirmLabel='Send'
+    confirmLabel="Send"
     canConfirm={!!title}
   />
 {/if}

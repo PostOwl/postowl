@@ -1,5 +1,5 @@
 import { getPostBySlug } from '$lib/api';
-import { redirect, fail } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 
 export async function load({ params, locals, url }) {
   const secret = url.searchParams.get('secret');

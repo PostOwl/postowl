@@ -18,16 +18,15 @@
   $: currentUser = data.currentUser;
   $: latestBio = bio || data.bio;
 
-
   function onKeyDown(e) {
     // Deactivate menu modal with esc key
     if (e.key === 'Escape' && showMenu) {
       return toggleMenu();
     }
 
-    // If focus is inside an input or Textrea don't handle 
-    const activeEl = document.activeElement?.tagName
-    if (activeEl === "INPUT" || activeEl === "TEXTAREA") {
+    // If focus is inside an input or Textrea don't handle
+    const activeEl = document.activeElement?.tagName;
+    if (activeEl === 'INPUT' || activeEl === 'TEXTAREA') {
       return;
     }
 
@@ -48,7 +47,7 @@
     if (e.key === 'n' && editable != true && !e.key.metaKey && !e.key.ctrlKey && currentUser) {
       return goto('/letters/new');
     }
-    
+
     // Go to friends list with f key
     if (e.key === 'f' && editable != true && !e.key.metaKey && !e.key.ctrlKey && currentUser) {
       return goto('/friends');
@@ -68,7 +67,6 @@
       // Default click behavior
     }
   }
-
 </script>
 
 <div
@@ -78,18 +76,33 @@
     'bg-white bg-opacity-95'
   )}
 >
-
   <div class="max-w-screen-md mx-auto py-4 px-6">
     <NotEditable {editable}>
       <div class="flex items-center relative">
         <a href="/" on:click={goBack} class="text-sm font-bold uppercase">
-          {backButton ? "← " : ''} {latestBio.name}
+          {backButton ? '← ' : ''}
+          {latestBio.name}
         </a>
         <div class="flex-1" />
-        <button on:click={() => (showMenu = true)} class="w-[26px] h-[26px] border border-black rounded-full" title={'Open Menu'}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-          </svg>          
+        <button
+          on:click={() => (showMenu = true)}
+          class="w-[26px] h-[26px] border border-black rounded-full"
+          title={'Open Menu'}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+            />
+          </svg>
         </button>
       </div>
     </NotEditable>
@@ -99,7 +112,10 @@
 {#if showMenu && !editable}
   <Modal on:close={() => (showMenu = false)}>
     <div class="p-8 flex flex-col space-y-4 relative">
-      <button class="absolute right-6 sm:-right-4 -top-4 bg-black text-white rounded-full" on:click={() => (showMenu = false)}>
+      <button
+        class="absolute right-6 sm:-right-4 -top-4 bg-black text-white rounded-full"
+        on:click={() => (showMenu = false)}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -120,34 +136,43 @@
         </div>
 
         <div class="space-y-4 flex flex-col">
-          {#if $page.url?.pathname  !== "/friends"}
+          {#if $page.url?.pathname !== '/friends'}
             <SecondaryButton size="sm" href="/friends">Manage friends</SecondaryButton>
           {/if}
         </div>
       {/if}
 
       {#if currentUser}
-      <div  class="pt-8 flex">
-        <div>Signed in as {currentUser.name}</div>
-        <div class="flex-1"></div>
-        <div>
-          <a data-sveltekit-preload-data="off"class="underline" href="/logout" on:click={toggleMenu}>Sign out</a>
+        <div class="pt-8 flex">
+          <div>Signed in as {currentUser.name}</div>
+          <div class="flex-1" />
+          <div>
+            <a
+              data-sveltekit-preload-data="off"
+              class="underline"
+              href="/logout"
+              on:click={toggleMenu}>Sign out</a
+            >
+          </div>
         </div>
-      </div>
       {:else}
-      <div class="">
-
-        <form method="POST" action="/login" class="flex flex-col space-y-8">
-          <div class="flex flex-col">
-            <label for="password" class="font-semibold mb-6 text-3xl">Sign in</label>
-            <Input type="password" name="password" id="password" placeholder="Enter your password"/>
-          </div>
-          <PrimaryButton type="submit">Sign in</PrimaryButton>
-          <div class="pt-8 text-sm sm:text-base">
-            Only the owner can sign in. But you can run <a class="underline" href="/">PostOwl</a> yourself.
-          </div>
-        </form>
-      </div>
+        <div class="">
+          <form method="POST" action="/login" class="flex flex-col space-y-8">
+            <div class="flex flex-col">
+              <label for="password" class="font-semibold mb-6 text-3xl">Sign in</label>
+              <Input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Enter your password"
+              />
+            </div>
+            <PrimaryButton type="submit">Sign in</PrimaryButton>
+            <div class="pt-8 text-sm sm:text-base">
+              Only the owner can sign in. But you can run <a class="underline" href="/">PostOwl</a> yourself.
+            </div>
+          </form>
+        </div>
       {/if}
     </div>
   </Modal>

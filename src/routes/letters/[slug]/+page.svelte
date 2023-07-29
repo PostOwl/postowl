@@ -96,7 +96,7 @@
   <meta name="twitter:description" content={teaser} />
   <meta name="twitter:image" content={data.teaser_image || data.bio.avatar} />
 
-  <link href="/rss.xml" rel="alternate" type="application/rss+xml" title={data.bio.name}>
+  <link href="/rss.xml" rel="alternate" type="application/rss+xml" title={data.bio.name} />
   <link rel="icon" type="image/png" sizes="300x300" href={data.bio.avatar} />
   <link rel="apple-touch-icon" sizes="300x300" href={data.bio.avatar} />
 
@@ -110,7 +110,13 @@
 <WebsiteNav bio={data.bio} bind:editable bind:showMenu backButton={true}>
   {#if currentUser}
     <div class="space-y-4 flex flex-col">
-      <SecondaryButton size="sm" on:click={() => {editable = true; showMenu = false; }}>Edit letter</SecondaryButton>
+      <SecondaryButton
+        size="sm"
+        on:click={() => {
+          editable = true;
+          showMenu = false;
+        }}>Edit letter</SecondaryButton
+      >
       <SecondaryButton size="sm" on:click={deletePost}>Delete letter</SecondaryButton>
     </div>
   {/if}
