@@ -60,7 +60,7 @@
   }
 
   function goBack(e) {
-    if ($previousPage && backButton) {
+    if ($previousPage === '/' && backButton) {
       window.history.back();
       e.preventDefault();
       e.stopPropagation();
