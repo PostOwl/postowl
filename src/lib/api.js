@@ -74,9 +74,12 @@ export async function createPost(
       sendMail(
         recipient.email,
         title,
-        `<p>${teaser}</p>
-        <p><a href="${`${ORIGIN}/letters/${slug}?secret=${secret}`}">Read more</a></p>
-        <p>Best, ${ADMIN_NAME}</p>`
+        `<p>Hi ${recipient.name.split(" ")[0]},</p>
+        <p>I'm writing to you from my website, here's the first part:</p>
+        <p>${teaser}</p>
+        <p><a href="${`${ORIGIN}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
+        <p>${ADMIN_NAME.split(" ")[0]}</p>
+        <p><em>(This message was sent from ${ADMIN_NAME}'s <a href="https://www.postowl.com">PostOwl</a> website.)</em></p>`
       );
     }
     return post;
@@ -176,9 +179,12 @@ export async function updatePost(
         sendMail(
           recipient.email,
           title,
-          `<p>${teaser}</p>
-          <p><a href="${`${ORIGIN}/letters/${slug}?secret=${secret}`}">Read more</a></p>
-          <p>Best, ${ADMIN_NAME}</p>`
+          `<p>Hi ${recipient.name.split(" ")[0]},</p>
+          <p>I'm writing to you from my website, here's the first part:</p>
+          <p>${teaser}</p>
+          <p><a href="${`${ORIGIN}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
+          <p>${ADMIN_NAME.split(" ")[0]}</p>
+          <p><em>(This message was sent from ${ADMIN_NAME}'s <a href="https://www.postowl.com">PostOwl</a> website.)</em></p>`
         );
         new_recipients.push(recipient_id);
       } else {
