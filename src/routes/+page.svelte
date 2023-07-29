@@ -184,12 +184,16 @@
     {#if data.posts.length === 0}
       <div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">      
         <div class="md:text-xl py-4 text-center">
-          {#if currentUser && !data.searchQuery}
-            <!-- svelte-ignore a11y-invalid-attribute -->
-            <a class="underline" href="#" on:click={() => (editable = true)}>Personalise</a> your profile, then <a class="underline" href={"/letters/new"}>create</a> your first letter 💌
-          {:else if (!currentUser)}
-            <!-- svelte-ignore a11y-invalid-attribute -->
-            <a href="#" class="underline" on:click={() => (showMenu = true)}>Sign in</a> to start writing.
+          {#if !data.searchQuery && !searchFilter}
+            {#if currentUser}
+              <!-- svelte-ignore a11y-invalid-attribute -->
+              <a class="underline" href="#" on:click={() => (editable = true)}>Personalise</a> your profile, then <a class="underline" href={"/letters/new"}>create</a> your first letter 💌
+            {:else}
+              <!-- svelte-ignore a11y-invalid-attribute -->
+              <a href="#" class="underline" on:click={() => (showMenu = true)}>Sign in</a> to start writing.
+            {/if}
+          {:else}
+            No letters found.
           {/if}
         </div>
       </div>
