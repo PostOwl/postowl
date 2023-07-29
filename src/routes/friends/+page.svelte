@@ -19,7 +19,7 @@
   <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar} />
 </svelte:head>
 
-<WebsiteNav />
+<WebsiteNav backButton={true} />
 
 <div class="max-w-screen-md mx-auto px-6 pb-8">
   <h1 class="text-center font-bold text-2xl sm:text-4xl pt-14">{data.friends.length} Friends</h1>

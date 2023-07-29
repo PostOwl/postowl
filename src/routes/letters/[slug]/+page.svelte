@@ -107,7 +107,7 @@
   <EditorToolbar on:cancel={initOrReset} on:save={savePost} canConfirm={!!title} />
 {/if}
 
-<WebsiteNav bio={data.bio} bind:editable bind:showMenu>
+<WebsiteNav bio={data.bio} bind:editable bind:showMenu backButton={true}>
   {#if currentUser}
     <div class="space-y-4 flex flex-col">
       <SecondaryButton size="sm" on:click={() => {editable = true; showMenu = false; }}>Edit letter</SecondaryButton>

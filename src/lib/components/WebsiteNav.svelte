@@ -7,14 +7,17 @@
   import Modal from './Modal.svelte';
   import Input from './Input.svelte';
   import SecondaryButton from './SecondaryButton.svelte';
+  import { previousPage } from '$lib/stores';
   export let editable = false;
 
   // Explicitly set by home page, so we get live updates
   export let bio = undefined;
   export let showMenu = false;
+  export let backButton = false;
   $: data = $page.data;
   $: currentUser = data.currentUser;
   $: latestBio = bio || data.bio;
+
 
   function onKeyDown(e) {
     // Deactivate menu modal with esc key
@@ -56,6 +59,16 @@
     showMenu = !showMenu;
   }
 
+  function goBack(e) {
+    if ($previousPage) {
+      window.history.back()
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      // Default click behavior
+    }
+  }
+
 </script>
 
 <div
@@ -69,8 +82,8 @@
   <div class="max-w-screen-md mx-auto py-4 px-6">
     <NotEditable {editable}>
       <div class="flex items-center relative">
-        <a href="/" class="text-sm font-bold uppercase">
-          {latestBio.name}
+        <a href="/" on:click={goBack} class="text-sm font-bold uppercase">
+          {backButton ? "← " : ''} {latestBio.name}
         </a>
         <div class="flex-1" />
         <button on:click={() => (showMenu = true)} class="w-[26px] h-[26px] border border-black rounded-full" title={'Open Menu'}>
@@ -107,7 +120,9 @@
         </div>
 
         <div class="space-y-4 flex flex-col">
-          <SecondaryButton size="sm" href="/friends">Manage friends</SecondaryButton>
+          {#if $page.url?.pathname  !== "/friends"}
+            <SecondaryButton size="sm" href="/friends">Manage friends</SecondaryButton>
+          {/if}
         </div>
       {/if}
 
