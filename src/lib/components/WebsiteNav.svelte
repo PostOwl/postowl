@@ -60,8 +60,8 @@
   }
 
   function goBack(e) {
-    if ($previousPage) {
-      window.history.back()
+    if ($previousPage && backButton) {
+      window.history.back();
       e.preventDefault();
       e.stopPropagation();
     } else {
