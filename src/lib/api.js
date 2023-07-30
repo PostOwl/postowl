@@ -266,9 +266,9 @@ export async function getPosts(currentUser, searchQuery, searchFilter) {
   } else {
     posts = db
       .prepare(
-        'SELECT * FROM posts WHERE is_public IS TRUE AND content LIKE ? ORDER BY created_at DESC'
+        'SELECT * FROM posts WHERE is_public IS TRUE AND (title LIKE ? OR content LIKE ?) ORDER BY created_at DESC'
       )
-      .all(`%${searchQuery}%`);
+      .all(`%${searchQuery}%`, `%${searchQuery}%`);
   }
 
   for (let i = 0; i < posts.length; i++) {
