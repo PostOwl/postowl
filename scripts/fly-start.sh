@@ -13,4 +13,4 @@ then
 fi
 
 sqlite3 data/db.sqlite3 < schema.sql
-node build
+node -r dotenv/config build

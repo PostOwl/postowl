@@ -6,6 +6,7 @@ node_modules
 .env
 .env.*
 !.env.example
+!.env.production.example
 *.sqlite3*
 fly.toml
 .tool-versions

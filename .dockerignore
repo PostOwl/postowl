@@ -9,8 +9,9 @@ data
 /.svelte-kit
 /package
 .env
-.envrc
 .env.*
+!.env.production
+.envrc
 .tool-versions
 .tool-versions
 vite.config.js.timestamp-*
