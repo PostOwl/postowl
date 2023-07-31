@@ -16,7 +16,7 @@ primary_region = "iad"
 
 # Override the CMD set in Dockerfile so we can migrate the SQLite database
 [experimental]
-  cmd = ["fly-start.sh"]
+  cmd = ["start-fly.sh"]
   entrypoint = ["sh"]
 
 [env]
