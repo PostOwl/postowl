@@ -172,7 +172,7 @@
             </div>
             <PrimaryButton type="submit">Sign in</PrimaryButton>
             <div class="pt-8 text-sm sm:text-base">
-              Only the owner can sign in. But you can run <a class="underline" href="/">PostOwl</a> yourself.
+              Only the owner can sign in. But you can run <a class="underline" href="https://postowl.com">PostOwl</a> yourself.
             </div>
           </form>
         </div>
