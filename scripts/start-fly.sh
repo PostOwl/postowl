@@ -13,4 +13,4 @@ then
 fi
 
 sqlite3 data/db.sqlite3 < schema.sql
-node -r dotenv/config build
+node -r dotenv/config ./start-app.js

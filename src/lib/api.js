@@ -6,11 +6,23 @@ import { DB_PATH, ADMIN_NAME, ADMIN_PASSWORD, ORIGIN } from '$env/static/private
 import sendMail from '$lib/sendMail';
 import { Blob } from 'node:buffer';
 
-const db = new Database(DB_PATH, {
+
+/**
+ * Database setup
+ */
+
+let db = new Database(DB_PATH, {
   // verbose: console.log
 });
 db.pragma('journal_mode = WAL');
 db.pragma('case_sensitive_like = false');
+
+function shutDownSQLite() {
+  console.log("SQLite doing graceful shutdown");
+  db.close();
+}
+process.on("SIGINT", shutDownSQLite);
+process.on("SIGTERM", shutDownSQLite);
 
 /**
  * Creates a post
@@ -38,7 +50,6 @@ export async function createPost(
     if (postExists) {
       slug = slug + '-' + nanoid();
     }
-
     const post = db
       .prepare(
         'INSERT INTO posts (slug, title, content, teaser, teaser_image, is_public, created_at) values(?, ?, ?, ?, ?, ?, ?) RETURNING slug, post_id, created_at'
