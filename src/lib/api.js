@@ -11,7 +11,7 @@ import { Blob } from 'node:buffer';
  * Database setup
  */
 
-let db = global.db = new Database(DB_PATH, {
+let db = new Database(DB_PATH, {
   // verbose: console.log
 });
 db.pragma('journal_mode = WAL');
