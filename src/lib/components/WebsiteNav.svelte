@@ -78,12 +78,15 @@
 >
   <div class="max-w-screen-md mx-auto py-4 px-6">
     <NotEditable {editable}>
-      <div class="flex items-center relative">
+      <div class="flex items-center relative space-x-4">
         <a href="/" on:click={goBack} class="text-sm font-bold uppercase">
           {backButton ? '← ' : ''}
           {latestBio.name}
         </a>
         <div class="flex-1" />
+        {#if currentUser}
+          <PrimaryButton size="sm" href="/letters/new">New letter</PrimaryButton>
+        {/if}
         <button
           on:click={() => (showMenu = true)}
           class="w-[26px] h-[26px] border border-black rounded-full"
