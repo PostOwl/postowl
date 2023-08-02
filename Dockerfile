@@ -4,34 +4,27 @@ RUN mkdir /app
 # NodeJS app lives here
 WORKDIR /app
 
-# Install packages needed to build node modules
-RUN apt update -qq && \
-    apt install -y python-is-python3 pkg-config build-essential
-
-# Install node modules
-COPY package.json package-lock.json ./
-RUN npm ci --omit dev
-RUN npm install dotenv
-
-# copy source across (excludes items filtered by .dockerignore)
+# Copy source (excludes items filtered by .dockerignore)
 COPY . .
 
-RUN mkdir data
-RUN npm run build
+# Install node modules and build app
+RUN npm ci --omit dev \
+    && mkdir data \
+    && npm run build
 
+# Create runner image from builder
 FROM node:18-slim AS runner
-RUN apt update -qq && \
-    apt install -y sqlite3
+RUN apt-get update -qq \
+    && apt-get install -y sqlite3
 
 COPY --from=builder /app/node_modules /app/node_modules
 COPY --from=builder /app/build /app/build
 COPY --from=builder /app/.env.production /app/build
-COPY --from=builder /app/package.json /app
-COPY --from=builder /app/scripts/schema.sql /app
-COPY --from=builder /app/scripts/start-fly.sh /app
-COPY --from=builder /app/scripts/start-app.js /app
+COPY --from=builder /app/package.json /app/scripts/schema.sql \
+    /app/scripts/start-fly.sh /app/scripts/start-app.js /app
+
 WORKDIR /app
 ENV NODE_ENV production
 
-# Start the server by default, this can be overwritten at runtime
+# Start the server
 CMD [ "node", "build" ]
