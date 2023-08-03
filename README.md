@@ -44,7 +44,7 @@ PostOwl is a [SvelteKit](https://kit.svelte.dev/) application inspired by [edita
 1. Enter the directory you cloned the repo to: `cd postowl`
 1. Run `npm install`
 1. Rename `.env.example` to `.env` and edit for your environment
-1. Create the database with `sqlite3 data/db.sqlite3 < scripts/schema.sql`
+1. Create the database with `sqlite3 data-local/db.sqlite3 < scripts/schema.sql`
 1. Run the dev server and open a new browser tab with `npm run dev -- --open`
 1. Sign in with the ADMIN_PASSWORD you set in `.env`
 
