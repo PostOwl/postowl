@@ -1,18 +1,15 @@
-fly.toml
-Dockerfile
-.dockerignore
-node_modules
-.git
-.DS_Store
+# Directories
 build
-data
-/.svelte-kit
-/package
-.env
-.env.*
+node_modules
+package
+
+# Files
+.DS_Store
+.git
+.env*
 !.env.production
-.envrc
+*.sqlite3*
+.svelte-kit
 .tool-versions
-.tool-versions
+fly.toml
 vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
