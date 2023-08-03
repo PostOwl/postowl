@@ -11,5 +11,6 @@ package
 *.sqlite3*
 .svelte-kit
 .tool-versions
+Dockerfile
 fly.toml
 vite.config.js.timestamp-*
