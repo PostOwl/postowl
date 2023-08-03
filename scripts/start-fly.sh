@@ -12,5 +12,5 @@ then
     touch /app/data/db.sqlite3
 fi
 
-sqlite3 data/db.sqlite3 < schema.sql
-node -r dotenv/config ./start-app.js
+sqlite3 /app/data/db.sqlite3 < /app/scripts/schema.sql
+node -r dotenv/config /app/scripts/start-app.js
