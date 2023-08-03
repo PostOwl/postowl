@@ -1,4 +1,4 @@
-import { server as app } from "./build/index.js"
+import { server as app } from "/app/build/index.js"
 
 function shutdownServer() {
   console.log("Server doing graceful shutdown");

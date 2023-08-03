@@ -2,7 +2,7 @@ import slugify from 'slugify';
 import Database from 'better-sqlite3';
 import { DEFAULT_BIO } from '$lib/constants';
 import { nanoid } from '$lib/util';
-import { DB_PATH, ADMIN_NAME, ADMIN_PASSWORD, ORIGIN } from '$env/static/private';
+import { DB_PATH, ADMIN_NAME, ADMIN_PASSWORD } from '$env/static/private';
 import sendMail from '$lib/sendMail';
 import { Blob } from 'node:buffer';
 
@@ -88,7 +88,7 @@ export async function createPost(
         `<p>Hi ${recipient.name.split(" ")[0]},</p>
         <p>I'm writing to you from my website, here's the first part:</p>
         <p>${teaser}</p>
-        <p><a href="${`${ORIGIN}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
+        <p><a href="${`/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
         <p>${ADMIN_NAME.split(" ")[0]}</p>
         <p><em>(This message was sent from ${ADMIN_NAME}'s <a href="https://www.postowl.com">PostOwl</a> website.)</em></p>`
       );
@@ -193,7 +193,7 @@ export async function updatePost(
           `<p>Hi ${recipient.name.split(" ")[0]},</p>
           <p>I'm writing to you from my website, here's the first part:</p>
           <p>${teaser}</p>
-          <p><a href="${`${ORIGIN}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
+          <p><a href="${`/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
           <p>${ADMIN_NAME.split(" ")[0]}</p>
           <p><em>(This message was sent from ${ADMIN_NAME}'s <a href="https://www.postowl.com">PostOwl</a> website.)</em></p>`
         );

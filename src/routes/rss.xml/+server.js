@@ -1,6 +1,5 @@
 import { getRSSFeedData } from '$lib/api';
 import { buildRFC822Date, encodeHTMLEntities } from '$lib/util';
-import { ORIGIN } from '$env/static/private';
 
 export async function GET({ setHeaders }) {
   setHeaders({
@@ -13,10 +12,10 @@ export async function GET({ setHeaders }) {
     <channel>
     <title>${feed.name}</title>
     <description>${feed.bio}</description>
-    <link>${ORIGIN}</link>
-    <atom:link href="${ORIGIN}/rss.xml" rel="self" type="application/rss+xml"/>
+    <link>/</link>
+    <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
     <webfeeds:accentColor>000000</webfeeds:accentColor>
-    <webfeeds:icon>${ORIGIN}${feed.avatar || '/images/person-placeholder.jpg'}</webfeeds:icon>
+    <webfeeds:icon>{feed.avatar || '/images/person-placeholder.jpg'}</webfeeds:icon>
     ${feed.posts
       .map(
         p => `
@@ -25,8 +24,8 @@ export async function GET({ setHeaders }) {
           <dc:creator>${feed.name}</dc:creator>
           <description>${encodeHTMLEntities(p.content)}</description>
           <pubDate>${buildRFC822Date(p.created_at)}</pubDate>
-          <link>${ORIGIN}/letters/${p.slug}</link>
-          <guid isPermaLink="true">${ORIGIN}/letters/${p.slug}</guid>
+          <link>/letters/${p.slug}</link>
+          <guid isPermaLink="true">/letters/${p.slug}</guid>
         </item>`
       )
       .join('\n')}
