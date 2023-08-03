@@ -1,6 +1,5 @@
 # Directories
 build
-data-local
 node_modules
 package
 
@@ -9,8 +8,8 @@ package
 .git
 .env*
 !.env.production
-*.sqlite3*
 .svelte-kit
 .tool-versions
+data/db.sqlite3*
 fly.toml
 vite.config.js.timestamp-*
