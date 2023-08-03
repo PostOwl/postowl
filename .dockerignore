@@ -1,5 +1,6 @@
 # Directories
 build
+data-local
 node_modules
 package
 
