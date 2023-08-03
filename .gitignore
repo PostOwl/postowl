@@ -1,14 +1,15 @@
-.DS_Store
+# Directories
+build
 node_modules
-/build
-/.svelte-kit
-/package
-.env
-.env.*
+package
+
+# Files
+.DS_Store
+.env*
 !.env.example
 !.env.production.example
 *.sqlite3*
-fly.toml
+.svelte-kit
 .tool-versions
+fly.toml
 vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
