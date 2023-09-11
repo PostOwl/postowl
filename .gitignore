@@ -1,7 +1,8 @@
 # Directories
-build
-node_modules
-package
+/build
+/node_modules
+/package
+/.svelte-kit
 
 # Files
 .DS_Store
@@ -9,7 +10,6 @@ package
 !.env.example
 !.env.production.example
 *.sqlite3*
-.svelte-kit
 .tool-versions
 Dockerfile
 fly.toml

@@ -1,15 +1,17 @@
 # Directories
-build
-node_modules
-package
+/.git
+/.svelte-kit
+/build
+/node_modules
+/package
 
 # Files
+.dockerignore
 .DS_Store
-.git
 .env*
 !.env.production
-.svelte-kit
 .tool-versions
+Dockerfile
 data/db.sqlite3*
 fly.toml
 vite.config.js.timestamp-*
