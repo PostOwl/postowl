@@ -95,7 +95,7 @@ export const multiLineRichTextSchema = new Schema({
   nodes: {
     // :: NodeSpec The top level document node.
     doc: {
-      content: 'block+'
+      content: 'paragraph block* paragraph'
     },
 
     // :: NodeSpec A plain paragraph textblock. Represented in the DOM
