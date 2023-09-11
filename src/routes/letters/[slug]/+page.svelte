@@ -10,7 +10,7 @@
   import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
 
   export let data;
-  let editable, title, content, created_at, updated_at, teaser_image, teaser, is_public, recipients;
+  let editable, title, content, created_at, teaser_image, teaser, is_public, recipients;
   let showMenu;
 
   $: currentUser = data.currentUser;
@@ -25,7 +25,6 @@
     title = data.title;
     content = data.content;
     created_at = data.created_at;
-    updated_at = data.updated_at;
     teaser_image = data.teaser_image;
     teaser = data.teaser;
     is_public = data.is_public;
@@ -64,7 +63,6 @@
         recipients,
         is_public
       });
-      updated_at = result.updated_at;
       recipients = result.recipients;
       editable = false;
       // In case the slug has changed (title change) forward to the correct url
@@ -143,6 +141,7 @@
       </a>
     </div>
 
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
     <p class="sm:text-lg prose">{@html data.bio.bio}</p>
   </div>
 </NotEditable>

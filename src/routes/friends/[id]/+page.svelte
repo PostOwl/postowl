@@ -5,7 +5,7 @@
   import PlainText from '$lib/components/PlainText.svelte';
 
   export let data;
-  let editable, name, email, created_at, updated_at;
+  let editable, name, email;
 
   $: currentUser = data.currentUser;
   $: bio = data.bio;
@@ -18,8 +18,6 @@
   function initOrReset() {
     name = data.name;
     email = data.email;
-    created_at = data.created_at;
-    updated_at = data.updated_at;
     editable = true;
   }
 
@@ -41,12 +39,11 @@
   async function saveFriend() {
     if (!currentUser) return alert('Sorry, you are not authorized.');
     try {
-      const result = await fetchJSON('POST', '/api/update-friend', {
+      await fetchJSON('POST', '/api/update-friend', {
         friend_id: data.friend_id,
         name,
         email
       });
-      updated_at = result.updated_at;
       goto('/friends');
     } catch (err) {
       console.error(err);

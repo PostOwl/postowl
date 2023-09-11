@@ -6,7 +6,6 @@ import { DB_PATH, ADMIN_NAME, ADMIN_PASSWORD } from '$env/static/private';
 import sendMail from '$lib/sendMail';
 import { Blob } from 'node:buffer';
 
-
 /**
  * Database setup
  */
@@ -18,11 +17,11 @@ db.pragma('journal_mode = WAL');
 db.pragma('case_sensitive_like = false');
 
 function shutDownSQLite() {
-  console.log("SQLite doing graceful shutdown");
+  console.log('SQLite doing graceful shutdown');
   db.close();
 }
-process.on("SIGINT", shutDownSQLite);
-process.on("SIGTERM", shutDownSQLite);
+process.on('SIGINT', shutDownSQLite);
+process.on('SIGTERM', shutDownSQLite);
 
 /**
  * Creates a post
@@ -85,11 +84,11 @@ export async function createPost(
       sendMail(
         recipient.email,
         title,
-        `<p>Hi ${recipient.name.split(" ")[0]},</p>
+        `<p>Hi ${recipient.name.split(' ')[0]},</p>
         <p>I'm writing to you from my website, here's the first part:</p>
         <p>${teaser}</p>
         <p><a href="${`${origin}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
-        <p>${ADMIN_NAME.split(" ")[0]}</p>
+        <p>${ADMIN_NAME.split(' ')[0]}</p>
         <p><em>(This message was sent from ${ADMIN_NAME}'s <a href="https://www.postowl.com">PostOwl</a> website.)</em></p>`
       );
     }
@@ -190,11 +189,11 @@ export async function updatePost(
         sendMail(
           recipient.email,
           title,
-          `<p>Hi ${recipient.name.split(" ")[0]},</p>
+          `<p>Hi ${recipient.name.split(' ')[0]},</p>
           <p>I'm writing to you from my website, here's the first part:</p>
           <p>${teaser}</p>
           <p><a href="${`${origin}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
-          <p>${ADMIN_NAME.split(" ")[0]}</p>
+          <p>${ADMIN_NAME.split(' ')[0]}</p>
           <p><em>(This message was sent from ${ADMIN_NAME}'s <a href="https://www.postowl.com">PostOwl</a> website.)</em></p>`
         );
         new_recipients.push(recipient_id);
