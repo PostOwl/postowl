@@ -11,7 +11,7 @@ export async function POST({ request, locals }) {
     teaser_image,
     recipients,
     is_public,
-    currentUser
+    locals // currentUser, origin, etc.
   );
   return json({ slug });
 }

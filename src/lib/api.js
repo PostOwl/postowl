@@ -34,7 +34,7 @@ export async function createPost(
   teaser_image,
   recipients,
   is_public,
-  currentUser
+  { currentUser, origin }
 ) {
   if (!currentUser) throw new Error('Not authorized');
   if (!title) throw new Error('Title mandatory');
@@ -88,7 +88,7 @@ export async function createPost(
         `<p>Hi ${recipient.name.split(" ")[0]},</p>
         <p>I'm writing to you from my website, here's the first part:</p>
         <p>${teaser}</p>
-        <p><a href="${`/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
+        <p><a href="${`${origin}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
         <p>${ADMIN_NAME.split(" ")[0]}</p>
         <p><em>(This message was sent from ${ADMIN_NAME}'s <a href="https://www.postowl.com">PostOwl</a> website.)</em></p>`
       );
@@ -111,7 +111,7 @@ export async function updatePost(
   teaser_image,
   recipients,
   is_public,
-  currentUser
+  { currentUser, origin }
 ) {
   if (!currentUser) throw new Error('Not authorized');
   if (!title) throw new Error('Title is mandatory');
@@ -193,7 +193,7 @@ export async function updatePost(
           `<p>Hi ${recipient.name.split(" ")[0]},</p>
           <p>I'm writing to you from my website, here's the first part:</p>
           <p>${teaser}</p>
-          <p><a href="${`/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
+          <p><a href="${`${origin}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
           <p>${ADMIN_NAME.split(" ")[0]}</p>
           <p><em>(This message was sent from ${ADMIN_NAME}'s <a href="https://www.postowl.com">PostOwl</a> website.)</em></p>`
         );

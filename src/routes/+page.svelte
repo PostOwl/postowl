@@ -72,9 +72,9 @@
 
 <svelte:head>
   <title>{name}</title>
-  <meta name="description" content="The story of my life" />
+  <meta name="description" content={bio} />
   <meta name="og:title" property="og:title" content={name} />
-  <meta name="og:description" property="og:description" content="The story of my life" />
+  <meta name="og:description" property="og:description" content={bio} />
   <meta
     name="og:image"
     property="og:image"
@@ -82,7 +82,7 @@
   />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content={name} />
-  <meta name="twitter:description" content="The story of my life" />
+  <meta name="twitter:description" content={bio} />
   <meta name="twitter:image" content="%sveltekit.assets%/favicon/favicon-512x512.png" />
   <meta name="robots" content="index, follow" />
 
