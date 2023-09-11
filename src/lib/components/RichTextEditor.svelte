@@ -50,13 +50,16 @@
     // more involved. Post MVP stuff! :)
     const nodes = slice?.content?.content;
     if (nodes) {
+
+      const newNodes = []
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
         // Everything that starts with a "/" can be considered an owned asset
-        if (node.type?.name === 'image' && !/^\//.test(node.attrs.src)) {
-          node.attrs.src = '/images/image-placeholder.png';
+        if (node.type?.name !== 'image' || /^\//.test(node.attrs.src)) {
+          newNodes.push(node);
         }
       }
+      slice.content.content = newNodes;
     }
     return slice;
   }
