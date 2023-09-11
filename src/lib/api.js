@@ -81,10 +81,11 @@ export async function createPost(
       // Email this new recipient - it may or may not work - we don't wait for it
       // TODO: for the future: Add some reporting, which emails have been sent/delivered
       // TODO: We may need some queuing to send out many emails (hopefully not!)
+
       sendMail(
         recipient.email,
         title,
-        `<p>Hi ${recipient.name.split(' ')[0]},</p>
+        `<p>Hi ${recipient.name?.split(' ')[0]},</p>
         <p>I'm writing to you from my website, here's the first part:</p>
         <p>${teaser}</p>
         <p><a href="${`${origin}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
@@ -189,7 +190,7 @@ export async function updatePost(
         sendMail(
           recipient.email,
           title,
-          `<p>Hi ${recipient.name.split(' ')[0]},</p>
+          `<p>Hi ${recipient.name?.split(' ')[0]},</p>
           <p>I'm writing to you from my website, here's the first part:</p>
           <p>${teaser}</p>
           <p><a href="${`${origin}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
