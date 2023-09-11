@@ -8,7 +8,8 @@ export async function load({ params, locals, url }) {
     throw redirect(301, `/letters/${data.slug}`);
   } else {
     return {
-      ...data
+      ...data,
+      ...locals
     };
   }
 }
