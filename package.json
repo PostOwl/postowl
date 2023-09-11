@@ -6,8 +6,8 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write .",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write .",
     "start": "node build"
   },
   "devDependencies": {

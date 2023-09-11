@@ -10,6 +10,6 @@ export async function load({ locals, url }) {
     posts,
     searchQuery: q,
     searchFilter: f,
-    ...locals,
+    ...locals
   };
 }

@@ -8,7 +8,6 @@
   "svelteStrictMode": false,
   "svelteIndentScriptAndStyle": true,
   "plugins": ["prettier-plugin-svelte"],
-  "pluginSearchDirs": ["."],
   "overrides": [
     { "files": "*.svelte", "options": { "parser": "svelte" } },
     { "files": "*.css", "options": { "singleQuote": false } }
