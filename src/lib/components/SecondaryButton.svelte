@@ -11,7 +11,7 @@
   {type}
   {size}
   {disabled}
-  styles="font-medium focus:ring-black border border-black bg-white"
+  styles="font-medium focus:ring-gray-200 border border-gray-200 bg-white"
   on:click
 >
   <slot />

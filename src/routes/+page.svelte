@@ -182,7 +182,7 @@
         autocomplete="off"
         id="search"
         name="search"
-        class="block w-full rounded-full border-1 border-black bg-transparent py-2 pl-10 pr-24 placeholder-gray-400 focus:border-black focus:text-black focus:outline-none focus:ring-0"
+        class="block w-full rounded-full border-1 border-gray-200 bg-transparent py-2 pl-10 pr-24 placeholder-gray-400 focus:border-black focus:text-black focus:outline-none focus:ring-0"
         placeholder={`Search ${data.posts.length} letters`}
         type="text"
       />
@@ -193,7 +193,7 @@
             id="country"
             name="country"
             autocomplete="country-name"
-            class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-0 ring-inset focus:ring-1 focus:ring-inset focus:ring-black sm:max-w-xs sm:text-sm leading-4"
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-0 ring-inset focus:ring-1 focus:ring-inset focus:ring-gray-200 sm:max-w-xs sm:text-sm leading-4"
             on:change={onInput}
           >
             <option value="">Show all</option>
