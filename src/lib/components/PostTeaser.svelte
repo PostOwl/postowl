@@ -10,7 +10,7 @@
 
 <div
   href={`/letters/${post.slug}`}
-  class={classNames('md:text-xl rounded-2xl border bg-white p-4 sm:p-8 border-black')}
+  class={classNames('md:text-xl rounded-2xl border bg-white p-4 sm:p-8 border-gray-200')}
 >
   <div>
     {#if currentUser}
