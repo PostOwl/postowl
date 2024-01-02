@@ -11,6 +11,8 @@
 !.env.production.example
 *.sqlite3*
 .tool-versions
+bun.lockb
 Dockerfile
 fly.toml
+pnpm-lock.yaml
 vite.config.js.timestamp-*
