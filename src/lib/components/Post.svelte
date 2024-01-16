@@ -11,7 +11,7 @@
   export let editable;
 
   let titleEl;
-  // HACK: set the focus to the title element, this will only work for new letters, which is intended behavior
+  // HACK: set the focus to the title element, this will only work for new posts, which is intended behavior
   onMount(() => {
     setTimeout(() => {
       titleEl.querySelector('.ProseMirror')?.focus();
@@ -25,13 +25,13 @@
       <div class="pb-2 sm:text-lg">{formatDate(created_at)}</div>
     </NotEditable>
     <h1 bind:this={titleEl} class="text-3xl md:text-5xl font-bold">
-      <PlainText {editable} bind:content={title} placeholder="Letter title…" />
+      <PlainText {editable} bind:content={title} placeholder="Post title…" />
     </h1>
   </div>
 </div>
 
 <div class="max-w-screen-md mx-auto px-6">
   <div id="post_content" class="prose sm:prose-xl text-inherit">
-    <RichText multiLine {editable} bind:content placeholder="Letter content…" />
+    <RichText multiLine {editable} bind:content placeholder="Post content…" />
   </div>
 </div>

@@ -30,7 +30,7 @@
   }
 
   async function copySecretUrl() {
-    await navigator.clipboard.writeText(`${origin}/letters/${slug}?secret=${recipient.secret}`);
+    await navigator.clipboard.writeText(`${origin}/posts/${slug}?secret=${recipient.secret}`);
     flashCopied();
   }
 </script>

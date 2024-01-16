@@ -32,11 +32,11 @@
         recipients,
         is_public
       });
-      goto(`/letters/${slug}`);
+      goto(`/posts/${slug}`);
     } catch (err) {
       console.error(err);
       // HACK: This is guesswork
-      alert('Oops there was an error. Did you specify a title for your letter?');
+      alert('Oops there was an error. Did you specify a title for your post?');
     }
   }
 
@@ -46,7 +46,7 @@
 </script>
 
 <svelte:head>
-  <title>New letter</title>
+  <title>New post</title>
   <link rel="icon" type="image/png" sizes="300x300" href={bio.avatar} />
   <link rel="apple-touch-icon" sizes="300x300" href={bio.avatar} />
 </svelte:head>

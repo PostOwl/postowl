@@ -3,7 +3,7 @@
 PostOwl is an open-source web application that let's you create your own website for:
 
 - blogging (public posts)
-- sharing letters (share secret links with friends and notify them by email)
+- sharing posts (share secret links with friends and notify them by email)
 - keeping a journal or diary (private posts)
 
 All your writing in one place!
@@ -54,7 +54,7 @@ PostOwl uses SQLite. [Beekeeper studio](https://github.com/beekeeper-studio/beek
 
 ### Sending emails in development
 
-PostOwl sends emails when you share a letter with friends.
+PostOwl sends emails when you share a post with friends.
 
 In development we recommend using [mailpit](https://github.com/axllent/mailpit) to test email without sending real emails.
 
@@ -63,7 +63,7 @@ In development we recommend using [mailpit](https://github.com/axllent/mailpit) 
 1. Configure `.env` with the examples shown for mailpit in `.env.example`
 1. Start the local development server with `npm run dev` - the app is now running in `dev` mode and emails can be sent without encryption
 1. Use PostOwl to add a friend at http://localhost:5173/friends
-1. Create and send them a letter
+1. Create and send them a post
 1. View the email they would have received in the mailpit web interface at http://localhost:8025
 
 ### Building
