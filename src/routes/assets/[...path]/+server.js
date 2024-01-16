@@ -6,7 +6,7 @@ export const GET = async ({ params, setHeaders }) => {
   const file = getAsset(path);
 
   if (!file || !file.data) {
-    throw error(404, 'Asset not found');
+    error(404, 'Asset not found');
   }
 
   // Set response headers

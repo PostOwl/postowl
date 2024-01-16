@@ -8,11 +8,11 @@ export const actions = {
     const sessionTimeout = 60 * 24 * 7; // one week in minutes
     try {
       const { sessionId } = await authenticate(password, sessionTimeout);
-      cookies.set('sessionid', sessionId);
+      cookies.set('sessionid', sessionId, { path: '/' });
     } catch (err) {
       console.error(err);
       return fail(400, { incorrect: true });
     }
-    throw redirect(303, '/');
+    redirect(303, '/');
   }
 };
