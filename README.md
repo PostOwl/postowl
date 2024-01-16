@@ -35,7 +35,7 @@ PostOwl is a [SvelteKit](https://kit.svelte.dev/) application inspired by [edita
 ### Requirements
 
 - [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org) (minimum 16.20.0 LTS or 18.16.0 LTS recommended) or other JavaScript runtime (not tested).
+- [Node.js](https://nodejs.org) (minimum 18.16.0 LTS or 20.11.0 LTS recommended) or other JavaScript runtime (not tested).
 - [SQLite](https://www.sqlite.org)
 
 ### How to run PostOwl in development mode on your computer
