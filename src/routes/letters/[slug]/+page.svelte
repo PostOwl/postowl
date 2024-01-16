@@ -35,7 +35,7 @@
   async function deletePost() {
     if (!currentUser) return alert('Sorry, you are not authorized.');
 
-    if (confirm('Are you sure you want to delete this letter? It cannot be undone.')) {
+    if (confirm('Are you sure you want to delete this post? It cannot be undone.')) {
       try {
         await fetchJSON('POST', '/api/delete-post', {
           slug: data.slug
@@ -67,7 +67,7 @@
       editable = false;
       // In case the slug has changed (title change) forward to the correct url
       if (result.slug !== data.slug) {
-        goto(`/letters/${result.slug}`);
+        goto(`/posts/${result.slug}`);
       }
     } catch (err) {
       console.error(err);
@@ -108,9 +108,9 @@
         on:click={() => {
           editable = true;
           showMenu = false;
-        }}>Edit letter</SecondaryButton
+        }}>Edit post</SecondaryButton
       >
-      <SecondaryButton size="sm" on:click={deletePost}>Delete letter</SecondaryButton>
+      <SecondaryButton size="sm" on:click={deletePost}>Delete post</SecondaryButton>
     </div>
   {/if}
 </WebsiteNav>

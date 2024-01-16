@@ -88,7 +88,7 @@ export async function createPost(
         `<p>Hi ${recipient.name?.split(' ')[0]},</p>
         <p>I'm writing to you from my website, here's the first part:</p>
         <p>${teaser}</p>
-        <p><a href="${`${origin}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
+        <p><a href="${`${origin}/posts/${slug}?secret=${secret}`}">Read the full post</a>.</p>
         <p>${ADMIN_NAME.split(' ')[0]}</p>
         <p><em>(This message was sent from ${ADMIN_NAME}'s <a href="https://www.postowl.com">PostOwl</a> website.)</em></p>`
       );
@@ -193,7 +193,7 @@ export async function updatePost(
           `<p>Hi ${recipient.name?.split(' ')[0]},</p>
           <p>I'm writing to you from my website, here's the first part:</p>
           <p>${teaser}</p>
-          <p><a href="${`${origin}/letters/${slug}?secret=${secret}`}">Read the full letter</a>.</p>
+          <p><a href="${`${origin}/posts/${slug}?secret=${secret}`}">Read the full post</a>.</p>
           <p>${ADMIN_NAME.split(' ')[0]}</p>
           <p><em>(This message was sent from ${ADMIN_NAME}'s <a href="https://www.postowl.com">PostOwl</a> website.)</em></p>`
         );
@@ -578,7 +578,7 @@ export async function getSitemap() {
     const sitemap = [];
     posts.forEach(a => {
       sitemap.push({
-        url: `/letters/${a.slug}`,
+        url: `/posts/${a.slug}`,
         lastmod: new Date(a.modified_at).toISOString()
       });
     });

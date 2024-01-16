@@ -43,9 +43,9 @@
     if (e.key === 'h' && editable != true && !e.key.metaKey && !e.key.ctrlKey) {
       return goto('/');
     }
-    // Go to new letter with n key
+    // Go to new post with n key
     if (e.key === 'n' && editable != true && !e.key.metaKey && !e.key.ctrlKey && currentUser) {
-      return goto('/letters/new');
+      return goto('/posts/new');
     }
 
     // Go to friends list with f key
@@ -85,7 +85,7 @@
         </a>
         <div class="flex-1" />
         {#if currentUser}
-          <PrimaryButton size="sm" href="/letters/new">New letter</PrimaryButton>
+          <PrimaryButton size="sm" href="/posts/new">New post</PrimaryButton>
         {/if}
         <button
           on:click={() => (showMenu = true)}
@@ -135,7 +135,7 @@
         <slot />
 
         <div class="space-y-4 flex flex-col pt-8">
-          <PrimaryButton size="sm" href="/letters/new">New letter</PrimaryButton>
+          <PrimaryButton size="sm" href="/posts/new">New post</PrimaryButton>
         </div>
 
         <div class="space-y-4 flex flex-col">
