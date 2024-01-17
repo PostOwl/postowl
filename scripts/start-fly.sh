@@ -9,8 +9,8 @@ if [ ! -d "$FOLDER" ]
 then
     echo "$FOLDER is not a directory, initializing database" 
     mkdir /data
-    touch /data/db.sqlite3
+    touch $DB_PATH
 fi
 
-sqlite3 /data/db.sqlite3 < /app/scripts/schema.sql
-node -r dotenv/config /app/scripts/start-app.js
+sqlite3 $DB_PATH < /app/scripts/schema.sql
+node /app/scripts/start-app.js

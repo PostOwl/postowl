@@ -1,0 +1,17 @@
+[build]
+
+[experimental]
+  cmd = ["/app/scripts/start-fly.sh"]
+  entrypoint = ["sh"]
+
+[[mounts]]
+  source = "litefs"
+  destination = "/var/lib/litefs"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]

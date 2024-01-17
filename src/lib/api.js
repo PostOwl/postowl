@@ -2,9 +2,12 @@ import slugify from 'slugify';
 import Database from 'better-sqlite3';
 import { DEFAULT_BIO } from '$lib/constants';
 import { nanoid } from '$lib/util';
-import { DB_PATH, ADMIN_NAME, ADMIN_PASSWORD } from '$env/static/private';
 import sendMail from '$lib/sendMail';
 import { Blob } from 'node:buffer';
+import { env } from '$env/dynamic/private'; 
+const DB_PATH = env.DB_PATH;
+const ADMIN_NAME = env.ADMIN_NAME;
+const ADMIN_PASSWORD = env.ADMIN_PASSWORD;
 
 /**
  * Database setup

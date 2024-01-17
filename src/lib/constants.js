@@ -1,4 +1,5 @@
-import { ADMIN_NAME } from '$env/static/private';
+import { env } from '$env/dynamic/private'; 
+const ADMIN_NAME = env.ADMIN_NAME;
 
 export const DEFAULT_BIO = {
   avatar: '/images/person-placeholder.jpg',
