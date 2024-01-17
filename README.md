@@ -82,7 +82,7 @@ We can't promise we won't add tests in the future 😉
 
 More seriously: PostOwl is currently an early technical preview, so we've been moving fast and breaking things.
 
-## Why is this in JavaScript not TypeScript - don't you know it's 2023?!
+## Why is this in JavaScript not TypeScript?
 
 We like JavaScript. That doesn't mean that PostOwl might not be converted to TypeScript sometime in the future.
 
