@@ -13,7 +13,7 @@ export async function GET({ setHeaders }) {
     <title>${feed.name}</title>
     <description>${feed.bio}</description>
     <link>/</link>
-    <atom:link href="/rss.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
     <webfeeds:accentColor>000000</webfeeds:accentColor>
     <webfeeds:icon>{feed.avatar || '/images/person-placeholder.jpg'}</webfeeds:icon>
     ${feed.posts
