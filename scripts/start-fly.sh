@@ -13,4 +13,4 @@ then
 fi
 
 sqlite3 $DB_PATH < /app/scripts/schema.sql
-node /app/scripts/start-app.js
+node build
