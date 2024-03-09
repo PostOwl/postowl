@@ -4,7 +4,7 @@
   cmd = ["/app/scripts/start-fly.sh"]
   entrypoint = ["sh"]
 
-[[mounts]]
+[mounts]
   source = "data"
   destination = "/data"
 
