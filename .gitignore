@@ -5,11 +5,12 @@
 /.svelte-kit
 
 # Files
-.DS_Store
-.env*
+*.sqlite3*
 !.env.example
 !.env.production.example
-*.sqlite3*
+.env*
+.DS_Store
+.mise.toml
 .tool-versions
 bun.lockb
 pnpm-lock.yaml
