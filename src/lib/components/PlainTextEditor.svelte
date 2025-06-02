@@ -1,4 +1,6 @@
 <script>
+  import { run } from 'svelte/legacy';
+
   import { onMount, onDestroy } from 'svelte';
   import { toHTML, fromHTML } from '$lib/prosemirrorUtil';
   import { singleLinePlainTextSchema, multiLinePlainTextSchema } from '$lib/prosemirrorSchemas';
@@ -11,36 +13,20 @@
   import { buildKeymap } from '$lib/prosemirrorKeymap';
   import { placeholderPlugin } from '$lib/prosemirrorPlugins';
 
-  export let content = '';
-  export let multiLine = false;
-  export let placeholder = 'Enter text';
+  /**
+   * @typedef {Object} Props
+   * @property {string} [content]
+   * @property {boolean} [multiLine]
+   * @property {string} [placeholder]
+   */
 
-  let editorChange = false;
-  let prosemirrorNode, editorView, editorState;
+  /** @type {Props} */
+  let { content = $bindable(''), multiLine = false, placeholder = 'Enter text' } = $props();
 
-  $: schema = multiLine ? multiLinePlainTextSchema : singleLinePlainTextSchema;
+  let editorChange = $state(false);
+  let prosemirrorNode = $state(), editorView = $state(), editorState = $state();
 
-  $: {
-    const doc = fromHTML(schema, content);
-    editorState = EditorState.create({
-      doc,
-      schema,
-      plugins: [
-        keymap(buildKeymap(schema)),
-        keymap(baseKeymap),
-        history(),
-        onUpdatePlugin,
-        placeholderPlugin(placeholder)
-      ]
-    });
-    // Only if there is already an editorView and the content change was external
-    // update editorView with the new editorState
-    if (!editorChange) {
-      editorView?.updateState(editorState);
-    } else {
-      editorChange = false;
-    }
-  }
+
 
   function dispatchTransaction(transaction) {
     const editorState = this.state.apply(transaction);
@@ -78,9 +64,31 @@
       editorView.destroy();
     }
   });
+  let schema = $derived(multiLine ? multiLinePlainTextSchema : singleLinePlainTextSchema);
+  run(() => {
+    const doc = fromHTML(schema, content);
+    editorState = EditorState.create({
+      doc,
+      schema,
+      plugins: [
+        keymap(buildKeymap(schema)),
+        keymap(baseKeymap),
+        history(),
+        onUpdatePlugin,
+        placeholderPlugin(placeholder)
+      ]
+    });
+    // Only if there is already an editorView and the content change was external
+    // update editorView with the new editorState
+    if (!editorChange) {
+      editorView?.updateState(editorState);
+    } else {
+      editorChange = false;
+    }
+  });
 </script>
 
-<div id="prosemirror-editor" bind:this={prosemirrorNode} />
+<div id="prosemirror-editor" bind:this={prosemirrorNode}></div>
 
 <style>
   @reference "../../app.css";

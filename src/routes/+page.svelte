@@ -13,13 +13,13 @@
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
 
-  export let data;
-  let editable, name, avatar, bio;
-  let searchInput;
-  let searchFilter = data.searchFilter;
-  let showMenu;
-  $: currentUser = data.currentUser;
-  $: postLimit = $page.url.searchParams.get('postLimit') || 30;
+  let { data } = $props();
+  let editable = $state(), name = $state(), avatar = $state(), bio = $state();
+  let searchInput = $state();
+  let searchFilter = $state(data.searchFilter);
+  let showMenu = $state(false);
+  let currentUser = $derived(data.currentUser);
+  let postLimit = $derived($page.url.searchParams.get('postLimit') || 30);
 
   function initOrReset() {
     avatar = data.bio.avatar;
@@ -158,7 +158,7 @@
           </svg>
         </div>
       {:else}
-        <a href="/" on:click={reset} class="absolute inset-y-0 left-3 flex items-center">
+        <a href="/" onclick={reset} class="absolute inset-y-0 left-3 flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -177,7 +177,7 @@
       {/if}
       <input
         bind:this={searchInput}
-        on:input={onInput}
+        oninput={onInput}
         value={data.searchQuery}
         autocomplete="off"
         id="search"
@@ -194,7 +194,7 @@
             name="country"
             autocomplete="country-name"
             class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-0 ring-inset focus:ring-1 focus:ring-inset focus:ring-gray-200 sm:max-w-xs sm:text-sm leading-4"
-            on:change={onInput}
+            onchange={onInput}
           >
             <option value="">Show all</option>
             <option value="private">Private</option>
@@ -211,12 +211,12 @@
         <div class="md:text-xl py-4 text-center">
           {#if !data.searchQuery && !searchFilter}
             {#if currentUser}
-              <!-- svelte-ignore a11y-invalid-attribute -->
-              <a class="underline" href="#" on:click={() => (editable = true)}>Personalise</a> your
+              <!-- svelte-ignore a11y_invalid_attribute -->
+              <a class="underline" href="#" onclick={() => (editable = true)}>Personalise</a> your
               profile, then <a class="underline" href={'/posts/new'}>create</a> your first post 💌
             {:else}
-              <!-- svelte-ignore a11y-invalid-attribute -->
-              <a href="#" class="underline" on:click={() => (showMenu = true)}>Sign in</a> to start writing.
+              <!-- svelte-ignore a11y_invalid_attribute -->
+              <a href="#" class="underline" onclick={() => (showMenu = true)}>Sign in</a> to start writing.
             {/if}
           {:else}
             No posts found.
@@ -237,7 +237,7 @@
       <div class="max-w-(--breakpoint-md) mx-auto px-6 pb-6">
         <button
           class="w-full mx-auto block px-4 py-2 rounded-lg border shadow-md bg-white text-center uppercase font-medium"
-          on:click={showMoreposts}
+          onclick={showMoreposts}
         >
           Show more
         </button>

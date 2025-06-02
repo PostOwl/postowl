@@ -1,16 +1,14 @@
 <script>
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import { createEventDispatcher } from 'svelte';
   import { onDestroy } from 'svelte';
 
-  let flash = undefined;
+  let flash = $state(undefined);
   let timeout;
 
-  export let recipient;
-  export let slug;
-  export let editable;
+  let { recipient, slug, editable } = $props();
 
-  $: origin = $page.data.origin;
+  let origin = $derived(page.data.origin);
 
   const dispatch = createEventDispatcher();
 
@@ -57,7 +55,7 @@
   {/if}
   <span title={recipient.name ? recipient.email : ''}>{recipient.name || recipient.email}</span>
   {#if editable}
-    <button on:click={() => handleDelete()}>
+    <button onclick={() => handleDelete()}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -71,7 +69,7 @@
     </button>
   {:else}
     <!-- Copy secret url -->
-    <button on:click={copySecretUrl}>
+    <button onclick={copySecretUrl}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

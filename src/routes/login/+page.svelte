@@ -2,9 +2,8 @@
   import Limiter from '$lib/components/Limiter.svelte';
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import Input from '$lib/components/Input.svelte';
-  export let form;
-  export let data;
-  $: bio = data.bio;
+  let { form, data } = $props();
+  let bio = $derived(data.bio);
 </script>
 
 <svelte:head>

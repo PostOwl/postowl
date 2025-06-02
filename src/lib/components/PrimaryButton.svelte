@@ -1,9 +1,22 @@
 <script>
   import BaseButton from '$lib/components/BaseButton.svelte';
-  export let disabled = undefined;
-  export let type = 'button';
-  export let size = undefined;
-  export let href = undefined;
+  /**
+   * @typedef {Object} Props
+   * @property {any} [disabled]
+   * @property {string} [type]
+   * @property {any} [size]
+   * @property {any} [href]
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let {
+    disabled = undefined,
+    type = 'button',
+    size = undefined,
+    href = undefined,
+    children
+  } = $props();
 </script>
 
 <BaseButton
@@ -14,5 +27,5 @@
   styles="font-medium bg-black focus:ring-black border-2 border-transparent text-white"
   on:click
 >
-  <slot />
+  {@render children?.()}
 </BaseButton>

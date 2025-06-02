@@ -1,14 +1,29 @@
 <script>
-  export let editable;
-  export let src;
-  export let alt;
-  export let uploadPrompt = undefined;
-  export let maxWidth;
-  export let maxHeight;
-  export let quality;
-  let className = '';
-  let previewSrc;
-  export { className as class };
+  /**
+   * @typedef {Object} Props
+   * @property {any} editable
+   * @property {any} src
+   * @property {any} alt
+   * @property {any} [uploadPrompt]
+   * @property {any} maxWidth
+   * @property {any} maxHeight
+   * @property {any} quality
+   * @property {string} [class]
+   */
+
+  /** @type {Props} */
+  let {
+    editable,
+    src = $bindable(),
+    alt,
+    uploadPrompt = undefined,
+    maxWidth,
+    maxHeight,
+    quality,
+    class: className = ''
+  } = $props();
+  let previewSrc = $state();
+  
 </script>
 
 {#if editable}

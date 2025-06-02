@@ -14,11 +14,17 @@
   import InsertImage from './tools/InsertImage.svelte';
   import CreateLink from './tools/CreateLink.svelte';
 
-  export let confirmLabel = 'Save';
-  export let canConfirm = true;
+  /**
+   * @typedef {Object} Props
+   * @property {string} [confirmLabel]
+   * @property {boolean} [canConfirm]
+   */
 
-  let editorView = null;
-  let editorState = null;
+  /** @type {Props} */
+  let { confirmLabel = 'Save', canConfirm = true } = $props();
+
+  let editorView = $state(null);
+  let editorState = $state(null);
 
   const unsubscribe = activeEditorView.subscribe(value => {
     editorView = value;
@@ -90,7 +96,7 @@
                 /></svg
               >
             </CreateLink>
-            <div class="hidden sm:block w-px bg-gray-700 mx-3" />
+            <div class="hidden sm:block w-px bg-gray-700 mx-3"></div>
             <ToggleHeading {editorState} {editorView}>
               <svg
                 class="h-3 w-3 sm:h-4 sm:w-4"
@@ -129,7 +135,7 @@
                 /></svg
               >
             </ToggleBlockquote>
-            <div class="hidden sm:block w-px bg-gray-700 mx-3" />
+            <div class="hidden sm:block w-px bg-gray-700 mx-3"></div>
             <ToggleBulletList {editorState} {editorView}>
               <svg
                 class="h-3 w-3 sm:h-4 sm:w-4"
@@ -154,7 +160,7 @@
                 /></svg
               >
             </ToggleOrderedList>
-            <div class="hidden sm:block w-px bg-gray-700 mx-3" />
+            <div class="hidden sm:block w-px bg-gray-700 mx-3"></div>
             <InsertImage {editorState} {editorView}>
               <svg
                 class="h-3 w-3 sm:h-4 sm:w-4"
@@ -170,9 +176,9 @@
           </div>
         {/if}
 
-        <div class="flex-1 h-8" />
+        <div class="flex-1 h-8"></div>
         <PrimaryButton type="button" on:click={handleCancel}>Cancel</PrimaryButton>
-        <div class="shrink-0 w-2 sm:w-4" />
+        <div class="shrink-0 w-2 sm:w-4"></div>
         <SecondaryButton type="button" on:click={handleSave} disabled={!canConfirm}
           >{confirmLabel}</SecondaryButton
         >
@@ -181,4 +187,4 @@
   </div>
 </div>
 
-<svelte:window on:keydown={onKeyDown} />
+<svelte:window onkeydown={onKeyDown} />

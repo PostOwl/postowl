@@ -1,4 +1,6 @@
 <script>
+  import { run } from 'svelte/legacy';
+
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
   import { extractTeaser, extractTeaserImage, fetchJSON } from '$lib/util';
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
@@ -9,16 +11,10 @@
   import NotEditable from '$lib/components/NotEditable.svelte';
   import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
 
-  export let data;
-  let editable, title, content, created_at, teaser_image, teaser, is_public, recipients;
-  let showMenu;
+  let { data = $bindable() } = $props();
+  let editable = $state(), title = $state(), content = $state(), created_at = $state(), teaser_image, teaser = $state(), is_public = $state(), recipients = $state();
+  let showMenu = $state(false);
 
-  $: currentUser = data.currentUser;
-  $: {
-    // HACK: To make sure this is only run when the parent passes in new data
-    data = data;
-    initOrReset();
-  }
 
 
   function initOrReset() {
@@ -76,6 +72,12 @@
       );
     }
   }
+  run(() => {
+    // HACK: To make sure this is only run when the parent passes in new data
+    data = data;
+    initOrReset();
+  });
+  let currentUser = $derived(data.currentUser);
 </script>
 
 <svelte:head>
@@ -115,7 +117,7 @@
   {/if}
 </WebsiteNav>
 
-<div class="pt-8 sm:pt-16" />
+<div class="pt-8 sm:pt-16"></div>
 
 {#if currentUser}
   <RecipientsSelector slug={data.slug} {editable} bind:is_public bind:recipients />

@@ -3,9 +3,15 @@
   import { fetchJSON } from '$lib/util';
   import NotEditable from '$lib/components/NotEditable.svelte';
 
-  export let counter = undefined;
-  export let editable = false;
-  let count;
+  /**
+   * @typedef {Object} Props
+   * @property {any} [counter]
+   * @property {boolean} [editable]
+   */
+
+  /** @type {Props} */
+  let { counter = undefined, editable = false } = $props();
+  let count = $state();
 
   onMount(async () => {
     if (counter) {

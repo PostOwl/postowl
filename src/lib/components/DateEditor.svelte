@@ -1,11 +1,17 @@
 <script>
   import { classNames, toDateString } from '$lib/util';
 
-  export let value = undefined;
-  let className = '';
-  export { className as class };
+  /**
+   * @typedef {Object} Props
+   * @property {any} [value]
+   * @property {string} [class]
+   */
 
-  let dateInput;
+  /** @type {Props} */
+  let { value = $bindable(undefined), class: className = '' } = $props();
+  
+
+  let dateInput = $state();
 
   function onDateChange() {
     value = dateInput.value;
@@ -23,5 +29,5 @@
   name="imagefile"
   bind:this={dateInput}
   value={toDateString(value)}
-  on:change={onDateChange}
+  onchange={onDateChange}
 />
