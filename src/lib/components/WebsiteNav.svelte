@@ -71,12 +71,12 @@
 
 <div
   class={classNames(
-    'backdrop-blur-sm z-10 text-sm lg:text-lg',
+    'backdrop-blur-xs z-10 text-sm lg:text-lg',
     !editable ? 'sticky top-0' : '',
     'bg-white bg-opacity-95'
   )}
 >
-  <div class="max-w-screen-md mx-auto py-4 px-6">
+  <div class="max-w-(--breakpoint-md) mx-auto py-4 px-6">
     <NotEditable {editable}>
       <div class="flex items-center relative space-x-4">
         <a href="/" on:click={goBack} class="text-lg font-bold uppercase">

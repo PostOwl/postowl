@@ -121,7 +121,7 @@
 </div>
 
 {#if is_cropping}
-  <div class="flex space-x-4 z-[60] fixed bottom-0 right-0 left-0 p-6">
+  <div class="flex space-x-4 z-60 fixed bottom-0 right-0 left-0 p-6">
     <div class="flex-1" />
     <button class="bg-[#EF174C] text-white rounded-full px-4 py-2" on:click={uploadImage}
       >Confirm</button
@@ -152,7 +152,7 @@
     <img
       on:mousedown={() => fileInput.click()}
       class={className +
-        ' cursor-pointer outline-[2px] hover:outline-dashed outline-[#EF174C] -outline-offset-[2px]'}
+        ' cursor-pointer outline-2 hover:outline-dashed outline-[#EF174C] -outline-offset-2'}
       {src}
       {alt}
       title={uploadPrompt}

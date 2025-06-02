@@ -111,7 +111,7 @@
 
 <!-- __bio is there to make placeholder work with centered text -->
 <div class="__bio">
-  <div class="max-w-screen-md mx-auto px-6">
+  <div class="max-w-(--breakpoint-md) mx-auto px-6">
     <div class="pt-6 sm:pt-12 pb-2 sm:pb-6 text-center">
       <div class="w-20 h-20 md:w-28 md:h-28 mx-auto overflow-hidden relative rounded-full">
         <Image
@@ -138,7 +138,7 @@
 
 <NotEditable {editable}>
   <!-- Search bar -->
-  <div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">
+  <div class="max-w-(--breakpoint-md) mx-auto px-6 pt-4 lg:pt-8">
     <div class={classNames(data.searchQuery ? '' : '', 'relative')}>
       {#if !data.searchQuery && !data.searchFilter}
         <div class="pointer-events-none absolute inset-y-0 left-3 flex items-center">
@@ -182,7 +182,7 @@
         autocomplete="off"
         id="search"
         name="search"
-        class="block w-full rounded-full border-1 border-gray-200 bg-transparent py-2 pl-10 pr-24 placeholder-gray-400 focus:border-black focus:text-black focus:outline-none focus:ring-0"
+        class="block w-full rounded-full border border-gray-200 bg-transparent py-2 pl-10 pr-24 placeholder-gray-400 focus:border-black focus:text-black focus:outline-hidden focus:ring-0"
         placeholder={`Search ${data.posts.length} posts`}
         type="text"
       />
@@ -207,7 +207,7 @@
 
   <div id="posts">
     {#if data.posts.length === 0}
-      <div class="max-w-screen-md mx-auto px-6 pt-4 lg:pt-8">
+      <div class="max-w-(--breakpoint-md) mx-auto px-6 pt-4 lg:pt-8">
         <div class="md:text-xl py-4 text-center">
           {#if !data.searchQuery && !searchFilter}
             {#if currentUser}
@@ -225,7 +225,7 @@
       </div>
     {/if}
 
-    <div class="max-w-screen-md mx-auto px-6">
+    <div class="max-w-(--breakpoint-md) mx-auto px-6">
       <div class="my-6 space-y-8">
         {#each data.posts.slice(0, postLimit) as post}
           <PostTeaser {post} {currentUser} />
@@ -234,7 +234,7 @@
     </div>
 
     {#if postLimit < data.posts.length}
-      <div class="max-w-screen-md mx-auto px-6 pb-6">
+      <div class="max-w-(--breakpoint-md) mx-auto px-6 pb-6">
         <button
           class="w-full mx-auto block px-4 py-2 rounded-lg border shadow-md bg-white text-center uppercase font-medium"
           on:click={showMoreposts}
