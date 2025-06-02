@@ -11,23 +11,23 @@
     "start": "node build"
   },
   "devDependencies": {
-    "@flydotio/dockerfile": "^0.5.9",
+    "@flydotio/dockerfile": "^0.7.10",
     "@sveltejs/adapter-auto": "^3.2.5",
     "@sveltejs/kit": "^2.6.3",
     "@sveltejs/vite-plugin-svelte": "^3.1.2",
     "eslint": "^9.12.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-svelte": "^2.44.1",
-    "prettier": "^3.3.3",
-    "prettier-plugin-svelte": "^3.2.7",
+    "prettier": "^3.5.3",
+    "prettier-plugin-svelte": "^3.4.0",
     "svelte": "^4.2.19",
     "vite": "^5.4.8"
   },
   "type": "module",
   "dependencies": {
     "@sveltejs/adapter-node": "^5.2.5",
-    "@tailwindcss/forms": "^0.5.9",
-    "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.8",
     "better-sqlite3": "^11.10.0",
     "nanoid": "^5.1.5",
@@ -43,7 +43,7 @@
     "prosemirror-schema-basic": "^1.2.4",
     "prosemirror-schema-list": "^1.5.1",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.39.3",
+    "prosemirror-view": "^1.40.0",
     "slugify": "^1.6.6",
     "tailwindcss": "^4.1.8"
   },
