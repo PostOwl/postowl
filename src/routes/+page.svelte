@@ -158,7 +158,7 @@
           </svg>
         </div>
       {:else}
-        <a href="/" onclick={reset} class="absolute inset-y-0 left-3 flex items-center">
+        <a href="/" onclick={reset} class="absolute inset-y-0 left-3 flex items-center" aria-label="Clear search">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -212,11 +212,11 @@
           {#if !data.searchQuery && !searchFilter}
             {#if currentUser}
               <!-- svelte-ignore a11y_invalid_attribute -->
-              <a class="underline" href="#" onclick={() => (editable = true)}>Personalise</a> your
-              profile, then <a class="underline" href={'/posts/new'}>create</a> your first post 💌
+              <a class="underline" href="#" onclick={() => (editable = true)} aria-label="Edit profile">Personalise</a> your
+              profile, then <a class="underline" href={'/posts/new'} aria-label="Create new post">create</a> your first post 💌
             {:else}
               <!-- svelte-ignore a11y_invalid_attribute -->
-              <a href="#" class="underline" onclick={() => (showMenu = true)}>Sign in</a> to start writing.
+              <a href="#" class="underline" onclick={() => (showMenu = true)} aria-label="Open sign in menu">Sign in</a> to start writing.
             {/if}
           {:else}
             No posts found.
@@ -238,6 +238,7 @@
         <button
           class="w-full mx-auto block px-4 py-2 rounded-lg border shadow-md bg-white text-center uppercase font-medium"
           onclick={showMoreposts}
+          aria-label="Show more posts"
         >
           Show more
         </button>

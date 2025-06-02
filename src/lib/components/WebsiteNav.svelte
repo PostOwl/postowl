@@ -92,7 +92,7 @@
   <div class="max-w-(--breakpoint-md) mx-auto py-4 px-6">
     <NotEditable {editable}>
       <div class="flex items-center relative space-x-4">
-        <a href="/" onclick={goBack} class="text-lg font-bold uppercase">
+        <a href="/" onclick={goBack} class="text-lg font-bold uppercase" aria-label={backButton ? 'Go back' : 'Go to home page'}>
           {backButton ? '← ' : ''}
           {latestBio.name}
         </a>
@@ -104,6 +104,7 @@
           onclick={() => (showMenu = true)}
           class="w-[26px] h-[26px] border border-black rounded-full"
           title={'Open Menu'}
+          aria-label="Open menu"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -131,6 +132,7 @@
       <button
         class="absolute right-6 sm:-right-4 -top-4 bg-black text-white rounded-full"
         onclick={() => (showMenu = false)}
+        aria-label="Close menu"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +169,8 @@
               data-sveltekit-preload-data="off"
               class="underline"
               href="/logout"
-              onclick={toggleMenu}>Sign out</a
+              onclick={toggleMenu}
+              aria-label="Sign out">Sign out</a
             >
           </div>
         </div>
@@ -185,7 +188,7 @@
             </div>
             <PrimaryButton type="submit">Sign in</PrimaryButton>
             <div class="pt-8 text-sm sm:text-base">
-              Only the owner can sign in. But you can run <a class="underline" href="https://www.postowl.com">PostOwl</a> yourself.
+              Only the owner can sign in. But you can run <a class="underline" href="https://www.postowl.com" aria-label="Visit PostOwl website">PostOwl</a> yourself.
             </div>
           </form>
         </div>
