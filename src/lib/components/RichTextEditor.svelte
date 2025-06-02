@@ -1,6 +1,4 @@
 <script>
-  import { run } from 'svelte/legacy';
-
   import { onMount, onDestroy } from 'svelte';
   import { toHTML, fromHTML } from '$lib/prosemirrorUtil';
   import { singleLineRichTextSchema, multiLineRichTextSchema } from '$lib/prosemirrorSchemas';
@@ -28,6 +26,8 @@
   let prosemirrorNode = $state(),
     editorView = $state(),
     editorState = $state();
+  let lastContent = $state('<p></p>');
+  let isInitialized = $state(false);
 
   function transformPasted(slice) {
     // For now, we just replace pasted external images
@@ -72,12 +72,15 @@
   });
 
   onMount(() => {
-    editorView = new EditorView(prosemirrorNode, {
-      state: editorState,
-      dispatchTransaction,
-      transformPasted
-    });
-    activeEditorView.set(editorView);
+    if (editorState && prosemirrorNode) {
+      editorView = new EditorView(prosemirrorNode, {
+        state: editorState,
+        dispatchTransaction,
+        transformPasted
+      });
+      activeEditorView.set(editorView);
+      isInitialized = true;
+    }
   });
   onDestroy(() => {
     // Guard on server side
@@ -86,26 +89,71 @@
     }
   });
   let schema = $derived(multiLine ? multiLineRichTextSchema : singleLineRichTextSchema);
-  run(() => {
-    const doc = fromHTML(schema, content);
-    editorState = EditorState.create({
-      doc,
-      schema,
-      plugins: [
-        buildInputRules(schema),
-        keymap(buildKeymap(schema)),
-        keymap(baseKeymap),
-        history(),
-        onUpdatePlugin,
-        placeholderPlugin(placeholder)
-      ]
-    });
-    // Only if there is already an editorView and the content change was external
-    // update editorView with the new editorState
-    if (!editorChange) {
-      editorView?.updateState(editorState);
-    } else {
+
+  // Create initial editor state
+  $effect(() => {
+    if (!schema || !content) return;
+
+    try {
+      const doc = fromHTML(schema, content || '<p></p>');
+      const newEditorState = EditorState.create({
+        doc,
+        schema,
+        plugins: [
+          buildInputRules(schema),
+          keymap(buildKeymap(schema)),
+          keymap(baseKeymap),
+          history(),
+          onUpdatePlugin,
+          placeholderPlugin(placeholder)
+        ]
+      });
+      editorState = newEditorState;
+      lastContent = content;
+
+      // If we have the DOM node but haven't initialized the view yet
+      if (prosemirrorNode && !editorView) {
+        editorView = new EditorView(prosemirrorNode, {
+          state: editorState,
+          dispatchTransaction,
+          transformPasted
+        });
+        activeEditorView.set(editorView);
+        isInitialized = true;
+      }
+    } catch (error) {
+      console.error('Failed to create editor state:', error);
+    }
+  });
+
+  // Update editor view when content changes externally
+  $effect(() => {
+    if (!schema || !isInitialized) return;
+
+    if (editorView && content !== lastContent && !editorChange) {
+      try {
+        const doc = fromHTML(schema, content || '<p></p>');
+        const newEditorState = EditorState.create({
+          doc,
+          schema,
+          plugins: [
+            buildInputRules(schema),
+            keymap(buildKeymap(schema)),
+            keymap(baseKeymap),
+            history(),
+            onUpdatePlugin,
+            placeholderPlugin(placeholder)
+          ]
+        });
+        editorView.updateState(newEditorState);
+        lastContent = content;
+      } catch (error) {
+        console.error('Failed to update editor state:', error);
+      }
+    }
+    if (editorChange) {
       editorChange = false;
+      lastContent = content;
     }
   });
 </script>

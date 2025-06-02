@@ -26,6 +26,7 @@
     editorView = $state(),
     editorState = $state();
   let lastContent = $state('');
+  let isInitialized = $state(false);
 
   function dispatchTransaction(transaction) {
     const editorState = this.state.apply(transaction);
@@ -50,11 +51,14 @@
   });
 
   onMount(() => {
-    editorView = new EditorView(prosemirrorNode, {
-      state: editorState,
-      dispatchTransaction
-    });
-    activeEditorView.set(editorView);
+    if (editorState && prosemirrorNode) {
+      editorView = new EditorView(prosemirrorNode, {
+        state: editorState,
+        dispatchTransaction
+      });
+      activeEditorView.set(editorView);
+      isInitialized = true;
+    }
   });
 
   onDestroy(() => {
@@ -67,25 +71,9 @@
 
   // Create initial editor state
   $effect(() => {
-    const doc = fromHTML(schema, content || '');
-    const newEditorState = EditorState.create({
-      doc,
-      schema,
-      plugins: [
-        keymap(buildKeymap(schema)),
-        keymap(baseKeymap),
-        history(),
-        onUpdatePlugin,
-        placeholderPlugin(placeholder)
-      ]
-    });
-    editorState = newEditorState;
-    lastContent = content;
-  });
+    if (!schema || content === undefined) return;
 
-  // Update editor view when content changes externally
-  $effect(() => {
-    if (editorView && content !== lastContent && !editorChange) {
+    try {
       const doc = fromHTML(schema, content || '');
       const newEditorState = EditorState.create({
         doc,
@@ -98,8 +86,46 @@
           placeholderPlugin(placeholder)
         ]
       });
-      editorView.updateState(newEditorState);
+      editorState = newEditorState;
       lastContent = content;
+
+      // If we have the DOM node but haven't initialized the view yet
+      if (prosemirrorNode && !editorView) {
+        editorView = new EditorView(prosemirrorNode, {
+          state: editorState,
+          dispatchTransaction
+        });
+        activeEditorView.set(editorView);
+        isInitialized = true;
+      }
+    } catch (error) {
+      console.error('Failed to create editor state:', error);
+    }
+  });
+
+  // Update editor view when content changes externally
+  $effect(() => {
+    if (!schema || !isInitialized) return;
+
+    if (editorView && content !== lastContent && !editorChange) {
+      try {
+        const doc = fromHTML(schema, content || '');
+        const newEditorState = EditorState.create({
+          doc,
+          schema,
+          plugins: [
+            keymap(buildKeymap(schema)),
+            keymap(baseKeymap),
+            history(),
+            onUpdatePlugin,
+            placeholderPlugin(placeholder)
+          ]
+        });
+        editorView.updateState(newEditorState);
+        lastContent = content;
+      } catch (error) {
+        console.error('Failed to update editor state:', error);
+      }
     }
     if (editorChange) {
       editorChange = false;
