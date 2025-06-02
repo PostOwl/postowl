@@ -1,13 +1,6 @@
-import forms from '@tailwindcss/forms';
-import typography from '@tailwindcss/typography';
-
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ['./src/**/*.{html,js,svelte,ts}'],
+module.exports = {
   theme: {
-    fontFamily: {
-      sans: ['Avenir', 'Montserrat', 'Corbel', 'URW Gothic', 'source-sans-pro', 'sans-serif']
-    },
     extend: {
       typography: {
         DEFAULT: {
@@ -25,11 +18,10 @@ export default {
             },
             'blockquote p:last-of-type::after': {
               content: ''
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   },
-  plugins: [forms, typography]
-};
+}

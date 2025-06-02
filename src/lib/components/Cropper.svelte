@@ -276,6 +276,7 @@
 </div>
 
 <style>
+  @reference "../../app.css";
   .cr-container {
     position: absolute;
     top: 0;

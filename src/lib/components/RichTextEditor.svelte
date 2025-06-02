@@ -105,6 +105,7 @@
 <div id="prosemirror-editor" bind:this={prosemirrorNode} />
 
 <style>
+  @reference "../../app.css";
   :global(#prosemirror-editor .ProseMirror) {
     outline: none;
     white-space: pre-wrap;
