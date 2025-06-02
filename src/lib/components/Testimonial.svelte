@@ -15,12 +15,7 @@
    */
 
   /** @type {Props} */
-  let {
-    testimonial = $bindable(),
-    editable,
-    firstEntry = false,
-    lastEntry = false
-  } = $props();
+  let { testimonial = $bindable(), editable, firstEntry = false, lastEntry = false } = $props();
 </script>
 
 <div class={classNames(firstEntry ? 'pt-2 pb-8 sm:pb-12' : 'py-8 sm:py-12')}>

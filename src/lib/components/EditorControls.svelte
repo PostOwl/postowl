@@ -54,7 +54,9 @@
 </script>
 
 <div class={classNames('sticky top-0 z-10 sm:py-2 sm:px-4', 'bg-black')}>
-  <div class="max-w-(--breakpoint-md) mx-auto px-2 backdrop-blur-xs bg-opacity-95 border-gray-100 shadow-sm">
+  <div
+    class="max-w-(--breakpoint-md) mx-auto px-2 backdrop-blur-xs bg-opacity-95 border-gray-100 shadow-sm"
+  >
     <div>
       <div class="flex items-center overflow-x-auto py-3 px-1">
         <!-- <SecondaryButton type="button" on:click={handleCancel}>← Back</SecondaryButton> -->

@@ -1,6 +1,4 @@
 <script>
-  import { run } from 'svelte/legacy';
-
   import { onMount, onDestroy } from 'svelte';
   import { toHTML, fromHTML } from '$lib/prosemirrorUtil';
   import { singleLinePlainTextSchema, multiLinePlainTextSchema } from '$lib/prosemirrorSchemas';
@@ -24,9 +22,10 @@
   let { content = $bindable(''), multiLine = false, placeholder = 'Enter text' } = $props();
 
   let editorChange = $state(false);
-  let prosemirrorNode = $state(), editorView = $state(), editorState = $state();
-
-
+  let prosemirrorNode = $state(),
+    editorView = $state(),
+    editorState = $state();
+  let lastContent = $state('');
 
   function dispatchTransaction(transaction) {
     const editorState = this.state.apply(transaction);
@@ -65,9 +64,11 @@
     }
   });
   let schema = $derived(multiLine ? multiLinePlainTextSchema : singleLinePlainTextSchema);
-  run(() => {
-    const doc = fromHTML(schema, content);
-    editorState = EditorState.create({
+
+  // Create initial editor state
+  $effect(() => {
+    const doc = fromHTML(schema, content || '');
+    const newEditorState = EditorState.create({
       doc,
       schema,
       plugins: [
@@ -78,12 +79,31 @@
         placeholderPlugin(placeholder)
       ]
     });
-    // Only if there is already an editorView and the content change was external
-    // update editorView with the new editorState
-    if (!editorChange) {
-      editorView?.updateState(editorState);
-    } else {
+    editorState = newEditorState;
+    lastContent = content;
+  });
+
+  // Update editor view when content changes externally
+  $effect(() => {
+    if (editorView && content !== lastContent && !editorChange) {
+      const doc = fromHTML(schema, content || '');
+      const newEditorState = EditorState.create({
+        doc,
+        schema,
+        plugins: [
+          keymap(buildKeymap(schema)),
+          keymap(baseKeymap),
+          history(),
+          onUpdatePlugin,
+          placeholderPlugin(placeholder)
+        ]
+      });
+      editorView.updateState(newEditorState);
+      lastContent = content;
+    }
+    if (editorChange) {
       editorChange = false;
+      lastContent = content;
     }
   });
 </script>

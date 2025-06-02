@@ -12,10 +12,15 @@
   import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
 
   let { data = $bindable() } = $props();
-  let editable = $state(), title = $state(), content = $state(), created_at = $state(), teaser_image, teaser = $state(), is_public = $state(), recipients = $state();
+  let editable = $state(),
+    title = $state(),
+    content = $state(),
+    created_at = $state(),
+    teaser_image,
+    teaser = $state(),
+    is_public = $state(),
+    recipients = $state();
   let showMenu = $state(false);
-
-
 
   function initOrReset() {
     title = data.title;

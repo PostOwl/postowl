@@ -3,7 +3,6 @@
   import { browser } from '$app/environment';
   import { classNames } from '$lib/util';
 
-  
   /**
    * @typedef {Object} Props
    * @property {string} [position] - Only relevant for mobile

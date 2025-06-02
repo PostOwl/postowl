@@ -7,8 +7,9 @@
   import PlainText from '$lib/components/PlainText.svelte';
 
   let { data = $bindable() } = $props();
-  let editable = $state(), name = $state(), email = $state();
-
+  let editable = $state(),
+    name = $state(),
+    email = $state();
 
   function initOrReset() {
     name = data.name;

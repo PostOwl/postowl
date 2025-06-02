@@ -18,10 +18,10 @@ module.exports = {
             },
             'blockquote p:last-of-type::after': {
               content: ''
-            },
-          },
-        },
-      },
-    },
-  },
-}
+            }
+          }
+        }
+      }
+    }
+  }
+};

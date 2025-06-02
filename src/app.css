@@ -1,13 +1,13 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 @config "../tailwind.config.js";
 
 @theme {
-  --font-sans: 'Avenir', 'Montserrat', 'Corbel', 'URW Gothic', 'source-sans-pro', sans-serif;
+  --font-sans: "Avenir", "Montserrat", "Corbel", "URW Gothic", "source-sans-pro", sans-serif;
 }
-        
+
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still

@@ -296,7 +296,7 @@
       class:cr-grid={showGrid}
       style="width: {cropperSize.width}px; height: {cropperSize.height}px;"
       data-testid="cropper"
-></div>
+    ></div>
   {/if}
 </div>
 

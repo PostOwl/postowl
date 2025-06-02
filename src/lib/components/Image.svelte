@@ -23,7 +23,6 @@
     class: className = ''
   } = $props();
   let previewSrc = $state();
-  
 </script>
 
 {#if editable}

@@ -9,7 +9,6 @@
 
   /** @type {Props} */
   let { value = $bindable(undefined), class: className = '' } = $props();
-  
 
   let dateInput = $state();
 
