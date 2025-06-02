@@ -112,7 +112,10 @@ export async function updatePost(
   if (!currentUser) throw new Error('Not authorized');
   if (!title) throw new Error('Title is mandatory');
 
-  return db.transaction(async () => {
+  // Store emails to send after transaction completes
+  const emailsToSend = [];
+
+  const result = db.transaction(() => {
     let new_slug; // in case the post title has changed
     const { title: old_title, post_id } = db
       .prepare('SELECT title, post_id FROM posts WHERE slug = ?')
@@ -180,19 +183,17 @@ export async function updatePost(
           )
           .get(post.post_id, friend_id, secret);
 
-        // Email this new recipient - it may or may not work - we don't wait for it
-        // TODO: for the future: Add some reporting, which emails have been sent/delivered
-        // TODO: We may need some queuing to send out many emails (hopefully not!)
-        sendMail(
-          recipient.email,
-          title,
-          `<p>Hi ${recipient.name?.split(' ')[0]},</p>
+        // Schedule email to be sent after transaction completes
+        emailsToSend.push({
+          email: recipient.email,
+          title: title,
+          content: `<p>Hi ${recipient.name?.split(' ')[0]},</p>
           <p>I'm writing to you from my website, here's the first part:</p>
           <p>${teaser}</p>
-          <p><a href="${`${origin}/posts/${slug}?secret=${secret}`}">Read the full post</a>.</p>
+          <p><a href="${`${origin}/posts/${new_slug || slug}?secret=${secret}`}">Read the full post</a>.</p>
           <p>${ADMIN_NAME.split(' ')[0]}</p>
           <p><em>(This message was sent from ${ADMIN_NAME}'s <a href="https://www.postowl.com">PostOwl</a> website.)</em></p>`
-        );
+        });
         new_recipients.push(recipient_id);
       } else {
         new_recipients.push(recipient_exists.recipient_id);
@@ -219,6 +220,15 @@ export async function updatePost(
       recipients: current_recipients
     };
   })();
+
+  // Send emails after transaction is complete
+  // TODO: for the future: Add some reporting, which emails have been sent/delivered
+  // TODO: We may need some queuing to send out many emails (hopefully not!)
+  emailsToSend.forEach(emailData => {
+    sendMail(emailData.email, emailData.title, emailData.content);
+  });
+
+  return result;
 }
 
 /*
