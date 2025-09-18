@@ -8,6 +8,7 @@
   import Post from '$lib/components/Post.svelte';
   import NotEditable from '$lib/components/NotEditable.svelte';
   import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
+  import Bookmark from '$lib/components/Bookmark.svelte';
 
   export let data;
   let editable, title, content, created_at, teaser_image, teaser, is_public, recipients;
@@ -122,6 +123,8 @@
 {/if}
 
 <Post bind:title bind:content bind:created_at {editable} />
+
+<Bookmark slug={data.slug} {editable} />
 
 <NotEditable {editable}>
   <div class="text-center max-w-screen-sm mx-auto px-6 py-12 sm:py-16">
