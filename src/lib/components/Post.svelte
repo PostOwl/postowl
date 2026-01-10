@@ -20,7 +20,7 @@
 </script>
 
 <div>
-  <div class="max-w-screen-md mx-auto px-6">
+  <div class="max-w-(--breakpoint-md) mx-auto px-6">
     <NotEditable {editable}>
       <div class="pb-2 sm:text-lg">{formatDate(created_at)}</div>
     </NotEditable>
@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<div class="max-w-screen-md mx-auto px-6">
+<div class="max-w-(--breakpoint-md) mx-auto px-6">
   <div id="post_content" class="prose sm:prose-xl text-inherit">
     <RichText multiLine {editable} bind:content placeholder="Post content…" />
   </div>

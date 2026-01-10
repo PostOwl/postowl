@@ -20,7 +20,6 @@
     initOrReset();
   }
 
-
   function initOrReset() {
     title = data.title;
     content = data.content;
@@ -124,7 +123,7 @@
 <Post bind:title bind:content bind:created_at {editable} />
 
 <NotEditable {editable}>
-  <div class="text-center max-w-screen-sm mx-auto px-6 py-12 sm:py-16">
+  <div class="text-center max-w-(--breakpoint-sm) mx-auto px-6 py-12 sm:py-16">
     <div class="pb-4 text-center">
       <a href="/"
         ><img

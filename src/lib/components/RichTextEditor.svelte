@@ -50,8 +50,7 @@
     // more involved. Post MVP stuff! :)
     const nodes = slice?.content?.content;
     if (nodes) {
-
-      const newNodes = []
+      const newNodes = [];
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
         // Everything that starts with a "/" can be considered an owned asset

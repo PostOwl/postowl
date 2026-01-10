@@ -90,7 +90,7 @@
   {/if}
   {#if flash}
     <div
-      class="absolute -bottom-6 left-5 text-xs bg-white shadow-sm rounded-full px-4 py-2 whitespace-nowrap"
+      class="absolute -bottom-6 left-5 text-xs bg-white shadow-xs rounded-full px-4 py-2 whitespace-nowrap"
     >
       Link copied
     </div>

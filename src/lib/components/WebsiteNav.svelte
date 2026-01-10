@@ -71,14 +71,14 @@
 
 <div
   class={classNames(
-    'backdrop-blur-sm z-10 text-sm lg:text-lg',
+    'backdrop-blur-xs z-10 text-sm lg:text-lg',
     !editable ? 'sticky top-0' : '',
     'bg-white bg-opacity-95'
   )}
 >
-  <div class="max-w-screen-md mx-auto py-4 px-6">
+  <div class="max-w-(--breakpoint-md) mx-auto py-4 px-6">
     <NotEditable {editable}>
-      <div class="flex items-center relative space-x-4">
+      <div class="flex items-center relative gap-4">
         <a href="/" on:click={goBack} class="text-lg font-bold uppercase">
           {backButton ? '← ' : ''}
           {latestBio.name}
@@ -172,7 +172,10 @@
             </div>
             <PrimaryButton type="submit">Sign in</PrimaryButton>
             <div class="pt-8 text-sm sm:text-base">
-              Only the owner can sign in. But you can run <a class="underline" href="https://www.postowl.com">PostOwl</a> yourself.
+              Only the owner can sign in. But you can run <a
+                class="underline"
+                href="https://www.postowl.com">PostOwl</a
+              > yourself.
             </div>
           </form>
         </div>

@@ -68,7 +68,7 @@
   />
 {/if}
 
-<div class="max-w-screen-md mx-auto px-6 pb-8 sm:text-xl">
+<div class="max-w-(--breakpoint-md) mx-auto px-6 pb-8 sm:text-xl">
   <div class="pt-24 text-sm font-bold">Name</div>
   <div class="border-b py-2">
     <PlainText {editable} bind:content={name} placeholder="Enter name" />
