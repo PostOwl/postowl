@@ -78,7 +78,7 @@
 >
   <div class="max-w-(--breakpoint-md) mx-auto py-4 px-6">
     <NotEditable {editable}>
-      <div class="flex items-center relative space-x-4">
+      <div class="flex items-center relative gap-4">
         <a href="/" on:click={goBack} class="text-lg font-bold uppercase">
           {backButton ? '← ' : ''}
           {latestBio.name}
