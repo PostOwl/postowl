@@ -109,7 +109,7 @@
   }
 </script>
 
-<div class="max-w-screen-md mx-auto px-6 pb-8 relative">
+<div class="max-w-(--breakpoint-md) mx-auto px-6 pb-8 relative">
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   {#if editable || is_public || !is_public}
     <svelte:element
@@ -180,7 +180,7 @@
         autocomplete="off"
         id="search"
         name="search"
-        class="block w-full border-none bg-transparent px-0 py-2 placeholder-gray-300 focus:border-black focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-0"
+        class="block w-full border-none bg-transparent px-0 py-2 placeholder-gray-300 focus:border-black focus:text-gray-900 focus:placeholder-gray-400 focus:outline-hidden focus:ring-0"
         placeholder="Enter email or name to send to friends."
         type="text"
       />
