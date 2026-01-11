@@ -2,12 +2,15 @@
   import { page } from '$app/stores';
   import { classNames } from '$lib/util';
   import { goto } from '$app/navigation';
+  import { enhance } from '$app/forms';
   import NotEditable from './NotEditable.svelte';
   import PrimaryButton from './PrimaryButton.svelte';
   import Modal from './Modal.svelte';
   import Input from './Input.svelte';
   import SecondaryButton from './SecondaryButton.svelte';
   import { previousPage } from '$lib/stores';
+
+  let loginError = $state(false);
 
   /**
    * @typedef {Object} Props
@@ -168,7 +171,22 @@
         </div>
       {:else}
         <div class="">
-          <form method="POST" action="/login" class="flex flex-col space-y-8">
+          <form
+            method="POST"
+            action="/login"
+            class="flex flex-col space-y-8"
+            use:enhance={() => {
+              loginError = false;
+              return async ({ result }) => {
+                if (result.type === 'failure') {
+                  loginError = true;
+                } else if (result.type === 'redirect') {
+                  showMenu = false;
+                  goto(result.location, { invalidateAll: true });
+                }
+              };
+            }}
+          >
             <div class="flex flex-col">
               <label for="password" class="font-semibold mb-6 text-3xl">Sign in</label>
               <Input
@@ -177,6 +195,9 @@
                 id="password"
                 placeholder="Enter your password"
               />
+              {#if loginError}
+                <p class="text-red-600 mt-2">Incorrect password. Please try again.</p>
+              {/if}
             </div>
             <PrimaryButton type="submit">Sign in</PrimaryButton>
             <div class="pt-8 text-sm sm:text-base">
