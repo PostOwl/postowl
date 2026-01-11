@@ -5,24 +5,43 @@
 
   import * as helpers from '$lib/cropperUtil';
 
-  export let image;
-  export let crop = { x: 0, y: 0 };
-  export let zoom = 1;
-  export let aspect = 4 / 3;
-  export let minZoom = 1;
-  export let maxZoom = 3;
-  export let cropSize = null;
-  export let cropShape = 'rect';
-  export let showGrid = true;
-  export let zoomSpeed = 1;
-  export let crossOrigin = null;
-  export let restrictPosition = true;
+  /**
+   * @typedef {Object} Props
+   * @property {any} image
+   * @property {any} [crop]
+   * @property {number} [zoom]
+   * @property {any} [aspect]
+   * @property {number} [minZoom]
+   * @property {number} [maxZoom]
+   * @property {any} [cropSize]
+   * @property {string} [cropShape]
+   * @property {boolean} [showGrid]
+   * @property {number} [zoomSpeed]
+   * @property {any} [crossOrigin]
+   * @property {boolean} [restrictPosition]
+   */
 
-  let cropperSize = null;
+  /** @type {Props} */
+  let {
+    image,
+    crop = $bindable({ x: 0, y: 0 }),
+    zoom = $bindable(1),
+    aspect = 4 / 3,
+    minZoom = 1,
+    maxZoom = 3,
+    cropSize = null,
+    cropShape = 'rect',
+    showGrid = true,
+    zoomSpeed = 1,
+    crossOrigin = null,
+    restrictPosition = true
+  } = $props();
+
+  let cropperSize = $state(null);
   let imageSize = { width: 0, height: 0, naturalWidth: 0, naturalHeight: 0 };
-  let containerEl = null;
+  let containerEl = $state(null);
   let containerRect = null;
-  let imgEl = null;
+  let imgEl = $state(null);
   let dragStartPosition = { x: 0, y: 0 };
   let dragStartCrop = { x: 0, y: 0 };
   let lastPinchDistance = 0;
@@ -235,31 +254,45 @@
     });
   };
 
-  // ------ Reactive statement ------
-  //when aspect changes, we reset the cropperSize
-  $: if (imgEl) {
-    cropperSize = cropSize ? cropSize : helpers.getCropSize(imgEl.width, imgEl.height, aspect);
-  }
+  // ------ Reactive statements ------
+  // when aspect changes, we reset the cropperSize
+  $effect(() => {
+    if (imgEl) {
+      cropperSize = cropSize ? cropSize : helpers.getCropSize(imgEl.width, imgEl.height, aspect);
+    }
+  });
 
   // when zoom changes, we recompute the cropped area
-  $: zoom && emitCropData();
+  $effect(() => {
+    if (zoom) {
+      emitCropData();
+    }
+  });
+
+  // Helper to prevent default on event handlers
+  function withPreventDefault(handler) {
+    return (e) => {
+      e.preventDefault();
+      handler(e);
+    };
+  }
 </script>
 
-<svelte:window on:resize={computeSizes} />
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<svelte:window onresize={computeSizes} />
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   class="cr-container"
   bind:this={containerEl}
-  on:mousedown|preventDefault={onMouseDown}
-  on:touchstart|preventDefault={onTouchStart}
-  on:wheel|preventDefault={onWheel}
+  onmousedown={withPreventDefault(onMouseDown)}
+  ontouchstart={withPreventDefault(onTouchStart)}
+  onwheel={withPreventDefault(onWheel)}
   data-testid="cr-container"
 >
   <img
     bind:this={imgEl}
     class="cr-image"
     src={image}
-    on:load={onImgLoad}
+    onload={onImgLoad}
     alt=""
     style="transform: translate({crop.x}px, {crop.y}px) scale({zoom});"
     crossorigin={crossOrigin}
@@ -271,7 +304,7 @@
       class:cr-grid={showGrid}
       style="width: {cropperSize.width}px; height: {cropperSize.height}px;"
       data-testid="cropper"
-    />
+></div>
   {/if}
 </div>
 

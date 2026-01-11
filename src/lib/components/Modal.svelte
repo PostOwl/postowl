@@ -3,17 +3,21 @@
   import { browser } from '$app/environment';
   import { classNames } from '$lib/util';
 
-  // Only relevant for mobile
-  export let position = 'bottom';
-  let modalEl;
+  
+  /**
+   * @typedef {Object} Props
+   * @property {string} [position] - Only relevant for mobile
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let { position = 'bottom', children } = $props();
+  let modalEl = $state();
 
   const dispatch = createEventDispatcher();
-  let surface;
+  let surface = $state();
   onMount(async () => {
     window.document.children[0].style = 'overflow: hidden;';
-
-    // Move the modal in the DOM to be the last child of <BODY> so that it can be on top of everything
-    document.body.appendChild(modalEl);
   });
   onDestroy(() => {
     if (browser) {
@@ -32,10 +36,10 @@
   role="dialog"
   aria-modal="true"
 >
-  <div class="fixed inset-0 bg-black bg-opacity-80" />
+  <div class="fixed inset-0 bg-black bg-opacity-80"></div>
 
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div class="fixed inset-0 z-50 overflow-y-auto" on:mouseup={onMouseUp}>
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div class="fixed inset-0 z-50 overflow-y-auto" onmouseup={onMouseUp}>
     <div
       bind:this={surface}
       class={classNames(
@@ -44,7 +48,7 @@
       )}
     >
       <div class="relative rounded-lg bg-white text-left shadow-xl sm:my-8 w-full sm:max-w-lg">
-        <slot />
+        {@render children?.()}
       </div>
     </div>
   </div>

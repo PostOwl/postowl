@@ -1,6 +1,6 @@
 <script>
-  export let friend;
   import { classNames } from '$lib/util';
+  let { friend } = $props();
 </script>
 
 <a

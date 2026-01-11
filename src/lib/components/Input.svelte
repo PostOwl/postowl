@@ -1,11 +1,25 @@
 <script>
-  export let value = '';
-  export let id;
-  export let type = 'text';
-  export let name;
-  export let required = false;
-  export let inputRef = null;
-  export let placeholder = '';
+  /**
+   * @typedef {Object} Props
+   * @property {string} [value]
+   * @property {any} id
+   * @property {string} [type]
+   * @property {any} name
+   * @property {boolean} [required]
+   * @property {any} [inputRef]
+   * @property {string} [placeholder]
+   */
+
+  /** @type {Props} */
+  let {
+    value = $bindable(''),
+    id,
+    type = 'text',
+    name,
+    required = false,
+    inputRef = $bindable(null),
+    placeholder = ''
+  } = $props();
   function setType(node) {
     node.type = type;
   }

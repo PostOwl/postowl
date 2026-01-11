@@ -1,5 +1,15 @@
+<script>
+  /**
+   * @typedef {Object} Props
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let { children } = $props();
+</script>
+
 <div class="font-medium text-base lg:text-xl">
-  <slot />
+  {@render children?.()}
   <svg
     width="10"
     height="10"

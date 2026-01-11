@@ -5,29 +5,43 @@
   import uploadAsset from '$lib/uploadAsset';
   import Cropper from '$lib/components/Cropper.svelte';
 
-  export let src;
-  export let alt;
-  export let uploadPrompt = undefined;
-  export let maxWidth;
-  export let maxHeight;
-  export let quality;
-  let className = '';
+  /**
+   * @typedef {Object} Props
+   * @property {any} src
+   * @property {any} alt
+   * @property {any} [uploadPrompt]
+   * @property {any} maxWidth
+   * @property {any} maxHeight
+   * @property {any} quality
+   * @property {string} [class]
+   */
 
-  export { className as class };
+  /** @type {Props} */
+  let {
+    src = $bindable(),
+    alt,
+    uploadPrompt = undefined,
+    maxWidth,
+    maxHeight,
+    quality,
+    class: className = ''
+  } = $props();
 
-  let fileInput; // for uploading an image
-  let progress = undefined; // file upload progress
-  let overlayEl;
+  
 
-  $: currentUser = $page.data.currentUser;
+  let fileInput = $state(); // for uploading an image
+  let progress = $state(undefined); // file upload progress
+  let overlayEl = $state();
+
+  let currentUser = $derived($page.data.currentUser);
 
   // Cropper stuff
-  let newSrc;
-  let cropDetail;
-  let is_cropping = false;
-  let scale = 1;
-  let crop = { x: 0, y: 0 };
-  let zoom = 1;
+  let newSrc = $state();
+  let cropDetail = $state();
+  let is_cropping = $state(false);
+  let scale = $state(1);
+  let crop = $state({ x: 0, y: 0 });
+  let zoom = $state(1);
 
   function onKeyDown(e) {
     // Trigger save
@@ -99,7 +113,7 @@
   }
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   bind:this={overlayEl}
   class={classNames(
@@ -107,7 +121,7 @@
       ? 'z-40 bg-black text-white font-bold fixed inset-0 bg-opacity-80 text-center p-6'
       : 'hidden'
   )}
-  on:dblclick={cancelCropping}
+  ondblclick={cancelCropping}
 >
   {#if is_safari()}
     <span class="text-[#EF174C]">ATTENTION:</span> Use Google Chrome, Firefox, oder Microsoft Edge for
@@ -122,22 +136,22 @@
 
 {#if is_cropping}
   <div class="flex space-x-4 z-60 fixed bottom-0 right-0 left-0 p-6">
-    <div class="flex-1" />
-    <button class="bg-[#EF174C] text-white rounded-full px-4 py-2" on:click={uploadImage}
+    <div class="flex-1"></div>
+    <button class="bg-[#EF174C] text-white rounded-full px-4 py-2" onclick={uploadImage}
       >Confirm</button
     >
-    <button class="bg-white text-black rounded-full px-4 py-2" on:click={cancelCropping}
+    <button class="bg-white text-black rounded-full px-4 py-2" onclick={cancelCropping}
       >Cancel</button
     >
-    <div class="flex-1" />
+    <div class="flex-1"></div>
   </div>
 {/if}
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   style={`aspect-ratio: ${maxWidth}/${maxHeight}; scale: ${scale}`}
   class={classNames(is_cropping ? `z-50` : '', 'relative')}
-  on:dblclick={uploadImage}
+  ondblclick={uploadImage}
 >
   {#if is_cropping}
     <Cropper
@@ -148,9 +162,9 @@
       aspect={maxWidth / maxHeight}
     />
   {:else}
-    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <img
-      on:mousedown={() => fileInput.click()}
+      onmousedown={() => fileInput.click()}
       class={className +
         ' cursor-pointer outline-2 hover:outline-dashed outline-[#EF174C] -outline-offset-2'}
       {src}
@@ -166,7 +180,7 @@
   accept="image/*"
   name="imagefile"
   bind:this={fileInput}
-  on:change={startCropping}
+  onchange={startCropping}
 />
 
-<svelte:window on:keydown={onKeyDown} />
+<svelte:window onkeydown={onKeyDown} />

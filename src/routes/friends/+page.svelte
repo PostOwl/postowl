@@ -3,8 +3,8 @@
   import FriendTeaser from '$lib/components/FriendTeaser.svelte';
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
 
-  export let data;
-  $: bio = data.bio;
+  let { data } = $props();
+  let bio = $derived(data.bio);
 </script>
 
 <svelte:head>

@@ -3,11 +3,10 @@
   import { toggleMark } from 'prosemirror-commands';
   import { createLink } from '$lib/prosemirrorCommands';
 
-  export let editorView;
-  export let editorState;
+  let { editorView, editorState, children } = $props();
 
-  $: schema = editorState.schema;
-  $: disabled = !createLink(editorState, null, editorView);
+  let schema = $derived(editorState.schema);
+  let disabled = $derived(!createLink(editorState, null, editorView));
 
   function handleClick() {
     let url = prompt('Enter link URL', 'https://example.com');
@@ -19,12 +18,12 @@
 </script>
 
 <button
-  on:click={handleClick}
+  onclick={handleClick}
   {disabled}
   class={classNames(
     'text-white hover:bg-white hover:text-black',
     'sm:mx-1 rounded-full p-2 disabled:opacity-30'
   )}
 >
-  <slot />
+  {@render children?.()}
 </button>

@@ -1,5 +1,12 @@
 <script>
   import { classNames } from '$lib/util';
+  /**
+   * @typedef {Object} Props
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let { children } = $props();
 </script>
 
 <div class={classNames('pb-8 sm:pb-16')}>
@@ -8,7 +15,7 @@
   >
     <img class="shrink-0 w-24 h-24 rounded-full" src="/images/sonja.jpg" alt="Michael Aufreiter" />
     <div>
-      <h2 class="text-2xl md:text-4xl font-medium"><slot /></h2>
+      <h2 class="text-2xl md:text-4xl font-medium">{@render children?.()}</h2>
     </div>
   </div>
 </div>

@@ -4,15 +4,14 @@
   import { insertImage } from '$lib/prosemirrorCommands';
   import { page } from '$app/stores';
 
-  export let editorView;
-  export let editorState;
+  let { editorView, editorState, children } = $props();
 
-  let fileInput; // for uploading an image
-  let progress = undefined; // file upload progress
+  let fileInput = $state(); // for uploading an image
+  let progress = $state(undefined); // file upload progress
 
-  $: schema = editorState.schema;
-  $: disabled = !insertImage(editorState, null, editorView);
-  $: currentUser = $page.data.currentUser;
+  let schema = $derived(editorState.schema);
+  let disabled = $derived(!insertImage(editorState, null, editorView));
+  let currentUser = $derived($page.data.currentUser);
 
   async function uploadImage() {
     const file = fileInput.files[0];
@@ -68,16 +67,16 @@
   name="imagefile"
   multiple
   bind:this={fileInput}
-  on:change={uploadImage}
+  onchange={uploadImage}
 />
 <button
-  on:click={() => fileInput.click()}
+  onclick={() => fileInput.click()}
   {disabled}
   class={classNames(
     'text-white hover:bg-white hover:text-black',
     'sm:mx-1 rounded-full p-2 disabled:opacity-30'
   )}
 >
-  <slot />
+  {@render children?.()}
   {progress || ''}
 </button>

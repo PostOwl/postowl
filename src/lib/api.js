@@ -112,7 +112,7 @@ export async function updatePost(
   if (!currentUser) throw new Error('Not authorized');
   if (!title) throw new Error('Title is mandatory');
 
-  return db.transaction(async () => {
+  return db.transaction(() => {
     let new_slug; // in case the post title has changed
     const { title: old_title, post_id } = db
       .prepare('SELECT title, post_id FROM posts WHERE slug = ?')

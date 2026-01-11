@@ -5,12 +5,14 @@
   import NotEditable from './NotEditable.svelte';
   import { onMount } from 'svelte';
 
-  export let title;
-  export let content;
-  export let created_at;
-  export let editable;
+  let {
+    title = $bindable(),
+    content = $bindable(),
+    created_at,
+    editable
+  } = $props();
 
-  let titleEl;
+  let titleEl = $state();
   // HACK: set the focus to the title element, this will only work for new posts, which is intended behavior
   onMount(() => {
     setTimeout(() => {
