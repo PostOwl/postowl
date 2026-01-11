@@ -1,5 +1,4 @@
 <script>
-  import { run } from 'svelte/legacy';
 
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
   import { extractTeaser, extractTeaserImage, fetchJSON } from '$lib/util';
@@ -71,9 +70,9 @@
       );
     }
   }
-  run(() => {
-    // HACK: To make sure this is only run when the parent passes in new data
-    data = data;
+  $effect(() => {
+    // Re-run initOrReset when data changes from the parent
+    data;
     initOrReset();
   });
   let currentUser = $derived(data.currentUser);

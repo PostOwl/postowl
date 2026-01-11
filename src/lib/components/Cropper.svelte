@@ -1,6 +1,4 @@
 <script>
-  import { run, preventDefault } from 'svelte/legacy';
-
   // Adopted from:
   // https://github.com/ValentinH/svelte-easy-crop/blob/main/src/lib/Cropper.svelte
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
@@ -256,18 +254,28 @@
     });
   };
 
-  // ------ Reactive statement ------
-  //when aspect changes, we reset the cropperSize
-  run(() => {
+  // ------ Reactive statements ------
+  // when aspect changes, we reset the cropperSize
+  $effect(() => {
     if (imgEl) {
       cropperSize = cropSize ? cropSize : helpers.getCropSize(imgEl.width, imgEl.height, aspect);
     }
   });
 
   // when zoom changes, we recompute the cropped area
-  run(() => {
-    zoom && emitCropData();
+  $effect(() => {
+    if (zoom) {
+      emitCropData();
+    }
   });
+
+  // Helper to prevent default on event handlers
+  function withPreventDefault(handler) {
+    return (e) => {
+      e.preventDefault();
+      handler(e);
+    };
+  }
 </script>
 
 <svelte:window onresize={computeSizes} />
@@ -275,9 +283,9 @@
 <div
   class="cr-container"
   bind:this={containerEl}
-  onmousedown={preventDefault(onMouseDown)}
-  ontouchstart={preventDefault(onTouchStart)}
-  onwheel={preventDefault(onWheel)}
+  onmousedown={withPreventDefault(onMouseDown)}
+  ontouchstart={withPreventDefault(onTouchStart)}
+  onwheel={withPreventDefault(onWheel)}
   data-testid="cr-container"
 >
   <img
