@@ -1,4 +1,4 @@
-import { fail } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import { destroySession } from '$lib/api';
 
 export async function load({ cookies }) {
@@ -8,6 +8,6 @@ export async function load({ cookies }) {
     cookies.delete('sessionid', { path: '/' });
   } catch (err) {
     console.error(err);
-    return fail(400, { incorrect: true });
   }
+  redirect(303, '/');
 }

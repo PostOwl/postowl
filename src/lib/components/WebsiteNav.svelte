@@ -164,10 +164,10 @@
           <div class="flex-1"></div>
           <div>
             <a
-              data-sveltekit-preload-data="off"
+              data-sveltekit-reload
               class="underline"
               href="/logout"
-              onclick={toggleMenu}>Sign out</a
+              >Sign out</a
             >
           </div>
         </div>
