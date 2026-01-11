@@ -1,7 +1,6 @@
 <script>
-  export let editable;
-  export let value;
   import { formatDate } from '$lib/util';
+  let { editable, value = $bindable() } = $props();
 </script>
 
 {#if editable}

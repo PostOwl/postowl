@@ -3,16 +3,19 @@
   import { markActive } from '$lib/prosemirrorUtil';
   import { classNames } from '$lib/util';
 
-  export let editorView;
-  export let editorState;
-  export let type;
+  let {
+    editorView,
+    editorState,
+    type,
+    children
+  } = $props();
 
-  $: schema = editorState.schema;
-  $: markType = schema.marks[type];
+  let schema = $derived(editorState.schema);
+  let markType = $derived(schema.marks[type]);
 
-  $: command = toggleMark(markType);
-  $: disabled = !markType || !command(editorState, null);
-  $: active = markActive(markType)(editorState);
+  let command = $derived(toggleMark(markType));
+  let disabled = $derived(!markType || !command(editorState, null));
+  let active = $derived(markActive(markType)(editorState));
 
   function handleClick() {
     command(editorState, editorView.dispatch, editorView);
@@ -21,12 +24,12 @@
 </script>
 
 <button
-  on:click={handleClick}
+  onclick={handleClick}
   {disabled}
   class={classNames(
     active ? 'bg-white text-black' : 'text-white hover:bg-white hover:text-black',
     'sm:mx-1 rounded-full p-2 disabled:opacity-30'
   )}
 >
-  <slot />
+  {@render children?.()}
 </button>

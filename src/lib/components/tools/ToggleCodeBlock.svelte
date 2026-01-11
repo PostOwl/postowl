@@ -3,14 +3,13 @@
   import { setBlockType } from 'prosemirror-commands';
   import { blockTypeActive } from '../../prosemirrorUtil';
 
-  export let editorView;
-  export let editorState;
+  let { editorView, editorState, children } = $props();
 
-  $: schema = editorState.schema;
-  $: disabled =
-    !setBlockType(schema.nodes.code_block)(editorState) &&
-    !setBlockType(schema.nodes.paragraph)(editorState);
-  $: active = blockTypeActive(schema.nodes.code_block)(editorState);
+  let schema = $derived(editorState.schema);
+  let disabled =
+    $derived(!setBlockType(schema.nodes.code_block)(editorState) &&
+    !setBlockType(schema.nodes.paragraph)(editorState));
+  let active = $derived(blockTypeActive(schema.nodes.code_block)(editorState));
 
   function handleClick() {
     if (active) {
@@ -23,12 +22,12 @@
 </script>
 
 <button
-  on:click={handleClick}
+  onclick={handleClick}
   {disabled}
   class={classNames(
     active ? 'bg-white text-black' : 'text-white hover:bg-white hover:text-black',
     'sm:mx-1 rounded-full p-2 disabled:opacity-30'
   )}
 >
-  <slot />
+  {@render children?.()}
 </button>

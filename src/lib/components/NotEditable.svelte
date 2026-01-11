@@ -1,12 +1,12 @@
 <script>
   import { classNames } from '$lib/util';
 
-  export let editable;
+  let { editable, children } = $props();
 </script>
 
 <div class={classNames(editable ? 'opacity-25 cursor-not-allowed relative' : '')}>
   {#if editable}
-    <div class="absolute inset-0 z-50" />
+    <div class="absolute inset-0 z-50"></div>
   {/if}
-  <slot />
+  {@render children?.()}
 </div>

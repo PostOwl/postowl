@@ -1,6 +1,5 @@
 <script>
   import { activeEditorView } from '$lib/stores';
-  import { onDestroy } from 'svelte';
   import { classNames } from '$lib/util';
   import ToggleMark from './tools/ToggleMark.svelte';
   import ToggleBulletList from './tools/ToggleBulletList.svelte';
@@ -8,39 +7,45 @@
   import ToggleOrderedList from './tools/ToggleOrderedList.svelte';
   import PrimaryButton from './PrimaryButton.svelte';
   import SecondaryButton from './SecondaryButton.svelte';
-  import { createEventDispatcher } from 'svelte';
   import ToggleHeading from './tools/ToggleHeading.svelte';
   import ToggleCodeBlock from './tools/ToggleCodeBlock.svelte';
   import InsertImage from './tools/InsertImage.svelte';
   import CreateLink from './tools/CreateLink.svelte';
 
-  export let confirmLabel = 'Save';
-  export let canConfirm = true;
+  /**
+   * @typedef {Object} Props
+   * @property {string} [confirmLabel]
+   * @property {boolean} [canConfirm]
+   * @property {Function} [oncancel]
+   * @property {Function} [onsave]
+   */
 
-  let editorView = null;
-  let editorState = null;
+  /** @type {Props} */
+  let { confirmLabel = 'Save', canConfirm = true, oncancel, onsave } = $props();
 
-  const unsubscribe = activeEditorView.subscribe(value => {
-    editorView = value;
-    editorState = value?.state;
+  let editorView = $state(null);
+  let editorState = $state(null);
+
+  $effect(() => {
+    const unsubscribe = activeEditorView.subscribe(value => {
+      editorView = value;
+      editorState = value?.state;
+    });
+    return unsubscribe;
   });
 
-  const dispatch = createEventDispatcher();
-
   function handleCancel() {
-    dispatch('cancel', {});
+    oncancel?.();
   }
 
   function handleSave() {
-    dispatch('save', {});
+    onsave?.();
   }
-
-  onDestroy(unsubscribe);
 
   function onKeyDown(e) {
     // Trigger save/confirm
     if (canConfirm && (e.key === 's' || e.key === 'Enter') && e.metaKey) {
-      dispatch('save', {});
+      onsave?.();
       e.preventDefault();
       e.stopPropagation();
     }
@@ -92,7 +97,7 @@
                 /></svg
               >
             </CreateLink>
-            <div class="hidden sm:block w-px bg-gray-700 mx-3" />
+            <div class="hidden sm:block w-px bg-gray-700 mx-3"></div>
             <ToggleHeading {editorState} {editorView}>
               <svg
                 class="h-3 w-3 sm:h-4 sm:w-4"
@@ -131,7 +136,7 @@
                 /></svg
               >
             </ToggleBlockquote>
-            <div class="hidden sm:block w-px bg-gray-700 mx-3" />
+            <div class="hidden sm:block w-px bg-gray-700 mx-3"></div>
             <ToggleBulletList {editorState} {editorView}>
               <svg
                 class="h-3 w-3 sm:h-4 sm:w-4"
@@ -156,7 +161,7 @@
                 /></svg
               >
             </ToggleOrderedList>
-            <div class="hidden sm:block w-px bg-gray-700 mx-3" />
+            <div class="hidden sm:block w-px bg-gray-700 mx-3"></div>
             <InsertImage {editorState} {editorView}>
               <svg
                 class="h-3 w-3 sm:h-4 sm:w-4"
@@ -172,10 +177,10 @@
           </div>
         {/if}
 
-        <div class="flex-1 h-8" />
-        <PrimaryButton type="button" on:click={handleCancel}>Cancel</PrimaryButton>
-        <div class="shrink-0 w-2 sm:w-4" />
-        <SecondaryButton type="button" on:click={handleSave} disabled={!canConfirm}
+        <div class="flex-1 h-8"></div>
+        <PrimaryButton type="button" onclick={handleCancel}>Cancel</PrimaryButton>
+        <div class="shrink-0 w-2 sm:w-4"></div>
+        <SecondaryButton type="button" onclick={handleSave} disabled={!canConfirm}
           >{confirmLabel}</SecondaryButton
         >
       </div>
@@ -183,4 +188,4 @@
   </div>
 </div>
 
-<svelte:window on:keydown={onKeyDown} />
+<svelte:window onkeydown={onKeyDown} />

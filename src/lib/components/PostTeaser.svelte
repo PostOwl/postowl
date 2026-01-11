@@ -1,10 +1,9 @@
 <script>
-  export let post;
-  export let currentUser;
   import { classNames, formatDate } from '$lib/util';
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
+  let { post, currentUser } = $props();
 
-  $: teaser_image = JSON.parse(post.teaser_image);
+  let teaser_image = $derived(JSON.parse(post.teaser_image));
   const lf = new Intl.ListFormat('en');
 </script>
 

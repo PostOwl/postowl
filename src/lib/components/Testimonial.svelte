@@ -6,10 +6,21 @@
 
   const dispatch = createEventDispatcher();
 
-  export let testimonial;
-  export let editable;
-  export let firstEntry = false;
-  export let lastEntry = false;
+  /**
+   * @typedef {Object} Props
+   * @property {any} testimonial
+   * @property {any} editable
+   * @property {boolean} [firstEntry]
+   * @property {boolean} [lastEntry]
+   */
+
+  /** @type {Props} */
+  let {
+    testimonial = $bindable(),
+    editable,
+    firstEntry = false,
+    lastEntry = false
+  } = $props();
 </script>
 
 <div class={classNames(firstEntry ? 'pt-2 pb-8 sm:pb-12' : 'py-8 sm:py-12')}>
@@ -35,7 +46,7 @@
       <div class="space-y-2 flex flex-col">
         <button
           class="w-6 h-6 p-1 rounded-full bg-gray-900 hover:bg-gray-800 text-white"
-          on:click={() => dispatch('delete')}
+          onclick={() => dispatch('delete')}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +64,7 @@
             'w-6 h-6 p-1 rounded-full hover:bg-gray-100',
             firstEntry ? 'opacity-20' : ''
           )}
-          on:click={() => dispatch('up')}
+          onclick={() => dispatch('up')}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +82,7 @@
             'w-6 h-6 p-1 rounded-full hover:bg-gray-100',
             lastEntry ? 'opacity-20' : ''
           )}
-          on:click={() => dispatch('down')}
+          onclick={() => dispatch('down')}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

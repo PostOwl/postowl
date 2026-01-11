@@ -3,17 +3,19 @@
   import { debounce, classNames, isEmailValid } from '$lib/util';
   import CopyableRecipient from './CopyableRecipient.svelte';
 
-  export let recipients = [];
-  export let is_public;
-  export let editable;
-  export let slug = undefined;
+  let {
+    recipients = $bindable([]),
+    is_public = $bindable(),
+    editable,
+    slug = undefined
+  } = $props();
 
-  let value;
-  let result = [];
-  let chooseVisibility = false;
-  let selectedResult = 0;
-  let input;
-  let resultsEl;
+  let value = $state();
+  let result = $state([]);
+  let chooseVisibility = $state(false);
+  let selectedResult = $state(0);
+  let input = $state();
+  let resultsEl = $state();
 
   // onMount(() => {
   //   if (input) {
@@ -110,11 +112,11 @@
 </script>
 
 <div class="max-w-(--breakpoint-md) mx-auto px-6 pb-8 relative">
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   {#if editable || is_public || !is_public}
     <svelte:element
       this={editable ? 'button' : 'div'}
-      on:click={toggleVisibilitySelector}
+      onclick={toggleVisibilitySelector}
       class={classNames(
         'relative rounded-full px-3 py-0.5 mr-1 mb-1 text-sm sm:text-base inline-flex items-center space-x-1 bg-black text-white',
         chooseVisibility ? 'z-50' : '' // pop to the top while editing visibility
@@ -137,16 +139,16 @@
   {/if}
 
   {#if chooseVisibility && editable}
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div
       class="z-40 fixed inset-0 bg-black opacity-80 cursor-default"
-      on:click={toggleVisibilitySelector}
-    />
+      onclick={toggleVisibilitySelector}
+></div>
     <div class="absolute top-10 left-6 right-6 sm:left-12 sm:right-12 z-50">
       <div class="max-w-lg space-y-2 text-sm sm:text-base">
         <button
-          on:click={togglePrivate}
+          onclick={togglePrivate}
           class={classNames(
             'block px-4 py-2 rounded-full mx-0 w-full text-left bg-white border border-black'
           )}
@@ -154,7 +156,7 @@
           Private <span class="text-sm">— Journal and drafts</span>
         </button>
         <button
-          on:click={togglePublic}
+          onclick={togglePublic}
           class={classNames(
             'block px-4 py-2 rounded-full mx-0 w-full text-left bg-white border border-black'
           )}
@@ -173,10 +175,10 @@
     <div class="relative border-gray-100 flex space-x-4 items-center py-2">
       <input
         bind:this={input}
-        on:keydown={onKeyDown}
+        onkeydown={onKeyDown}
         bind:value
         use:debounce={{ value, func: search, duration: 50 }}
-        on:blur={onBlur}
+        onblur={onBlur}
         autocomplete="off"
         id="search"
         name="search"
@@ -189,7 +191,7 @@
     <div class="overflow-y-auto" bind:this={resultsEl}>
       {#each result as friend, i}
         <button
-          on:click={() => addRecipient(friend)}
+          onclick={() => addRecipient(friend)}
           class={classNames(
             'w-full text-left block px-4 sm:px-6 py-3 border-b border-gray-100 text-gray-600 hover:text-black',
             selectedResult === i ? 'bg-gray-100' : ''

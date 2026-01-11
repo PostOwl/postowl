@@ -1,8 +1,16 @@
 <script>
-  export let confirmLabel = 'Save';
-  export let canConfirm = true;
+  /**
+   * @typedef {Object} Props
+   * @property {string} [confirmLabel]
+   * @property {boolean} [canConfirm]
+   * @property {Function} [oncancel]
+   * @property {Function} [onsave]
+   */
+
+  /** @type {Props} */
+  let { confirmLabel = 'Save', canConfirm = true, oncancel, onsave } = $props();
 </script>
 
 {#await import('$lib/components/EditorControls.svelte') then EditorToolbar}
-  <EditorToolbar.default on:cancel on:save {confirmLabel} {canConfirm} />
+  <EditorToolbar.default {oncancel} {onsave} {confirmLabel} {canConfirm} />
 {/await}

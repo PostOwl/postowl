@@ -5,17 +5,17 @@
   import { goto } from '$app/navigation';
   import Post from '$lib/components/Post.svelte';
 
-  export let data;
+  let { data } = $props();
 
-  let is_public = false,
-    recipients = [],
+  let is_public = $state(false),
+    recipients = $state([]),
     editable = true,
-    title = '',
-    content = '',
-    created_at = toDateString();
+    title = $state(''),
+    content = $state(''),
+    created_at = $state(toDateString());
 
-  $: currentUser = data.currentUser;
-  $: bio = data.bio;
+  let currentUser = $derived(data.currentUser);
+  let bio = $derived(data.bio);
 
   async function createPost() {
     if (!currentUser) {
@@ -53,15 +53,15 @@
 
 {#if editable}
   <EditorToolbar
-    on:cancel={discardDraft}
-    on:save={createPost}
+    oncancel={discardDraft}
+    onsave={createPost}
     confirmLabel={is_public ? 'Publish' : recipients.length > 0 ? 'Send' : 'Save'}
     canConfirm={!!title}
   />
 {/if}
 
 <!-- <WebsiteNav bind:editable /> -->
-<div class="pt-8 sm:pt-16" />
+<div class="pt-8 sm:pt-16"></div>
 <RecipientsSelector {editable} bind:is_public bind:recipients />
 
 <Post bind:title bind:content bind:created_at {editable} />

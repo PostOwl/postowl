@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy, untrack } from 'svelte';
   import { toHTML, fromHTML } from '$lib/prosemirrorUtil';
   import { singleLinePlainTextSchema, multiLinePlainTextSchema } from '$lib/prosemirrorSchemas';
   import { activeEditorView } from '$lib/stores';
@@ -11,36 +11,20 @@
   import { buildKeymap } from '$lib/prosemirrorKeymap';
   import { placeholderPlugin } from '$lib/prosemirrorPlugins';
 
-  export let content = '';
-  export let multiLine = false;
-  export let placeholder = 'Enter text';
+  /**
+   * @typedef {Object} Props
+   * @property {string} [content]
+   * @property {boolean} [multiLine]
+   * @property {string} [placeholder]
+   */
 
-  let editorChange = false;
-  let prosemirrorNode, editorView, editorState;
+  /** @type {Props} */
+  let { content = $bindable(''), multiLine = false, placeholder = 'Enter text' } = $props();
 
-  $: schema = multiLine ? multiLinePlainTextSchema : singleLinePlainTextSchema;
+  let editorChange = $state(false);
+  let prosemirrorNode = $state(), editorView = $state(), editorState = $state();
 
-  $: {
-    const doc = fromHTML(schema, content);
-    editorState = EditorState.create({
-      doc,
-      schema,
-      plugins: [
-        keymap(buildKeymap(schema)),
-        keymap(baseKeymap),
-        history(),
-        onUpdatePlugin,
-        placeholderPlugin(placeholder)
-      ]
-    });
-    // Only if there is already an editorView and the content change was external
-    // update editorView with the new editorState
-    if (!editorChange) {
-      editorView?.updateState(editorState);
-    } else {
-      editorChange = false;
-    }
-  }
+
 
   function dispatchTransaction(transaction) {
     const editorState = this.state.apply(transaction);
@@ -54,11 +38,15 @@
     this.state = editorState;
   }
 
-  const onUpdatePlugin = new Plugin({
+  // Plugin to clear the active editor view when this plain text editor receives focus
+  // This disables the rich text toolbar controls when editing plain text fields
+  const onFocusPlugin = new Plugin({
     view() {
       return {
         update(updatedView) {
-          activeEditorView.set(updatedView);
+          if (updatedView.hasFocus()) {
+            activeEditorView.set(null);
+          }
         }
       };
     }
@@ -67,9 +55,15 @@
   onMount(() => {
     editorView = new EditorView(prosemirrorNode, {
       state: editorState,
-      dispatchTransaction
+      dispatchTransaction,
+      // Handle focus event to clear the rich text toolbar when this plain text editor receives focus
+      handleDOMEvents: {
+        focus: () => {
+          activeEditorView.set(null);
+          return false; // Don't prevent default handling
+        }
+      }
     });
-    activeEditorView.set(editorView);
   });
 
   onDestroy(() => {
@@ -78,9 +72,35 @@
       editorView.destroy();
     }
   });
+  let schema = $derived(multiLine ? multiLinePlainTextSchema : singleLinePlainTextSchema);
+  $effect.pre(() => {
+    const doc = fromHTML(schema, content);
+    const newEditorState = EditorState.create({
+      doc,
+      schema,
+      plugins: [
+        keymap(buildKeymap(schema)),
+        keymap(baseKeymap),
+        history(),
+        onFocusPlugin,
+        placeholderPlugin(placeholder)
+      ]
+    });
+    // Only if there is already an editorView and the content change was external
+    // update editorView with the new editorState
+    // Use untrack to read editorChange without creating a reactive dependency
+    const wasInternalChange = untrack(() => editorChange);
+    if (!wasInternalChange) {
+      editorView?.updateState(newEditorState);
+    }
+    untrack(() => {
+      editorChange = false;
+    });
+    editorState = newEditorState;
+  });
 </script>
 
-<div id="prosemirror-editor" bind:this={prosemirrorNode} />
+<div id="prosemirror-editor" bind:this={prosemirrorNode}></div>
 
 <style>
   :global(#prosemirror-editor .ProseMirror) {

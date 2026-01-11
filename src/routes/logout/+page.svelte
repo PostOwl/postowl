@@ -1,9 +1,8 @@
 <script>
   import Limiter from '$lib/components/Limiter.svelte';
 
-  export let form;
-  export let data;
-  $: bio = data.bio;
+  let { form, data } = $props();
+  let bio = $derived(data.bio);
 </script>
 
 <svelte:head>
