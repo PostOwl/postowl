@@ -57,6 +57,7 @@
         slug: data.slug,
         title,
         content,
+        created_at,
         teaser,
         teaser_image,
         recipients,

@@ -2,12 +2,13 @@ import { json } from '@sveltejs/kit';
 import { updatePost } from '$lib/api';
 
 export async function POST({ request, locals }) {
-  const { slug, title, content, teaser, teaser_image, recipients, is_public } =
+  const { slug, title, content, created_at, teaser, teaser_image, recipients, is_public } =
     await request.json();
   const result = await updatePost(
     slug,
     title,
     content,
+    created_at,
     teaser,
     teaser_image,
     recipients,
