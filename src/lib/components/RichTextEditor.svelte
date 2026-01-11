@@ -23,8 +23,9 @@
   let { content = $bindable('<p></p>'), multiLine = false, placeholder = 'Enter text' } = $props();
 
   let editorChange = $state(false);
-  let prosemirrorNode = $state(), editorView = $state(), editorState = $state();
-
+  let prosemirrorNode = $state(),
+    editorView = $state(),
+    editorState = $state();
 
   function transformPasted(slice) {
     // For now, we just replace pasted external images

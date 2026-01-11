@@ -271,7 +271,7 @@
 
   // Helper to prevent default on event handlers
   function withPreventDefault(handler) {
-    return (e) => {
+    return e => {
       e.preventDefault();
       handler(e);
     };
@@ -304,7 +304,7 @@
       class:cr-grid={showGrid}
       style="width: {cropperSize.width}px; height: {cropperSize.height}px;"
       data-testid="cropper"
-></div>
+    ></div>
   {/if}
 </div>
 

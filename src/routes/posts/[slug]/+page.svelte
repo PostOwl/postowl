@@ -1,5 +1,4 @@
 <script>
-
   import EditorToolbar from '$lib/components/EditorToolbar.svelte';
   import { extractTeaser, extractTeaserImage, fetchJSON } from '$lib/util';
   import SecondaryButton from '$lib/components/SecondaryButton.svelte';
@@ -11,9 +10,15 @@
   import RecipientsSelector from '$lib/components/RecipientsSelector.svelte';
 
   let { data = $bindable() } = $props();
-  let editable = $state(false), title = $state(), content = $state(), created_at = $state(), teaser_image, teaser = $state(), is_public = $state(false), recipients = $state([]);
+  let editable = $state(false),
+    title = $state(),
+    content = $state(),
+    created_at = $state(),
+    teaser_image,
+    teaser = $state(),
+    is_public = $state(false),
+    recipients = $state([]);
   let showMenu = $state(false);
-
 
   function initOrReset() {
     title = data.title;

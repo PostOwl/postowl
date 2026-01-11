@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import { env } from '$env/dynamic/private'; 
+import { env } from '$env/dynamic/private';
 const SMTP_SERVER = env.SMTP_SERVER;
 const SMTP_PORT = env.SMTP_PORT;
 const SMTP_USERNAME = env.SMTP_USERNAME;

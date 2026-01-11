@@ -27,8 +27,6 @@
     class: className = ''
   } = $props();
 
-  
-
   let fileInput = $state(); // for uploading an image
   let progress = $state(undefined); // file upload progress
   let overlayEl = $state();

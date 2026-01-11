@@ -9,7 +9,6 @@
   import SecondaryButton from './SecondaryButton.svelte';
   import { previousPage } from '$lib/stores';
 
-  
   /**
    * @typedef {Object} Props
    * @property {boolean} [editable]
@@ -164,12 +163,7 @@
           <div>Signed in as {currentUser.name}</div>
           <div class="flex-1"></div>
           <div>
-            <a
-              data-sveltekit-reload
-              class="underline"
-              href="/logout"
-              >Sign out</a
-            >
+            <a data-sveltekit-reload class="underline" href="/logout">Sign out</a>
           </div>
         </div>
       {:else}

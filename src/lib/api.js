@@ -4,7 +4,7 @@ import { DEFAULT_BIO } from '$lib/constants';
 import { nanoid } from '$lib/util';
 import sendMail from '$lib/sendMail';
 import { Blob } from 'node:buffer';
-import { env } from '$env/dynamic/private'; 
+import { env } from '$env/dynamic/private';
 const DB_PATH = env.DB_PATH;
 const ADMIN_NAME = env.ADMIN_NAME;
 const ADMIN_PASSWORD = env.ADMIN_PASSWORD;

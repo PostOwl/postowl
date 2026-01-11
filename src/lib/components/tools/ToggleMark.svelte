@@ -3,12 +3,7 @@
   import { markActive } from '$lib/prosemirrorUtil';
   import { classNames } from '$lib/util';
 
-  let {
-    editorView,
-    editorState,
-    type,
-    children
-  } = $props();
+  let { editorView, editorState, type, children } = $props();
 
   let schema = $derived(editorState.schema);
   let markType = $derived(schema.marks[type]);
