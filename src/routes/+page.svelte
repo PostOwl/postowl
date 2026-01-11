@@ -158,7 +158,7 @@
           </svg>
         </div>
       {:else}
-        <a href="/" onclick={reset} class="absolute inset-y-0 left-3 flex items-center">
+        <a href="/" onclick={reset} class="absolute inset-y-0 left-3 flex items-center" aria-label="Clear search">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

@@ -131,6 +131,7 @@
       <button
         class="absolute right-6 sm:-right-4 -top-4 bg-black text-white rounded-full"
         onclick={() => (showMenu = false)}
+        aria-label="Close menu"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
