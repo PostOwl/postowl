@@ -43,25 +43,25 @@
     }
 
     // Activate editing with e key
-    if (e.key === 'e' && editable != true && !e.key.metaKey && !e.key.ctrlKey && currentUser) {
+    if (e.key === 'e' && editable != true && !e.metaKey && !e.ctrlKey && currentUser) {
       editable = true;
       return;
     }
     // Toggle menu modal with m key
-    if (e.key === 'm' && editable != true && !e.key.metaKey && !e.key.ctrlKey) {
+    if (e.key === 'm' && editable != true && !e.metaKey && !e.ctrlKey) {
       return toggleMenu();
     }
     // Go to home with h key
-    if (e.key === 'h' && editable != true && !e.key.metaKey && !e.key.ctrlKey) {
+    if (e.key === 'h' && editable != true && !e.metaKey && !e.ctrlKey) {
       return goto('/');
     }
     // Go to new post with n key
-    if (e.key === 'n' && editable != true && !e.key.metaKey && !e.key.ctrlKey && currentUser) {
+    if (e.key === 'n' && editable != true && !e.metaKey && !e.ctrlKey && currentUser) {
       return goto('/posts/new');
     }
 
     // Go to friends list with f key
-    if (e.key === 'f' && editable != true && !e.key.metaKey && !e.key.ctrlKey && currentUser) {
+    if (e.key === 'f' && editable != true && !e.metaKey && !e.ctrlKey && currentUser) {
       return goto('/friends');
     }
   }
